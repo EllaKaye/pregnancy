@@ -1,3 +1,13 @@
+#' Calculate due date
+#'
+#' @param start_date Start date
+#' @param start_type Start type
+#' @param cycle Cycle length
+#'
+#' @return Your due date
+#' @export
+#'
+#' @examples due_date(lubridate::ymd("2023-02-15"))
 due_date <- function(start_date, start_type = c("LMP", "conception", "IVF", "fresh_donor", "transfer_day_3", "transfer_day_5"), cycle = 28) {
 
   start_type <- match.arg(start_type)

@@ -93,7 +93,7 @@ how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) 
 
 #pregnancy::how_long_until(due, 12, return = TRUE)
 
-meds <- EMKprivate::meds
+meds <- EMKpregnancy::meds
 
 meds_left <- function(meds, group = c("medication", "format")) {
 
