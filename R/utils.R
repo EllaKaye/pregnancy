@@ -19,21 +19,7 @@ person_pronoun <- function(person) {
 
 }
 
-check_date <- function(date) {
-  if (!lubridate::is.Date(date)) {
-
-    message <- c(
-      "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
-      "i" = "It was {.type {date}} instead.")
-
-    if (is.character(date)) {
-      message <- c(message,  "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
-    }
-
-    cli::cli_abort(message, call = rlang::caller_env())
-  }
-}
-
+# used to pass into `get_to_be()`
 tense <- function(date1, date2) {
 
   # date1 is typically `on_date` (default to Sys.Date)
@@ -51,3 +37,39 @@ tense <- function(date1, date2) {
 
   out
 }
+
+get_to_be <- function(person, tense) {
+
+  if (!(person %in% c("I", "You"))) person <- "She"
+
+  `I` <- c("was", "am", "will be")
+  You <- c("were", "are", "will be")
+  She <- c("was", "is", "will be")
+
+  to_be <- rbind(`I`, You, She)
+
+  colnames(to_be) <- c("past", "present", "future")
+
+  to_be[person, tense]
+
+}
+
+check_date <- function(date) {
+
+  # TODO: check has length 1
+
+  if (!lubridate::is.Date(date)) {
+
+    message <- c(
+      "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
+      "i" = "It was {.type {date}} instead.")
+
+    if (is.character(date)) {
+      message <- c(message,  "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
+    }
+
+    cli::cli_abort(message, call = rlang::caller_env())
+  }
+}
+
+

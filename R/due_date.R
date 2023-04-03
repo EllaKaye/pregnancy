@@ -10,6 +10,7 @@
 #' @examples calculate_due_date(lubridate::ymd("2023-02-15"))
 calculate_due_date <- function(start_date, start_type = c("LMP", "conception", "IVF", "fresh_donor", "transfer_day_3", "transfer_day_5"), cycle = 28) {
 
+  # TODO: use rlang::arg_match
   start_type <- match.arg(start_type)
 
   # use check_date() instead
@@ -61,29 +62,23 @@ get_due_date <- function() {
 
   if (is.null(due_date)) cli::cli_bullets(c("!" = "You do not have {.code pregnancy.due_date} set as an option.",
                                             "i" = "You can set it by..."))
-  else cli::cli_inform('Your due date is set as {format(due_date, "%B %d, %Y")}.')
+  else cli::cli_inform("Your due date is set as {format(due_date, '%B %d, %Y')}.")
 
 }
 
 set_due_date <- function(due_date) {
 
   # check date
-  # ...
+  check_date(due_date)
 
   options("pregnancy.due_date" = due_date)
 
+  cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
+  cli::cli_alert_info("Functions in the pregnancy package will now use this due
+                        date without you needing to supply a value to the `due_date` argument.",
+                      wrap = TRUE)
+  cli::cli_alert_info("The setting only holds for this R session")
+  cli::cli_alert_info("To set the due date across sessions, ...")
+  # message indicating success
+
 }
-
-#start_date <- ymd("2021-06-11")
-#due_date(start_date, "fresh_donor")
-
-
-#cycle <- 22
-
-
-
-
-
-#due_date(ymd("2021-01-01"), "hello")
-
-#vec <- c("LMP", "conception", "IVF", "fresh donor", "transfer_day_3", "transfer_day_5")
