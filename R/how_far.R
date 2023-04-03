@@ -66,6 +66,7 @@ how_far_on_date <- function(due, date, quiet = FALSE, return = FALSE) {
 
 how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) {
 
+  # TODO: get due_date instead
   # TODO: use check_date() instead
   # assertthat::assert_that(assertthat::is.date(due))
 
@@ -96,5 +97,4 @@ how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) 
 
 }
 
-#pregnancy::how_long_until(due, 12, return = TRUE)
 

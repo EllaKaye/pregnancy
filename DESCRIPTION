@@ -1,5 +1,5 @@
 Package: pregnancy
-Title: Keep track of dates and medications in pregnancy
+Title: Keep track of dates and medications through pregnancy and fertility treatment
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Ella",
@@ -15,4 +15,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Imports: 
     cli,
-    lubridate
+    lubridate,
+    rlang
