@@ -9,6 +9,7 @@ date_abort_null <- function(date) {
   ), call = rlang::caller_env())
 }
 
+# used to pass into `get_to_be()`
 person_pronoun <- function(person) {
 
   if (person %in% c("1st", "first", "I", "i")) {person <- "I"}
@@ -19,7 +20,7 @@ person_pronoun <- function(person) {
 
 }
 
-# used to pass into `get_to_be()`
+# used to pass into `to_be()`
 tense <- function(date1, date2) {
 
   # date1 is typically `on_date` (default to Sys.Date)
@@ -38,7 +39,10 @@ tense <- function(date1, date2) {
   out
 }
 
-get_to_be <- function(person, tense) {
+# Might want to do some checks
+# Will definitely need tests!
+# Make sure this is OK with capitalisation
+to_be <- function(person, tense) {
 
   if (!(person %in% c("I", "You"))) person <- "She"
 
@@ -46,11 +50,11 @@ get_to_be <- function(person, tense) {
   You <- c("were", "are", "will be")
   She <- c("was", "is", "will be")
 
-  to_be <- rbind(`I`, You, She)
+  to_be_mat <- rbind(`I`, You, She)
 
-  colnames(to_be) <- c("past", "present", "future")
+  colnames(to_be_mat) <- c("past", "present", "future")
 
-  to_be[person, tense]
+  to_be_mat[person, tense]
 
 }
 
@@ -71,5 +75,6 @@ check_date <- function(date) {
     cli::cli_abort(message, call = rlang::caller_env())
   }
 }
+
 
 
