@@ -69,9 +69,11 @@ get_due_date <- function() {
 set_due_date <- function(due_date) {
 
   # check date
-  check_date(due_date)
+  if (!is.null(due_date)) check_date(due_date)
 
   options("pregnancy.due_date" = due_date)
+
+  # TODO: different message if NULL
 
   cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
   cli::cli_alert_info("Functions in the pregnancy package will now use this due
