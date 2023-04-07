@@ -1,62 +1,30 @@
-how_far <- function(due, quiet = FALSE, return = FALSE) {
+how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
 
-  # TODO: use check_date() instead
-  # assertthat::assert_that(assertthat::is.date(due))
+  check_date(on_date)
 
-  today <- Sys.Date()
-  start <- due - lubridate::days(280)
+  due_date <- due_date %||% getOption("pregnancy.due_date") %||% due_abort_null()
+  check_date(due_date)
 
-  span <- lubridate::interval(start, today)
-  span2 <- lubridate::interval(today, due)
+  # TODO: deal with person arg
 
-  t <- lubridate::as.period(span, unit = "day")
-  t2 <- lubridate::as.period(span2, unit = "day")
+  start <- due_date - lubridate::days(280)
+  span_start <- lubridate::interval(start, on_date)
+  span_due <- lubridate::interval(on_date, due_date)
+  t_start <- lubridate::as.period(span_start, unit = "day")
+  t_due <- lubridate::as.period(span_due, unit = "day")
+  weeks_start <- lubridate::time_length(t_start, unit="weeks")
+  weeks_due <- lubridate::time_length(t_due, "weeks")
 
-  weeks <- lubridate::time_length(t,unit="weeks")
-  weeks2 <- lubridate::time_length(t2, "weeks")
-
-  num_days_preg <- (weeks %% 1) * 7
-  num_weeks_preg <- floor(weeks)
-
-  num_days_left <- (weeks2 %% 1) * 7
-  num_weeks_left <- floor(weeks2)
-
-  if (!quiet) {
-    cat("I am", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\nI am due in", num_weeks_left, "weeks and", num_days_left, "days.\n")
-  }
-
-  if (return) {
-    weeks
-  }
-
-}
-
-#due <- ymd("2022-01-24")
-
-how_far_on_date <- function(due, date, quiet = FALSE, return = FALSE) {
-
-  # TODO: use check_date() instead
-  #assertthat::assert_that(assertthat::is.date(due))
-  #assertthat::assert_that(assertthat::is.date(date))
-
-  start <- due - lubridate::days(280)
-  span <- lubridate::interval(start, date)
-  t <- lubridate::as.period(span, unit = "day")
-  weeks <- lubridate::time_length(t,unit="weeks")
-
-  num_days_preg <- (weeks %% 1) * 7
-  num_weeks_preg <- floor(weeks)
+  num_days_preg <- (weeks_start %% 1) * 7
+  num_weeks_preg <- floor(weeks_start)
+  num_days_left <- (weeks_due %% 1) * 7
+  num_weeks_left <- floor(weeks_due)
 
   # TODO: {cli} to format output instead of cat()
-  if (!quiet) {
-    cat("On", as.character(date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
+  cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
+  cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
 
-  }
-
-  if (return) {
-    weeks
-  }
-
+  invisible(weeks_start)
 }
 
 #due <- ymd("2022-01-24")
