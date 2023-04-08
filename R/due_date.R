@@ -20,13 +20,24 @@ calculate_due_date <- function(start_date,
 
   check_date(start_date)
 
-  # TODO: Use {cli} for output instead of stop()
-  if (start_type == "LMP") {
-    if (!(cycle %in% 20:44)) stop("cycle must be an integer between 20 and 44")
-  }
 
   # LMP: start_date is start of last menstrual period
   if (start_type == "LMP") {
+
+    # check cycle is an integer of length 1 between 20 and 44
+    if (length(cycle) != 1 | !is.numeric(cycle)) {
+
+      message <- c(
+        "{.var cycle} must be a {.cls numeric} vector of length 1.",
+        "i" = "It was {.cls {cycle}} of length {length(cycle)} instead.")
+
+      cli::cli_abort(message)
+    }
+
+    if (!(cycle %in% 20:44)) {
+      cli::cli_abort("{.var cycle} must be an integer between 20 and 44 (inclusive).")
+    }
+
     due <- start_date + lubridate::days(cycle) - lubridate::days(28) + lubridate::days(280)
   }
 
