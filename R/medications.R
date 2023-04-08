@@ -49,3 +49,17 @@ meds_left <- function(meds, group = c("medication", "format")) {
 #meds_left(meds_bad)
 
 #meds_left(meds_bad)
+
+my_meds <- data.frame(meds = LETTERS[1:3], remaining = 1:3)
+
+meds_print <- function(meds) {
+  # will need to make sure we deal with case when meds has no rows:
+
+  # check col names
+  medications <- meds$meds
+  remaining <- meds$remaining
+
+  for (i in 1:nrow(meds)) {
+    cli::cli_bullets(c("*" = "You have {medications[i]} remaining"))
+  }
+}

@@ -9,64 +9,33 @@ date_abort_null <- function(date) {
   ), call = rlang::caller_env())
 }
 
-# used to pass into `get_to_be()`
-person_pronoun <- function(person) {
+check_person <- function(person) {
 
-  if (person %in% c("1st", "first", "I", "i")) {person <- "I"}
+  if (!is_character(person, 1)) {
 
-  else if (person %in% c("2nd", "second", "You", "you", "YOU")) {person <- "You"}
+    message <- c(
+      "{.var {rlang::caller_arg(person)}} must be a {.cls character} vector of length 1.",
+      # change to class not type
+      "i" = "It was {.type {person}} of length {length(person)} instead.")
 
-  person
+    cli::cli_abort(message, call = rlang::caller_env())
+  }
 
-}
-
-# used to pass into `to_be()`
-tense <- function(date1, date2) {
-
-  # date1 is typically `on_date` (default to Sys.Date)
-  # date2 is typically `due_date`
-  # Therefore positive diff means due date is in the future
-
-  check_date(date1)
-  check_date(date2)
-
-  diff <- date2 - date1
-
-  if (diff > 0) out <- "future"
-  else if (diff < 0) out <- "past"
-  else out <- "present"
-
-  out
-}
-
-# Might want to do some checks
-# Will definitely need tests!
-# Make sure this is OK with capitalisation
-to_be <- function(person, tense) {
-
-  if (!(person %in% c("I", "You"))) person <- "She"
-
-  `I` <- c("was", "am", "will be")
-  You <- c("were", "are", "will be")
-  She <- c("was", "is", "will be")
-
-  to_be_mat <- rbind(`I`, You, She)
-
-  colnames(to_be_mat) <- c("past", "present", "future")
-
-  to_be_mat[person, tense]
+  #cat("Person", person)
 
 }
 
 check_date <- function(date) {
 
-  # TODO: check has length 1
+  message <- c(
+    "{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
+    "i" = "It was {.type {date}} of length {length(date)} instead.")
+
+  if (length(date) != 1) {
+    cli::cli_abort(message, call = rlang::caller_env())
+  }
 
   if (!lubridate::is.Date(date)) {
-
-    message <- c(
-      "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
-      "i" = "It was {.type {date}} instead.")
 
     if (is.character(date)) {
       message <- c(message,  "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
