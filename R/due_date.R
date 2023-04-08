@@ -1,3 +1,8 @@
+# functions related to due date
+# calculate_due_date(start_date, start_type, cycle)
+# get_due_date()
+# set_due_date(due_date)
+
 #' Calculate due date
 #'
 #' @param start_date Start date

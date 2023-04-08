@@ -6,8 +6,8 @@
 \usage{
 calculate_due_date(
   start_date,
-  start_type = c("LMP", "conception", "IVF", "fresh_donor", "transfer_day_3",
-    "transfer_day_5"),
+  start_type = c("LMP", "conception", "transfer_day_3", "transfer_day_5",
+    "transfer_day_6"),
   cycle = 28
 )
 }

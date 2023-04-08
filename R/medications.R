@@ -1,8 +1,14 @@
-#meds <- EMKpregnancy::meds
+# functions related to mediations
+# meds_remaining()
+# meds_augment()
+# meds_print()
+# get_meds()
+# set_meds()
 
 # need to copy over then modify code from EMKpregnancy package
-
-meds_left <- function(meds, group = c("medication", "format")) {
+# TODO: think about function args (and names) and order.
+# TODO: needs on_date
+meds_remaining <- function(medications, group = c("medication", "format")) {
 
   group = match.arg(group)
 
@@ -39,6 +45,7 @@ meds_left <- function(meds, group = c("medication", "format")) {
 }
 
 # function for figuring out the function
+# use as helper or delete from package?
 meds_print <- function() {
 
   # will need to make sure we deal with case when meds has no rows:

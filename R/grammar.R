@@ -1,3 +1,8 @@
+# helper functions relating to grammar in message, e.g. name/pronoun, tense of verb
+# person_pronoun(person)
+# tense(date1, date2)
+# to_be(person, tense)
+
 # used to pass into `to_be()`
 person_pronoun <- function(person) {
 

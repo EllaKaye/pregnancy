@@ -1,4 +1,7 @@
 # (non-exported) helper functions for getting and checking due dates
+# date_abort_null(date)
+# check_person(person)
+# check_date(date)
 
 date_abort_null <- function(date) {
   cli::cli_abort(c(
@@ -11,17 +14,19 @@ date_abort_null <- function(date) {
 
 check_person <- function(person) {
 
-  if (!is_character(person, 1)) {
+  if (!rlang::is_character(person, 1)) {
 
     message <- c(
       "{.var {rlang::caller_arg(person)}} must be a {.cls character} vector of length 1.",
       # change to class not type
       "i" = "It was {.type {person}} of length {length(person)} instead.")
 
-    cli::cli_abort(message, call = rlang::caller_env())
+    cli::cli_abort(message,
+                   call = rlang::caller_env(),
+                   class = "pregnancy_error_class_or_length")
   }
 
-  #cat("Person", person)
+  invisible(person)
 
 }
 

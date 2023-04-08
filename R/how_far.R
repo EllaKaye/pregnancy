@@ -1,8 +1,12 @@
+# functions relating to pregnancy progress
+# how_far(on_date, due_date, person)
+# how_long_until(REDO ARGS)
+
 how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
 
   check_date(on_date)
 
-  due_date <- due_date %||% getOption("pregnancy.due_date") %||% due_abort_null()
+  due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort_null()
   check_date(due_date)
 
   # TODO: deal with person arg
@@ -15,23 +19,24 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   weeks_start <- lubridate::time_length(t_start, unit="weeks")
   weeks_due <- lubridate::time_length(t_due, "weeks")
 
+  days_along <- lubridate::time_length(span_start, unit = "days")
+  percent_along <- round((days_along/280)*100)
+
   num_days_preg <- (weeks_start %% 1) * 7
   num_weeks_preg <- floor(weeks_start)
   num_days_left <- (weeks_due %% 1) * 7
   num_weeks_left <- floor(weeks_due)
 
   # TODO: {cli} to format output instead of cat()
+  # TODO: correct messages!
   cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
   cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
 
   invisible(weeks_start)
 }
 
-#due <- ymd("2022-01-24")
-#date <- ymd("2021-10-10")
-
-#pregnancy::how_far_on_date(due, date, quiet = TRUE, return = TRUE)
-
+# TODO: redo args in this function.
+# Need on_date, due_date, weeks, days, person - think about order (not quiet or return)
 how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) {
 
   # TODO: get due_date instead
