@@ -38,22 +38,11 @@ meds_left <- function(meds, group = c("medication", "format")) {
   # assert that stop_date are dates
 }
 
-#meds_colnames <- colnames(meds)
-#length(meds_colnames)
+# function for figuring out the function
+meds_print <- function() {
 
-#meds_colnames == colnames(meds)
-
-
-#meds_bad <- dplyr::tibble(medication = "med1", format = "pill", quantity = 1, stop_date = Sys.Date() + lubridate::days(4), extra = NA)
-
-#meds_left(meds_bad)
-
-#meds_left(meds_bad)
-
-my_meds <- data.frame(meds = LETTERS[1:3], remaining = 1:3)
-
-meds_print <- function(meds) {
   # will need to make sure we deal with case when meds has no rows:
+  meds <- data.frame(meds = LETTERS[1:3], remaining = 1:3)
 
   # check col names
   medications <- meds$meds
