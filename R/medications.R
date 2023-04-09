@@ -8,10 +8,11 @@
 # need to copy over then modify code from EMKpregnancy package
 # TODO: think about function args (and names) and order.
 # TODO: needs on_date
-meds_remaining <- function(medications, group = c("medication", "format")) {
+meds_remaining <- function(meds, group = c("medication", "format")) {
 
-  group = match.arg(group)
+  group = rlang::arg_match(group)
 
+  # TODO: cli_abort in all these assertions
   if (!is.data.frame(meds)) {
     stop("meds must be a data frame")
   }

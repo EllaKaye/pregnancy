@@ -2,6 +2,7 @@
 # date_abort_null(date)
 # check_person(person)
 # check_date(date)
+# check_cycle(cycle)
 
 date_abort_null <- function(date) {
   cli::cli_abort(c(
@@ -10,6 +11,26 @@ date_abort_null <- function(date) {
     "i" = "You can {.emph EITHER} set the {.var {rlang::caller_arg(date)}} argument {.emph OR} (recommended) set {.code options(pregnancy.due_date)} in your .Rprofile.",
     "i" = "{.emph LINK TO OPTIONS MAN PAGE (ONCE WRITTEN!) FOR FURTHER DETAILS.}"
   ), call = rlang::caller_env())
+}
+
+check_date <- function(date) {
+
+  message <- c(
+    "{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
+    "i" = "It was {.type {date}} of length {length(date)} instead.")
+
+  if (length(date) != 1) {
+    cli::cli_abort(message, call = rlang::caller_env())
+  }
+
+  if (!lubridate::is.Date(date)) {
+
+    if (is.character(date)) {
+      message <- c(message,  "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
+    }
+
+    cli::cli_abort(message, call = rlang::caller_env())
+  }
 }
 
 check_person <- function(person) {
@@ -30,23 +51,20 @@ check_person <- function(person) {
 
 }
 
-check_date <- function(date) {
+check_cycle <- function(cycle) {
 
-  message <- c(
-    "{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
-    "i" = "It was {.type {date}} of length {length(date)} instead.")
+  if (length(cycle) != 1 | !is.numeric(cycle)) {
 
-  if (length(date) != 1) {
+    message <- c(
+      "{.var {rlang::caller_arg(cycle)}} must be a {.cls numeric} vector of length 1.",
+      "i" = "It was {.cls {cycle}} of length {length(cycle)} instead.")
+
     cli::cli_abort(message, call = rlang::caller_env())
   }
 
-  if (!lubridate::is.Date(date)) {
-
-    if (is.character(date)) {
-      message <- c(message,  "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
-    }
-
-    cli::cli_abort(message, call = rlang::caller_env())
+  if (!(cycle %in% 20:44)) {
+    cli::cli_abort("{.var {rlang::caller_arg(cycle)}} must be an integer between 20 and 44 (inclusive).",
+                   call = rlang::caller_env())
   }
 }
 
