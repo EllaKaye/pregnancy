@@ -6,13 +6,15 @@
 # used to pass into `to_be()`
 person_pronoun <- function(person) {
 
+  # having this condition separately makes it easier to write check_person()
+  # as then check_person() can require a character vector
   if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
 
   check_person(person)
 
-  if (person %in% c("1st", "first", "I", "i", "1")) {person <- "I"}
+  if (person %in% c("1st", "first", "First", "FIRST", "I", "i", "1")) {person <- "I"}
 
-  else if (person %in% c("2nd", "second", "You", "you", "YOU", "2")) {person <- "You"}
+  else if (person %in% c("2nd", "second", "Second", "SECOND", "You", "you", "YOU", "2")) {person <- "You"}
 
   person
 
@@ -37,11 +39,13 @@ tense <- function(date1, date2) {
   out
 }
 
-# Might want to do some checks
-# Will definitely need tests!
-# Make sure this is OK with capitalisation
+# `person` must have been through `person_pronoun(person)` first
+# (that is where checks on `person` take place, all possible ways of specifying 2nd person are reduced to "You",
+# and similarly for "I")
+# `tense` should be the result of tense(date1, date2)
 to_be <- function(person, tense) {
 
+  # person must have been through person_pronoun() first
   if (!(person %in% c("I", "You"))) person <- "She"
 
   `I` <- c("was", "am", "will be")
