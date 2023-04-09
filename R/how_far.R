@@ -6,7 +6,7 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
 
   check_date(on_date)
 
-  due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort_null()
+  due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
   check_date(due_date)
 
   # TODO: deal with person arg
