@@ -63,8 +63,16 @@ test_that("date diff gives expected tense", {
 
 # testing to_be(person, tense) --------------------------------------------
 
+#test_that("un-matched tense throws error", {
+#  expect_error(to_be("futuree"), regexp = "tense")
+#})
+# may need snapshot test here
+
 # N.B. `person` should have been through `person_pronoun(person)` first (hence also `check_person()`)
 test_that("get correct verb given person and tense", {
+  expect_equal(to_be("I"), "am")
+  expect_equal(to_be("You"), "are")
+  expect_equal(to_be("She"), "is")
   expect_equal(to_be("I", "past"), "was")
   expect_equal(to_be("I", "present"), "am")
   expect_equal(to_be("I", "future"), "will be")

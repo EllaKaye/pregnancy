@@ -43,9 +43,17 @@ tense <- function(date1, date2) {
 # (that is where checks on `person` take place, all possible ways of specifying 2nd person are reduced to "You",
 # and similarly for "I")
 # `tense` should be the result of tense(date1, date2)
-to_be <- function(person, tense) {
+to_be <- function(person, tense = c("present", "past", "future")) {
 
-  # person must have been through person_pronoun() first
+  # person should have been through person_pronoun, and hence check_person first
+  # but just being extra careful here
+  # this only ensures that person is a character vector of length 1
+  # not that the 'right' pronoun will be picked
+  check_person(person)
+
+  tense <- rlang::arg_match(tense)
+
+  # Assumes person has been through person_pronoun() first
   if (!(person %in% c("I", "You"))) person <- "She"
 
   `I` <- c("was", "am", "will be")
@@ -56,6 +64,7 @@ to_be <- function(person, tense) {
 
   colnames(to_be_mat) <- c("past", "present", "future")
 
+  # above conditions ensure that person and tense will always match a row and a column name
   to_be_mat[person, tense]
 
 }
