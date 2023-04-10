@@ -25,5 +25,5 @@ Your due date
 Calculate due date
 }
 \examples{
-calculate_due_date(lubridate::ymd("2023-02-15"))
+calculate_due_date(as.Date("2023-01-31"))
 }
