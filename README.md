@@ -7,7 +7,8 @@
 <!-- badges: end -->
 
 This is a work-in-progress R package for tracking dates and medications
-in pregnancy. It is in the early stages of development.
+in pregnancy and fertility treatment. It is in the early stages of
+development.
 
 **Update 2023-03-25:** After a long hiatus, I am now actively returning
 to work on this project. The R code will be getting a major overhaul.

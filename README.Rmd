@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This is a work-in-progress R package for tracking dates and medications in pregnancy. 
+This is a work-in-progress R package for tracking dates and medications in pregnancy and fertility treatment. 
 It is in the early stages of development. 
 
 **Update 2023-03-25:** 
