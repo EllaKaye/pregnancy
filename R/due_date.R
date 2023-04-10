@@ -12,7 +12,10 @@
 #' @return Your due date
 #' @export
 #'
-#' @examples calculate_due_date(as.Date("2023-01-31"))
+#' @examples my_start_date <- as.Date("2023-01-31")
+#' @examples calculate_due_date(my_start_date)
+#' @examples x <- calculate_due_date(my_start_date, "conception")
+#' @examples x
 calculate_due_date <- function(start_date,
                                start_type = c("LMP",
                                               "conception",
@@ -55,10 +58,23 @@ calculate_due_date <- function(start_date,
   birth_period_start <- due_date - lubridate::days(21)
   birth_period_end <- due_date + lubridate::days(14)
 
-  cli::cli_inform(
-    c("i" = "Due date: {format(due_date, '%A, %B %d, %Y')}",
-      "i" = "Estimated birth period begins: {format(birth_period_start, '%A, %B %d, %Y')} (37 weeks)",
-      "i" = "Estimated birth period ends: {format(birth_period_end, '%A, %B %d, %Y')} (42 weeks)")
+
+  # fun <- function() {
+  #   cli_ul()
+  #   cli_li("Due date: {format(due_date, '%A, %B %d, %Y')}")
+  #   cli_li("Estimated birth period:")
+  #   ulid <- cli_ul()
+  #   cli_li("begins: {format(birth_period_start, '%A, %B %d, %Y')} (37 weeks)")
+  #   cli_li("ends: {format(birth_period_end, '%A, %B %d, %Y')} (42 weeks)")
+  #   cli_end(ulid)
+  #   cli_end()
+  # }
+  # fun()
+
+  cli::cli_bullets(
+    c("i" = "Estimated due date: {.strong {format(due_date, '%A, %B %d, %Y')}}",
+      "i" = "Estimated birth period begins: {format(birth_period_start, '%B %d, %Y')} (37 weeks)",
+      "i" = "Estimated birth period ends: {format(birth_period_end, '%B %d, %Y')} (42 weeks)")
   )
 
   invisible(due_date)

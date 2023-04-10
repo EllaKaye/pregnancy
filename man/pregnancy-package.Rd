@@ -8,6 +8,13 @@
 \description{
 What the package does (one paragraph).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://ellakaye.github.io/pregnancy/}
+}
+
+}
 \author{
 \strong{Maintainer}: Ella Kaye \email{ella.kaye@gmail.com} (\href{https://orcid.org/0000-0002-7300-3718}{ORCID})
 

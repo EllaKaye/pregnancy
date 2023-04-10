@@ -25,5 +25,8 @@ Your due date
 Calculate due date
 }
 \examples{
-calculate_due_date(as.Date("2023-01-31"))
+my_start_date <- as.Date("2023-01-31")
+calculate_due_date(my_start_date)
+x <- calculate_due_date(my_start_date, "conception")
+x
 }
