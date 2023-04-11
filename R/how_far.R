@@ -28,7 +28,7 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   num_weeks_left <- floor(weeks_due)
 
   # TODO: {cli} to format output instead of cat()
-  # TODO: correct messages!
+  # TODO: correct messages (using person and tense)!
   cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
   cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
 

@@ -16,17 +16,19 @@
 #' @examples calculate_due_date(my_start_date)
 #' @examples x <- calculate_due_date(my_start_date, "conception")
 #' @examples x
+#' @examples class(x)
 calculate_due_date <- function(start_date,
                                start_type = c("LMP",
                                               "conception",
+                                              "egg_retreival",
                                               "transfer_day_3",
                                               "transfer_day_5",
                                               "transfer_day_6"),
                                cycle = 28) {
+
   start_type <- rlang::arg_match(start_type)
 
   check_date(start_date)
-
 
   # LMP: start_date is start of last menstrual period
   if (start_type == "LMP") {
@@ -36,7 +38,7 @@ calculate_due_date <- function(start_date,
   }
 
   # conception: start_date in date of conception
-  if (start_type == "conception") {
+  if (start_type %in% c("conception", "egg_retreival")) {
     due_date <- start_date + lubridate::days(266)
   }
 
@@ -58,20 +60,7 @@ calculate_due_date <- function(start_date,
   birth_period_start <- due_date - lubridate::days(21)
   birth_period_end <- due_date + lubridate::days(14)
 
-
-  # fun <- function() {
-  #   cli_ul()
-  #   cli_li("Due date: {format(due_date, '%A, %B %d, %Y')}")
-  #   cli_li("Estimated birth period:")
-  #   ulid <- cli_ul()
-  #   cli_li("begins: {format(birth_period_start, '%A, %B %d, %Y')} (37 weeks)")
-  #   cli_li("ends: {format(birth_period_end, '%A, %B %d, %Y')} (42 weeks)")
-  #   cli_end(ulid)
-  #   cli_end()
-  # }
-  # fun()
-
-  cli::cli_bullets(
+  cli::cli_inform(
     c("i" = "Estimated due date: {.strong {format(due_date, '%A, %B %d, %Y')}}",
       "i" = "Estimated birth period begins: {format(birth_period_start, '%B %d, %Y')} (37 weeks)",
       "i" = "Estimated birth period ends: {format(birth_period_end, '%B %d, %Y')} (42 weeks)")
@@ -96,21 +85,16 @@ get_due_date <- function() {
 
 set_due_date <- function(due_date) {
   # check date
-  if (!is.null(due_date))
-    check_date(due_date)
+  if (!is.null(due_date)) check_date(due_date)
 
   options("pregnancy.due_date" = due_date)
 
-  # TODO: different message if NULL
+  # TODO: different message if due_date = NULL
 
   cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
-  cli::cli_alert_info(
-    "Functions in the pregnancy package will now use this due
+  cli::cli_inform(c(
+    "i" = "Functions in the pregnancy package will now use this due
                         date without you needing to supply a value to the `due_date` argument.",
-    wrap = TRUE
-  )
-  cli::cli_alert_info("The setting only holds for this R session")
-  cli::cli_alert_info("To set the due date across sessions, ...")
-  # message indicating success
-
+    "i" = "The setting only holds for this R session",
+    "i" = "To set the due date across sessions, SAY SOMETHING ABOUT EDITING RPROFILE..."))
 }
