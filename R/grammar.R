@@ -23,9 +23,9 @@ person_pronoun <- function(person) {
 # used to pass into `to_be()`
 tense <- function(date1, date2) {
 
-  # date1 is typically `on_date` (default to Sys.Date)
-  # date2 is typically `due_date`
-  # Therefore positive diff means due date is in the future
+  # date1 is typically `Sys.Date`
+  # date2 is typically `on_date`
+  # A positive diff means date2 is in the future
 
   check_date(date1)
   check_date(date2)

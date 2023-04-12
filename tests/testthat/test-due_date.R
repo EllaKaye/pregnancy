@@ -31,7 +31,6 @@ test_that("correct due date for each start type", {
   start_date <- as.Date("2023-01-31")
   expect_equal(calculate_due_date(start_date), as.Date("2023-11-07"))
   expect_equal(calculate_due_date(start_date, "conception"), as.Date("2023-10-24"))
-  expect_equal(calculate_due_date(start_date, "egg_retreival"), as.Date("2023-10-24"))
   expect_equal(calculate_due_date(start_date, "transfer_day_3"), as.Date("2023-10-21"))
   expect_equal(calculate_due_date(start_date, "transfer_day_5"), as.Date("2023-10-19"))
   expect_equal(calculate_due_date(start_date, "transfer_day_6"), as.Date("2023-10-18"))

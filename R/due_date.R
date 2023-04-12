@@ -14,13 +14,12 @@
 #'
 #' @examples my_start_date <- as.Date("2023-01-31")
 #' @examples calculate_due_date(my_start_date)
-#' @examples x <- calculate_due_date(my_start_date, "conception")
-#' @examples x
-#' @examples class(x)
+#' @examples due_date <- calculate_due_date(my_start_date, "conception")
+#' @examples due_date
+#' @examples class(due_date)
 calculate_due_date <- function(start_date,
                                start_type = c("LMP",
                                               "conception",
-                                              "egg_retreival",
                                               "transfer_day_3",
                                               "transfer_day_5",
                                               "transfer_day_6"),
@@ -38,7 +37,7 @@ calculate_due_date <- function(start_date,
   }
 
   # conception: start_date in date of conception
-  if (start_type %in% c("conception", "egg_retreival")) {
+  if (start_type == "conception") {
     due_date <- start_date + lubridate::days(266)
   }
 

@@ -9,8 +9,17 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
   check_date(due_date)
 
-  # TODO: deal with person arg
+  # grammar for output message
+  # TODO: consider putting this in separate function, if I use elsewhere
+  #   e.g. person_verb(date1, date2, person)
+  #   which returns, e.g. $upper = "You are", $lower = "you are"
+  person <- person %||% getOption("pregnancy.person") %||% "You"
+  person <- person_pronoun(person)
+  verb_tense <- tense(Sys.Date(), on_date)
+  verb <- to_be(person, verb_tense)
+  person_lower <- ifelse(person == "You", "you", person)
 
+  # date calculations
   start <- due_date - lubridate::days(280)
   span_start <- lubridate::interval(start, on_date)
   span_due <- lubridate::interval(on_date, due_date)
@@ -22,15 +31,22 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   days_along <- lubridate::time_length(span_start, unit = "days")
   percent_along <- round((days_along/280)*100)
 
-  num_days_preg <- (weeks_start %% 1) * 7
+  num_days_preg <- round((weeks_start %% 1) * 7)
   num_weeks_preg <- floor(weeks_start)
   num_days_left <- (weeks_due %% 1) * 7
   num_weeks_left <- floor(weeks_due)
 
-  # TODO: {cli} to format output instead of cat()
-  # TODO: correct messages (using person and tense)!
-  cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
-  cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
+  # TODO: combine formatted on_date/today with person (lower)
+  if (on_date == Sys.Date()) message_start <- "Today, "
+  else message_start <- glue::glue("On {format(on_date, '%B %d, %Y')}, ")
+
+  # TODO: Add more info to message
+  cli::cli_inform(c(
+    "i" = "{message_start} {person_lower} {verb} {num_weeks_preg} week{?s} and {num_days_preg} day{?s} pregnant."
+    #"i" = "On {format(on_date, '%B %d, %Y')},"
+  ))
+  #cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
+  #cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
 
   invisible(weeks_start)
 }
