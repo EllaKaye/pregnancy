@@ -36,15 +36,18 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   num_days_left <- (weeks_due %% 1) * 7
   num_weeks_left <- floor(weeks_due)
 
-  # TODO: combine formatted on_date/today with person (lower)
-  if (on_date == Sys.Date()) message_start <- "Today, "
-  else message_start <- glue::glue("On {format(on_date, '%B %d, %Y')}, ")
+  if (on_date == Sys.Date()) {
+    cli::cli_inform(c(
+      "i" = "Today, {person_lower} {verb} {num_weeks_preg} week{?s} and {num_days_preg} day{?s} pregnant."
+    ))
+  }
+  else {
+    cli::cli_inform(c(
+      "i" = "On {format(on_date, '%B %d, %Y')}, {person_lower} {verb} {num_weeks_preg} week{?s} and {num_days_preg} day{?s} pregnant."
+    ))
+  }
 
   # TODO: Add more info to message
-  cli::cli_inform(c(
-    "i" = "{message_start} {person_lower} {verb} {num_weeks_preg} week{?s} and {num_days_preg} day{?s} pregnant."
-    #"i" = "On {format(on_date, '%B %d, %Y')},"
-  ))
   #cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
   #cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
 
