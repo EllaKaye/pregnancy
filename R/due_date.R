@@ -25,36 +25,8 @@ calculate_due_date <- function(start_date,
                                               "transfer_day_6"),
                                cycle = 28) {
 
-  start_type <- rlang::arg_match(start_type)
-
-  check_date(start_date)
-
-  # LMP: start_date is start of last menstrual period
-  if (start_type == "LMP") {
-    check_cycle(cycle)
-    due_date <-
-      start_date + lubridate::days(cycle) - lubridate::days(28) + lubridate::days(280)
-  }
-
-  # conception: start_date in date of conception
-  if (start_type == "conception") {
-    due_date <- start_date + lubridate::days(266)
-  }
-
-  # transfer_day_3: start_date is date of transfer
-  if (start_type == "transfer_day_3") {
-    due_date <- start_date + lubridate::days(266) - lubridate::days(3)
-  }
-
-  # transfer_day_5: start_date is date of transfer
-  if (start_type == "transfer_day_5") {
-    due_date <- start_date + lubridate::days(266) - lubridate::days(5)
-  }
-
-  # transfer_day_6: start_date is date of transfer
-  if (start_type == "transfer_day_6") {
-    due_date <- start_date + lubridate::days(266) - lubridate::days(6)
-  }
+  ovulation_date <- ovulation_date_calculation(start_date, start_type, cycle)
+  due_date <- ovulation_date + lubridate::days(266)
 
   birth_period_start <- due_date - lubridate::days(21)
   birth_period_end <- due_date + lubridate::days(14)
@@ -67,6 +39,51 @@ calculate_due_date <- function(start_date,
 
   invisible(due_date)
 
+}
+
+# unexported function to use in both calculate_date_date and calculate_test_date
+# ovulation maybe not right term to use for all fertility treatment types,
+# but the broad idea is good enough for unexported function.
+ovulation_date_calculation <- function(start_date,
+                                 start_type = c("LMP",
+                                                "conception",
+                                                "transfer_day_3",
+                                                "transfer_day_5",
+                                                "transfer_day_6"),
+                                 cycle = 28) {
+
+  start_type <- rlang::arg_match(start_type)
+
+  check_date(start_date)
+
+  # LMP: start_date is start of last menstrual period
+  if (start_type == "LMP") {
+    check_cycle(cycle)
+    ovulation_date <-
+      start_date + lubridate::days(cycle) - lubridate::days(28) + lubridate::days(14)
+  }
+
+  # conception: start_date in date of conception
+  if (start_type == "conception") {
+    ovulation_date <- start_date
+  }
+
+  # transfer_day_3: start_date is date of transfer
+  if (start_type == "transfer_day_3") {
+    ovulation_date <- start_date - lubridate::days(3)
+  }
+
+  # transfer_day_5: start_date is date of transfer
+  if (start_type == "transfer_day_5") {
+    ovulation_date <- start_date - lubridate::days(5)
+  }
+
+  # transfer_day_6: start_date is date of transfer
+  if (start_type == "transfer_day_6") {
+    ovulation_date <- start_date - lubridate::days(6)
+  }
+
+  ovulation_date
 }
 
 get_due_date <- function() {
