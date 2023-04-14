@@ -83,8 +83,10 @@ get_due_date <- function() {
       c("!" = "You do not have {.code pregnancy.due_date} set as an option.",
         "i" = "You can set it by...")
     )
-  else
+  else {
+    check_date(due_date)
     cli::cli_inform("Your due date is set as {format(due_date, '%B %d, %Y')}.")
+  }
 
 }
 
