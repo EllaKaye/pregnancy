@@ -9,6 +9,8 @@ Authors@R:
            comment = c(ORCID = "0000-0002-7300-3718"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
+URL: https://ellakaye.github.io/pregnancy/, https://github.com/EllaKaye/pregnancy
+BugPerports: https://github.com/EllaKaye/pregnancy/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -20,4 +22,3 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://ellakaye.github.io/pregnancy/
