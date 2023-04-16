@@ -12,11 +12,12 @@ What the package does (one paragraph).
 Useful links:
 \itemize{
   \item \url{https://ellakaye.github.io/pregnancy/}
+  \item \url{https://github.com/EllaKaye/pregnancy}
 }
 
 }
 \author{
-\strong{Maintainer}: Ella Kaye \email{ella.kaye@gmail.com} (\href{https://orcid.org/0000-0002-7300-3718}{ORCID})
+\strong{Maintainer}: Ella Kaye \email{ella.kaye@gmail.com} (\href{https://orcid.org/0000-0002-7300-3718}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}
