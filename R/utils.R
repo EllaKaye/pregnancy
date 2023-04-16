@@ -30,13 +30,16 @@ check_date <- function(date) {
                    class = "pregnancy_error_length")
   }
 
-  # pick up cases where lubridate fails to parse date (returns NA with a warning)
+  # picks up cases where lubridate fails to parse date (returns NA with a warning)
   # (as.Date() will throw an error if it cannot parse date)
   if (!is.null(date)) {
+    # need this as is.na(NULL) throws an error
     if (is.na(date)) {
-      cli::cli_abort(c("{.var {rlang::caller_arg(date)}} was {.class {date}}"),
-                     call = rlang::caller_env(),
-                     class = "pregnancy_error_value")
+      cli::cli_abort(
+        c("{.var {rlang::caller_arg(date)}} was {.class {date}}"),
+        call = rlang::caller_env(),
+        class = "pregnancy_error_value"
+      )
     }
   }
 

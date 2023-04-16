@@ -56,7 +56,6 @@ set_test_date <- function(test_date) {
   options("pregnancy.test_date" = test_date)
 
   # TODO: different message if test_date = NULL
-
   cli::cli_alert_success("Test date set as {format(test_date, '%B %d, %Y')}")
   set_option_message("test_date")
 }
