@@ -49,8 +49,18 @@ test_that("calculate_due_date message", {
 
 
 # testing get_due_date() --------------------------------------------------
+test_that("retreives date option", {
+  withr::local_options(pregnancy.due_date = as.Date("2023-01-31"))
+  expect_equal(get_due_date(), as.Date("2023-01-31"))
+})
 
+test_that("NULL if due_date not set", {
+  withr::local_options(pregnancy.due_date = NULL)
+  expect_equal(get_due_date(), NULL)
+})
+
+# snapshot tests for get_due_date (both when date is set and when NULL)
 
 # testing set_due_date(due_date) ------------------------------------------
-
+# How to do this?
 

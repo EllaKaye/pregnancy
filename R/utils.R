@@ -11,7 +11,7 @@ date_abort <- function(date) {
     c(
       "x" = "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
       "i" = "It was {.type {date}} instead.",
-      "i" = "You can {.emph EITHER} set the {.var {rlang::caller_arg(date)}} argument {.emph OR} (recommended) set {.code options(pregnancy.due_date)} in your .Rprofile.",
+      "i" = "You can {.emph EITHER} set the {.var {rlang::caller_arg(date)}} argument {.emph OR} (recommended) set {.code options(pregnancy.{rlang::caller_arg(date)})} in your .Rprofile.",
       "i" = "{.emph LINK TO OPTIONS MAN PAGE (ONCE WRITTEN!) FOR FURTHER DETAILS.}"
     ),
     call = rlang::caller_env(),
@@ -28,6 +28,16 @@ check_date <- function(date) {
     cli::cli_abort(message,
                    call = rlang::caller_env(),
                    class = "pregnancy_error_length")
+  }
+
+  # pick up cases where lubridate fails to parse date (returns NA with a warning)
+  # (as.Date() will throw an error if it cannot parse date)
+  if (!is.null(date)) {
+    if (is.na(date)) {
+      cli::cli_abort(c("{.var {rlang::caller_arg(date)}} was {.class {date}}"),
+                     call = rlang::caller_env(),
+                     class = "pregnancy_error_value")
+    }
   }
 
   if (!lubridate::is.Date(date)) {
@@ -83,3 +93,23 @@ check_cycle <- function(cycle) {
 
   invisible(cycle)
 }
+
+# TODO: Write line about editing RProfile
+set_option_message <- function(option) {
+  cli::cli_inform(
+    c(
+      "i" = "Functions in the pregnancy package will now use this `{option}` option.",
+      "i" = "You do not now need to supply a value to the `{option}` argument.",
+      "i" = "This option setting only holds for this R session.",
+      "i" = "To set the `{option}` option to persist across R sessions,",
+      " " = "SAY SOMETHING ABOUT EDITING RPROFILE...",
+      "i" = "You can retreive the set {option} with `get_{option}()`,",
+      " " = "or with `getOption('pregnancy.{option}')`."
+    )
+  )
+}
+
+# TODO: write this function
+# set_option_null_message <- function(option) {
+#
+# }

@@ -88,6 +88,8 @@ get_due_date <- function() {
     cli::cli_inform("Your due date is set as {format(due_date, '%B %d, %Y')}.")
   }
 
+  invisible(due_date)
+
 }
 
 set_due_date <- function(due_date) {
@@ -97,15 +99,12 @@ set_due_date <- function(due_date) {
 
   options("pregnancy.due_date" = due_date)
 
-  # TODO: different message if due_date = NULL
+  # stop if not set correctly
+  if (getOption("pregnancy.due_date") != due_date) {
+    cli::cli_abort("prednancy.due_date option was not set to {.var due_date}")
+  }
 
+  # TODO: different message if due_date = NULL
   cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
-  cli::cli_inform(
-    c(
-      "i" = "Functions in the pregnancy package will now use this due
-                        date without you needing to supply a value to the `due_date` argument.",
-      "i" = "The setting only holds for this R session",
-      "i" = "To set the due date across sessions, SAY SOMETHING ABOUT EDITING RPROFILE..."
-    )
-  )
+  set_option_message("due_date")
 }

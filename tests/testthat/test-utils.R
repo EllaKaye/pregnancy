@@ -15,6 +15,10 @@ test_that("date is length 1", {
   expect_error(check_date(c(as.Date("2023-01-01"), as.Date("2023-01-02"))), class = "pregnancy_error_length")
 })
 
+test_that("NA date throws error", {
+  expect_error(check_date(NA), class = "pregnancy_error_value")
+})
+
 test_that("date is a Date", {
   expect_error(check_date(2023-01-01), class = "pregnancy_error_class")
   expect_error(check_date("2023-01-01"), class = "pregnancy_error_class")

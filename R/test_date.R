@@ -12,6 +12,9 @@ calculate_test_date <- function(start_date,
                                                "transfer_day_6"),
                                 cycle = 28,
                                 test_type = c("urine", "blood")) {
+
+  test_type <- rlang::arg_match(test_type)
+
   urine_test_date <-
     ovulation_date_calculation(start_date = start_date,
                                start_type = start_type,
@@ -24,11 +27,8 @@ calculate_test_date <- function(start_date,
       "i" = "Estimated test date (blood): {format(blood_test_date, '%A, %B %d, %Y')}")
   )
 
-  test_type <- rlang::arg_match(test_type)
-  if (test_type == "urine")
-    invisible(urine_test_date)
-  if (test_type == "blood")
-    invisible(blood_test_date)
+  if (test_type == "urine") invisible(urine_test_date)
+  else invisible(blood_test_date)
 }
 
 get_test_date <- function() {
@@ -44,6 +44,8 @@ get_test_date <- function() {
     check_date(test_date)
   }
 
+  invisible(test_date)
+
 }
 
 set_test_date <- function(test_date) {
@@ -55,14 +57,21 @@ set_test_date <- function(test_date) {
 
   # TODO: different message if test_date = NULL
 
-  cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
-  cli::cli_inform(
-    c(
-      "i" = "Functions in the pregnancy package will now use this test
-                        date without you needing to supply a value to the `test_date` argument.",
-      "i" = "The setting only holds for this R session",
-      "i" = "To set the due date across sessions, SAY SOMETHING ABOUT EDITING RPROFILE..."
-    )
-  )
+  cli::cli_alert_success("Test date set as {format(test_date, '%B %d, %Y')}")
+  set_option_message("test_date")
 }
 
+days_until_test <- function(test_date = NULL) {
+  test_date <- test_date %||% getOption("pregnancy.test_date") %||% date_abort(test_date)
+
+  check_date(test_date)
+
+  date_diff <- as.numeric(test_date - Sys.Date())
+
+  # TODO: different messages
+  # date_diff > 0 -> test in future
+  # date_diff == 0, -> test today
+  # date_diff < 0 -> already past test date
+
+
+}
