@@ -63,6 +63,7 @@ test_that("date diff gives expected tense", {
 
 # testing to_be(person, tense) --------------------------------------------
 
+# TODO: snapshot test
 #test_that("un-matched tense throws error", {
 #  expect_error(to_be("futuree"), regexp = "tense")
 #})

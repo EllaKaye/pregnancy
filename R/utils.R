@@ -7,6 +7,7 @@
 # this throws an error regardless on the value of date
 # the date argument is only to allow an informative error message when date_abort called within another function
 date_abort <- function(date) {
+  # TODO: link to documentation
   cli::cli_abort(
     c(
       "x" = "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
