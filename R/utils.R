@@ -10,7 +10,7 @@ date_abort <- function(date) {
   # TODO: link to documentation
   cli::cli_abort(
     c(
-      "x" = "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
+      "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
       "i" = "It was {.type {date}} instead.",
       "i" = "You can {.emph EITHER} set the {.var {rlang::caller_arg(date)}} argument {.emph OR} (recommended) set {.code options(pregnancy.{rlang::caller_arg(date)})} in your .Rprofile.",
       "i" = "{.emph LINK TO OPTIONS MAN PAGE (ONCE WRITTEN!) FOR FURTHER DETAILS.}"
