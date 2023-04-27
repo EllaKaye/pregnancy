@@ -6,12 +6,13 @@
 # set_meds()
 
 # need to copy over then modify code from EMKpregnancy package
-# TODO: think about function args (and names) and order.
-# TODO: needs on_date
 meds_remaining <-
+
   function(on_date = Sys.Date(),
            meds = NULL,
            group = c("medication", "format")) {
+
+    rlang::check_installed("dplyr", reason = "to use `meds_remaining()`")
 
     check_date(on_date)
 
@@ -20,42 +21,50 @@ meds_remaining <-
 
     group = rlang::arg_match(group)
 
-    # TODO: cli_abort in all these assertions, and rlang::is_*
+    # Check meds is a data frame, with the necessary columns, of the right type
     if (!is.data.frame(meds)) {
-      cli::cli_abort(c("{.var meds} must be a data frame",
+      cli::cli_abort(c("{.var meds} must be a data frame.",
                        "i" = "It was {.type {meds}} instead."))
     }
 
-
-
     colnames_meds <- colnames(meds)
+    needs_cols <- c("medication", "format", "quantity", "start_date", "stop_date")
+    diff <- setdiff(needs_cols, colnames_meds)
 
-    if (!("medication" %in% colnames_meds)) {
-      stop("meds must have a column 'medication'")
+    if(length(diff) > 0) {
+      message <- c("{.var meds} is missing column{?s} {.code {diff}}.")
+      cli::cli_abort(message)
     }
 
-    if (!("format" %in% colnames_meds)) {
-      stop("meds must have a column 'format'")
+    if (!lubridate::is.Date(meds[["start_date"]]) || !lubridate::is.Date(meds[["stop_date"]])) {
+      cli::cli_abort(c(
+        "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
+        "i" = "{.var start_date} was class {.cls {class(meds[['start_date']])}}.",
+        "i" = "{.var stop_date} was class {.cls {class(meds[['stop_date']])}}."))
     }
 
-    if (!("quantity" %in% colnames_meds)) {
-      stop("meds must have a column 'quantity'")
+    if (!rlang::is_character(meds$medication) && !is.factor(meds$medication)) {
+      cli_abort(c(
+        "In {.var meds}, column {.code medication} must have class {.cls character} or {.cls factor}.",
+        "i" = "It was class {.cls {class(meds$medication)}}."
+      ))
     }
 
-    if (!("start_date" %in% colnames_meds)) {
-      stop("meds must have a column 'extra'")
+    if (!rlang::is_character(meds$format) && !is.factor(meds$format)) {
+      cli_abort(c(
+        "In {.var meds}, column {.code format} must have class {.cls character} or {.cls factor}.",
+        "i" = "It was class {.cls {class(meds$format)}} instead."
+      ))
     }
 
-    if (!("stop_date" %in% colnames_meds)) {
-      stop("meds must have a column 'stop_date'")
+    if (!is.numeric(meds$quantity)) {
+      cli_abort(c(
+        "In {.var meds}, column {.code quantity} must have class {.cls numeric}.",
+        "i" = "It was class {.cls {class(meds$quantity)}} instead."
+      ))
     }
 
-
-
-    # TODO: Check all col types do not rely on assertthat
-    # assertthat::assert_that(assertthat::noNA(meds$extra))
-
-    # assert that stop_date are dates
+    meds
   }
 
 # function for figuring out the function
@@ -72,3 +81,28 @@ meds_print <- function() {
     cli::cli_bullets(c("*" = "You have {medications[i]} remaining"))
   }
 }
+
+# TODO: get/set_meds functions
+
+# TODO: delete this code
+# figuring stuff out
+# meds <- medications
+# needs_cols <- colnames(meds)
+# missing_colnames <- colnames(meds)[1:3]
+# missing_colname <- colnames(meds)[1:4]
+# missing_more_colnames <- colnames(meds)[1:2]
+# too_many_colnames <- c(colnames(meds), LETTERS[1:2])
+# mixed_colnames <- c(missing_colnames, LETTERS[1:2])
+#
+# diff1 <- base::setdiff(needs_cols, missing_colname)
+# diff2 <- base::setdiff(needs_cols, missing_colnames)
+# diff3 <- base::setdiff(needs_cols, missing_more_colnames)
+# no_diff <- base::setdiff(needs_cols, too_many_colnames)
+# base::setdiff(needs_cols, mixed_colnames)
+#
+#
+
+
+#meds_not_date <- mutate(pregnancy::medications, start_date = as.character(start_date))
+# transform is base, so better in tests
+# meds_not_date <- transform(medications, start_date = as.character(start_date))

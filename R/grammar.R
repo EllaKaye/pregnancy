@@ -68,3 +68,7 @@ to_be <- function(person, tense = c("present", "past", "future")) {
   to_be_mat[person, tense]
 
 }
+
+# TODO: get/set_meds person
+# set_person
+# get_person
