@@ -30,62 +30,63 @@ meds_remaining <-
 
     group = rlang::arg_match(group)
 
-    meds_aug <- meds_augment(on_date, meds)
+    meds_aug <- meds %>%
+      dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
+      dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
+      dplyr::mutate(days_remaining = dplyr::case_when(
+        on_date <= stop_date & on_date >= start_date ~ (as.integer(stop_date - on_date) + 1),
+        start_date > on_date ~ (as.integer(stop_date - start_date) + 1),
+        TRUE ~ 0
+      )) %>%
+      dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity))
 
     if (group == "medication") {
       meds_summary <- meds_aug %>%
         dplyr::group_by(medication) %>%
-        dplyr::summarise(medication_remaining = sum(quantity_remaining)) %>%
-        dplyr::filter(medication_remaining > 0)
+        dplyr::summarise(quantity_remaining = sum(quantity_remaining)) %>%
+        dplyr::filter(quantity_remaining > 0)
     }
 
     if (group == "format") {
       meds_summary <- meds_aug %>%
         dplyr::group_by(format) %>%
-        dplyr::summarise(format_remaining = sum(quantity_remaining)) %>%
-        dplyr::filter(format_remaining > 0)
+        dplyr::summarise(quantity_remaining = sum(quantity_remaining)) %>%
+        dplyr::filter(quantity_remaining > 0)
     }
 
-    # TODO: call to meds_print()
+    if (nrow(meds_summary) == 0) {
+      cli::cli_alert_success("There are no medications remaining.")
+      return(invisible(meds_summary))
+    }
 
-    # TODO: make invisible
     meds_summary
   }
 
 
-meds_augment <- function(on_date, meds) {
-
-  meds %>%
-    dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
-    dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
-    dplyr::mutate(days_remaining = dplyr::case_when(
-      #on_date > stop_date ~ as.difftime(0, units = days), # THINK ABOUT WHETHER THIS NEEDS TO BE >=
-      on_date <= stop_date & on_date >= start_date ~ (as.integer(stop_date - on_date) + 1), # THINK ABOUT WHERE THE EQUALITIES GO
-      start_date > on_date ~ (as.integer(stop_date - start_date) + 1),
-      TRUE ~ 0
-    )) %>%
-    dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity))
-
-}
-
-# function for figuring out the function
-# use as helper or delete from package?
-meds_print <- function(meds_summary, on_date) {
+# tibble output actually looks better than cli here
+meds_print <- function(meds_summary, on_date = Sys.Date()) {
 
   # TODO: use person and have (via a new to_have function)
   if (nrow(meds_summary) == 0) {
-    cli::cli_alert_success("There are no medications remaining.")}
+    cli::cli_alert_success("There are no medications remaining.")
+    return(invisible(meds_summary))
+  }
 
   # check col names
   thing <- meds_summary[[1]]
   quantity <- meds_summary[[2]]
 
   # TODO: pick up here...
-  for (i in 1:nrow(meds_summary)) {
-    cli::cli_bullets(c("*" = "You have {medications[i]} remaining"))
+
+  if (on_date == Sys.Date()) {
+    cli::cli_alert_info("As of first thing today, the following medications remain to be taken:")
   }
 
-  # "As of first thing today/on_date, the following {group?s} remain to be taken:
+  else cli::cli_alert_info("As of first thing on {format(on_date, '%B %d, %Y')}, the following medications remain to be taken:")
+
+  for (i in 1:length(thing)) {
+    cli::cli_bullets(c("*" = "{quantity[i]} {thing[i]}"))
+  }
 
   invisible(meds_summary)
 }
