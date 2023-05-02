@@ -22,10 +22,6 @@ meds_remaining <-
            meds = NULL,
            group = c("medication", "format")) {
 
-    rlang::check_installed("dplyr", reason = "to use `meds_remaining()`")
-
-    `%>%` <-  dplyr::`%>%`
-
     check_date(on_date)
 
     # TODO: better abort message (see date_abort)
@@ -58,10 +54,6 @@ meds_remaining <-
 
 
 meds_augment <- function(on_date, meds) {
-
-  rlang::check_installed("dplyr", reason = "to use `meds_augment()`")
-
-  `%>%` <-  dplyr::`%>%`
 
   meds %>%
     dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%

@@ -8,6 +8,7 @@ total_days <- days_remaining <- NULL
 quantity_remaining <- medication_remaining <- format_remaining <- NULL
 
 ## usethis namespace: start
+#' @importFrom dplyr %>%
 #' @importFrom rlang %||%
 ## usethis namespace: end
 NULL
