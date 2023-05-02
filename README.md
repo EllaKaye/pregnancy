@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/EllaKaye/pregnancy/branch/main/graph/badge.svg)](https://app.codecov.io/gh/EllaKaye/pregnancy?branch=main)
 <!-- badges: end -->
 
 This is a work-in-progress R package for tracking dates and medications
