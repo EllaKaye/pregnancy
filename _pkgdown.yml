@@ -1,4 +1,21 @@
 url: https://ellakaye.github.io/pregnancy/
+
+authors:
+  Ella Kaye:
+    href: https://ellakaye.co.uk
+
 template:
   bootstrap: 5
-
+  theme: arrow-light
+  bslib:
+    bg: "#F8F9FA"
+    fg: "#212429"
+    primary: "#2559D5"
+    base_font: "LEMONMILKPro-Light, sans-serif"
+#  opengraph:
+#    image:
+#      src:
+#  bslib:
+#    base_font: { google: "" }
+#    heading_font: { google: ""}
+#    code_font: { google: ""}
