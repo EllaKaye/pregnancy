@@ -6,12 +6,20 @@ authors:
 
 template:
   bootstrap: 5
+  #bootswatch: flatly
   theme: arrow-light
   bslib:
-    bg: "#F8F9FA"
-    fg: "#212429"
+    #bg: "#F8F9FA"
+    #fg: "#212429"
     primary: "#2559D5"
-    base_font: "LEMONMILKPro-Light, sans-serif"
+    base_font: "LEMONMILKPro-Light, Figtree, Helvetica, sans-serif"
+    heading_font: "ABCMaxiRoundEdu-Regular, Outfit, sans-serif"
+    #code_font: "MonoLisa-Regular, monospace"
+    #base_font: {google: "Figtree"}
+    #heading_font: {google: "Outfit"}
+    #code_font: {google: "Fira Mono"}
+
+
 #  opengraph:
 #    image:
 #      src:
