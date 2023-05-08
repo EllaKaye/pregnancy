@@ -1,4 +1,4 @@
-This site uses Lemon Milk Pro for the body Maxi Round for headers and MonoLisa for code.
+This site uses Lemon Milk Pro for the body, Maxi Round for headers and MonoLisa for code.
 
 They are paid-for fonts and I have bought licenses for them.
 
