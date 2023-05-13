@@ -69,6 +69,31 @@ to_be <- function(person, tense = c("present", "past", "future")) {
 
 }
 
-# TODO: get/set_meds person
 # set_person
+set_person <- function(person) {
+  # checks person and turns any first/second person option to I/You
+  if (!is.null(person)) {
+    person <- person_pronoun(person)
+  }
+
+  options("pregnancy.person" = person)
+
+  # TODO: different message if person = NULL
+  cli::cli_alert_success("person set as '{person}'")
+  set_option_message("person")
+}
+
 # get_person
+get_person <- function() {
+  person <- getOption("pregnancy.person")
+
+  if (is.null(person)) null_option("person")
+  else {
+    if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
+    check_person(person)
+    cli::cli_inform("The person option is set as '{person}'.")
+  }
+
+  invisible(person)
+
+}

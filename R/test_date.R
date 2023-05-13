@@ -34,11 +34,7 @@ calculate_test_date <- function(start_date,
 get_test_date <- function() {
   test_date <- getOption("pregnancy.test_date")
 
-  if (is.null(test_date))
-    cli::cli_bullets(
-      c("!" = "You do not have {.code pregnancy.test_date} set as an option.",
-        "i" = "You can set it by...")
-    )
+  if (is.null(test_date)) null_option("test_date")
   else {
     cli::cli_inform("Your test date is set as {format(test_date, '%B %d, %Y')}.")
     check_date(test_date)

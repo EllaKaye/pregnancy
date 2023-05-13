@@ -78,11 +78,7 @@ ovulation_date_calculation <- function(start_date,
 get_due_date <- function() {
   due_date <- getOption("pregnancy.due_date")
 
-  if (is.null(due_date))
-    cli::cli_bullets(
-      c("!" = "You do not have {.code pregnancy.due_date} set as an option.",
-        "i" = "You can set it by...")
-    )
+  if (is.null(due_date)) null_option("due_date")
   else {
     check_date(due_date)
     cli::cli_inform("Your due date is set as {format(due_date, '%B %d, %Y')}.")
@@ -99,12 +95,9 @@ set_due_date <- function(due_date) {
 
   options("pregnancy.due_date" = due_date)
 
-  # stop if not set correctly
-  if (getOption("pregnancy.due_date") != due_date) {
-    cli::cli_abort("prednancy.due_date option was not set to {.var due_date}")
-  }
-
   # TODO: different message if due_date = NULL
   cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
   set_option_message("due_date")
+
+  invisible(due_date)
 }

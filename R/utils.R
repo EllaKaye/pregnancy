@@ -113,7 +113,35 @@ set_option_message <- function(option) {
   )
 }
 
-# TODO: write this function
+# Probably don't need this - use tests instead of in-function checks
+# check_set <- function(option) {
+#   option_string <- deparse(substitute(option))
+#   pregnancy_option <- paste0("pregnancy.", option_string)
+#
+#   if (is.null(option) && !is.null(getOption(pregnancy_option))) {
+#     cli::cli_abort("pregnancy.{option} option was not set to {.var {option_string}}")
+#   pregancy_option
+#   }
+#
+#   if (!is.null(option) && getOption(pregnancy_option) != option) {
+#     cli::cli_abort("pregnancy.{option} option was not set to {.var {option_string}}")
+#   }
+#
+#   invisible(option)
+#
+# }
+
+# TODO: finish message in this function, to use in get_{option} functions
+# TODO: use it in all get_{option} function
+null_option <- function(option) {
+ # message when getOption(pregnancy.{option}) is null
+  cli::cli_bullets(
+    c("!" = "You do not have {.code pregnancy.{option}} set as an option.",
+      "i" = "You can set it by...")
+  )
+}
+
+# TODO: write this function, to use in set_{option} functions
 # set_option_null_message <- function(option) {
 #
 # }

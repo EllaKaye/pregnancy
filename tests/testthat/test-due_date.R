@@ -56,11 +56,28 @@ test_that("retreives date option", {
 
 test_that("NULL if due_date not set", {
   withr::local_options(pregnancy.due_date = NULL)
-  expect_equal(get_due_date(), NULL)
+  expect_null(get_due_date())
 })
 
 # snapshot tests for get_due_date (both when date is set and when NULL)
 
 # testing set_due_date(due_date) ------------------------------------------
-# How to do this?
+test_that("date option gets set", {
+  starting_option <- getOption("pregnancy.due_date")
+  options(pregnancy.due_date = NULL)
+  set_due_date(as.Date("2023-04-30"))
+  expect_equal(getOption("pregnancy.due_date"), as.Date("2023-04-30"))
+  options(pregnancy.due_date = starting_option)
+})
+
+test_that("NULL option gets set", {
+  starting_option <- getOption("pregnancy.due_date")
+  options(pregnancy.due_date = as.Date("2023-04-30"))
+  set_due_date(NULL)
+  expect_null(getOption("pregnancy.due_date"))
+  options(pregnancy.due_date = starting_option)
+})
+
+# snapshot tests for set_due_date (both when date is set and when NULL)
+
 
