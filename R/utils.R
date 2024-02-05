@@ -99,15 +99,19 @@ check_cycle <- function(cycle) {
 }
 
 # TODO: Write line about editing RProfile
-set_option_message <- function(option) {
+# TODO: Make sure line of code for RProfile stands out - make it black,
+# though this could be an issue depending on light/dark theme, so some cli function (e.g. cli_bullets) that is darker than inform
+# TODO: Make sure functions that call this pass in `value` argument (and that it's parsed properly)
+# TODO: Add a line about making sure the code to generate the value of `{option}` is also included in the .Rprofile
+set_option_message <- function(option, value = NULL) {
   cli::cli_inform(
     c(
-      "i" = "Functions in the pregnancy package will now use this `{option}` option.",
-      "i" = "You do not now need to supply a value to the `{option}` argument.",
-      "i" = "This option setting only holds for this R session.",
-      "i" = "To set the `{option}` option to persist across R sessions,",
-      " " = "SAY SOMETHING ABOUT EDITING RPROFILE...",
-      "i" = "You can retreive the set {option} with `get_{option}()`,",
+      "i" = "For this R session only, functions in the pregnancy package will now use this `{option}` option.",
+      "i" = "So for now, you do not now need to supply a value to the `{option}` argument.",
+      "i" = "To make this `{option}` option available in all R sessions, include this code in your {.val .Rprofile}:",
+      " " = "options(pregnancy.{option} = {value})",
+      "i" = "You can edit your {.val .Rprofile} by calling {.fn usethis::edit_r_profile}",
+      "i" = "You can retreive the `{option}` option with {.fn get_{option}},",
       " " = "or with `getOption('pregnancy.{option}')`."
     )
   )
