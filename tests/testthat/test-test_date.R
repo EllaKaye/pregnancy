@@ -7,7 +7,7 @@
 # testing calculate_test_date() --------------------------------------------
 
 test_that("start_date is correct format", {
-  expect_error(calculate_test_date(2023-01-01), class = "pregnancy_error_class")
+  expect_error(calculate_test_date(2023 - 01 - 01), class = "pregnancy_error_class")
   expect_error(calculate_test_date("2023-01-01"), class = "pregnancy_error_class")
 })
 
@@ -68,4 +68,3 @@ test_that("NULL if test_date not set", {
 
 # testing set_test_date(test_date) ------------------------------------------
 # How to do this?
-

@@ -64,9 +64,9 @@ test_that("date diff gives expected tense", {
 # testing to_be(person, tense) --------------------------------------------
 
 # TODO: snapshot test
-#test_that("un-matched tense throws error", {
+# test_that("un-matched tense throws error", {
 #  expect_error(to_be("futuree"), regexp = "tense")
-#})
+# })
 # may need snapshot test here
 
 # N.B. `person` should have been through `person_pronoun(person)` first (hence also `check_person()`)

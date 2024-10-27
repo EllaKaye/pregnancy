@@ -20,7 +20,7 @@ test_that("NA date throws error", {
 })
 
 test_that("date is a Date", {
-  expect_error(check_date(2023-01-01), class = "pregnancy_error_class")
+  expect_error(check_date(2023 - 01 - 01), class = "pregnancy_error_class")
   expect_error(check_date("2023-01-01"), class = "pregnancy_error_class")
 })
 
@@ -47,5 +47,3 @@ test_that("cycle is in the allowed range", {
   expect_error(check_cycle(45), class = "pregnancy_error_value")
   expect_error(check_cycle(27.5), class = "pregnancy_error_value")
 })
-
-

@@ -5,24 +5,23 @@
 
 # used to pass into `to_be()`
 person_pronoun <- function(person) {
-
   # having this condition separately makes it easier to write check_person()
   # as then check_person() can require a character vector
   if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
 
   check_person(person)
 
-  if (person %in% c("1st", "first", "First", "FIRST", "I", "i", "1")) {person <- "I"}
-
-  else if (person %in% c("2nd", "second", "Second", "SECOND", "You", "you", "YOU", "2")) {person <- "You"}
+  if (person %in% c("1st", "first", "First", "FIRST", "I", "i", "1")) {
+    person <- "I"
+  } else if (person %in% c("2nd", "second", "Second", "SECOND", "You", "you", "YOU", "2")) {
+    person <- "You"
+  }
 
   person
-
 }
 
 # used to pass into `to_be()`
 tense <- function(date1, date2) {
-
   # date1 is typically `Sys.Date`
   # date2 is typically `on_date`
   # A positive diff means date2 is in the future
@@ -32,9 +31,13 @@ tense <- function(date1, date2) {
 
   diff <- date2 - date1
 
-  if (diff > 0) out <- "future"
-  else if (diff < 0) out <- "past"
-  else out <- "present"
+  if (diff > 0) {
+    out <- "future"
+  } else if (diff < 0) {
+    out <- "past"
+  } else {
+    out <- "present"
+  }
 
   out
 }
@@ -44,7 +47,6 @@ tense <- function(date1, date2) {
 # and similarly for "I")
 # `tense` should be the result of tense(date1, date2)
 to_be <- function(person, tense = c("present", "past", "future")) {
-
   # person should have been through person_pronoun, and hence check_person first
   # but just being extra careful here
   # this only ensures that person is a character vector of length 1
@@ -66,7 +68,6 @@ to_be <- function(person, tense = c("present", "past", "future")) {
 
   # above conditions ensure that person and tense will always match a row and a column name
   to_be_mat[person, tense]
-
 }
 
 # set_person
@@ -87,13 +88,13 @@ set_person <- function(person) {
 get_person <- function() {
   person <- getOption("pregnancy.person")
 
-  if (is.null(person)) null_option("person")
-  else {
+  if (is.null(person)) {
+    null_option("person")
+  } else {
     if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
     check_person(person)
     cli::cli_inform("The person option is set as '{person}'.")
   }
 
   invisible(person)
-
 }

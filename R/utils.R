@@ -23,12 +23,14 @@ date_abort <- function(date) {
 check_date <- function(date) {
   message <-
     c("{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
-      "i" = "It was {.type {date}} of length {length(date)} instead.")
+      "i" = "It was {.type {date}} of length {length(date)} instead."
+    )
 
   if (length(date) != 1) {
     cli::cli_abort(message,
-                   call = rlang::caller_env(),
-                   class = "pregnancy_error_length")
+      call = rlang::caller_env(),
+      class = "pregnancy_error_length"
+    )
   }
 
   # picks up cases where lubridate fails to parse date (returns NA with a warning)
@@ -47,12 +49,13 @@ check_date <- function(date) {
   if (!lubridate::is.Date(date)) {
     if (is.character(date)) {
       message <-
-        c(message,  "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
+        c(message, "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
     }
 
     cli::cli_abort(message,
-                   call = rlang::caller_env(),
-                   class = "pregnancy_error_class")
+      call = rlang::caller_env(),
+      class = "pregnancy_error_class"
+    )
   }
 
   invisible(date)
@@ -67,12 +70,12 @@ check_person <- function(person) {
     )
 
     cli::cli_abort(message,
-                   call = rlang::caller_env(),
-                   class = "pregnancy_error_class_or_length")
+      call = rlang::caller_env(),
+      class = "pregnancy_error_class_or_length"
+    )
   }
 
   invisible(person)
-
 }
 
 check_cycle <- function(cycle) {
@@ -83,8 +86,9 @@ check_cycle <- function(cycle) {
     )
 
     cli::cli_abort(message,
-                   call = rlang::caller_env(),
-                   class = "pregnancy_error_class_or_length")
+      call = rlang::caller_env(),
+      class = "pregnancy_error_class_or_length"
+    )
   }
 
   if (!(cycle %in% 20:44)) {
@@ -138,10 +142,12 @@ set_option_message <- function(option, value = NULL) {
 # TODO: finish message in this function, to use in get_{option} functions
 # TODO: use it in all get_{option} function
 null_option <- function(option) {
- # message when getOption(pregnancy.{option}) is null
+  # message when getOption(pregnancy.{option}) is null
   cli::cli_bullets(
-    c("!" = "You do not have {.code pregnancy.{option}} set as an option.",
-      "i" = "You can set it by...")
+    c(
+      "!" = "You do not have {.code pregnancy.{option}} set as an option.",
+      "i" = "You can set it by..."
+    )
   )
 }
 

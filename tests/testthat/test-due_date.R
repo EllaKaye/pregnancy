@@ -7,7 +7,7 @@
 # testing calculate_due_date() --------------------------------------------
 
 test_that("start_date is correct format", {
-  expect_error(calculate_due_date(2023-01-01), class = "pregnancy_error_class")
+  expect_error(calculate_due_date(2023 - 01 - 01), class = "pregnancy_error_class")
   expect_error(calculate_due_date("2023-01-01"), class = "pregnancy_error_class")
 })
 
@@ -79,5 +79,3 @@ test_that("NULL option gets set", {
 })
 
 # snapshot tests for set_due_date (both when date is set and when NULL)
-
-
