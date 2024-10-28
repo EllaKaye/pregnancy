@@ -19,29 +19,34 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   person_lower <- ifelse(person == "You", "you", person)
 
   # date calculations
-  start <- due_date - lubridate::days(280)
-  span_start <- lubridate::interval(start, on_date)
-  span_due <- lubridate::interval(on_date, due_date)
-  t_start <- lubridate::as.period(span_start, unit = "day")
-  t_due <- lubridate::as.period(span_due, unit = "day")
-  weeks_start <- lubridate::time_length(t_start, unit = "weeks")
-  weeks_due <- lubridate::time_length(t_due, "weeks")
+  start_date <- due_date - 280
 
-  days_along <- lubridate::time_length(span_start, unit = "days")
+  #span_start <- lubridate::interval(start, on_date)
+  #span_due <- lubridate::interval(on_date, due_date)
+  #t_start <- lubridate::as.period(span_start, unit = "day")
+  #t_due <- lubridate::as.period(span_due, unit = "day")
+  #weeks_start <- lubridate::time_length(t_start, unit = "weeks")
+  #weeks_due <- lubridate::time_length(t_due, "weeks")
+
+  #days_along <- lubridate::time_length(span_start, unit = "days")
+  days_along <- as.numeric(difftime(on_date, start_date, units = "days"))
+  weeks_pregnant <- floor(days_along / 7)
+  days_pregnant <- round(days_along %% 7)
+  
   percent_along <- round((days_along / 280) * 100)
 
-  num_days_preg <- round((weeks_start %% 1) * 7)
-  num_weeks_preg <- floor(weeks_start)
-  num_days_left <- (weeks_due %% 1) * 7
-  num_weeks_left <- floor(weeks_due)
+  #num_days_preg <- round((weeks_start %% 1) * 7)
+  #num_weeks_preg <- floor(weeks_start)
+  #num_days_left <- (weeks_due %% 1) * 7
+  #num_weeks_left <- floor(weeks_due)
 
   if (on_date == Sys.Date()) {
     cli::cli_inform(c(
-      "i" = "Today, {person_lower} {verb} {num_weeks_preg} week{?s} and {num_days_preg} day{?s} pregnant."
+      "i" = "Today, {person_lower} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
     ))
   } else {
     cli::cli_inform(c(
-      "i" = "On {format(on_date, '%B %d, %Y')}, {person_lower} {verb} {num_weeks_preg} week{?s} and {num_days_preg} day{?s} pregnant."
+      "i" = "On {format(on_date, '%B %d, %Y')}, {person_lower} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
     ))
   }
 
@@ -49,7 +54,7 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   # cat("On", as.character(on_date), "I will be", num_weeks_preg, "weeks and", num_days_preg, "days pregnant.\n")
   # cat("My due date of", as.character(due_date), "is", num_weeks_left, "weeks and", num_days_left, "days away.\n")
 
-  invisible(weeks_start)
+  invisible(days_along)
 }
 
 # TODO: redo args in this function.
