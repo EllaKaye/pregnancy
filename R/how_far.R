@@ -62,7 +62,9 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
 how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) {
   # TODO: get due_date instead
   # TODO: use check_date() instead
-  # assertthat::assert_that(assertthat::is.date(due))
+  # TODO: invisible() instead to arg for return
+  # TODO: assertthat::assert_that(assertthat::is.date(due))
+  # TODO: think about tense
 
   if (!is.null(days)) {
     if (!(days %in% 0:6)) stop("days must be an integer between 0 and 6.")

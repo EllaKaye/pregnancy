@@ -115,7 +115,7 @@ set_option_message <- function(option, value = NULL) {
       "i" = "To make this `{option}` option available in all R sessions, include this code in your {.val .Rprofile}:",
       " " = "options(pregnancy.{option} = {value})",
       "i" = "You can edit your {.val .Rprofile} by calling {.fn usethis::edit_r_profile}",
-      "i" = "You can retreive the `{option}` option with {.fn get_{option}},",
+      "i" = "You can retrieve the `{option}` option with {.fn get_{option}},",
       " " = "or with `getOption('pregnancy.{option}')`."
     )
   )
@@ -128,7 +128,7 @@ set_option_message <- function(option, value = NULL) {
 #
 #   if (is.null(option) && !is.null(getOption(pregnancy_option))) {
 #     cli::cli_abort("pregnancy.{option} option was not set to {.var {option_string}}")
-#   pregancy_option
+#   pregnancy_option
 #   }
 #
 #   if (!is.null(option) && getOption(pregnancy_option) != option) {

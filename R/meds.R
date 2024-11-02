@@ -1,4 +1,4 @@
-# functions related to mediations
+# functions related to medications
 # meds_remaining()
 # meds_augment()
 # meds_print()
