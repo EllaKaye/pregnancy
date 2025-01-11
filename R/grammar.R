@@ -56,16 +56,8 @@ to_be <- function(person, tense = c("present", "past", "future")) {
   # Assumes person has been through person_pronoun() first
   if (!(person %in% c("I", "You"))) person <- "She"
 
-  # TODO: to_be_mat can be internal data - doesn't need to be created on every call to to_be
-  `I` <- c("was", "am", "will be")
-  You <- c("were", "are", "will be")
-  She <- c("was", "is", "will be")
-
-  to_be_mat <- rbind(`I`, You, She)
-
-  colnames(to_be_mat) <- c("past", "present", "future")
-
   # above conditions ensure that person and tense will always match a row and a column name
+  # to_be_mat is in R/sysdata.rda
   to_be_mat[person, tense]
 }
 
