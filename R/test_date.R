@@ -62,7 +62,7 @@ set_test_date <- function(test_date) {
 
   # TODO: different message if test_date = NULL
   cli::cli_alert_success("Test date set as {format(test_date, '%B %d, %Y')}")
-  set_option_message("test_date")
+  set_option_message("test_date", test_date)
 }
 
 days_until_test <- function(test_date = NULL) {

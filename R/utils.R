@@ -107,6 +107,7 @@ check_cycle <- function(cycle) {
 # though this could be an issue depending on light/dark theme, so some cli function (e.g. cli_bullets) that is darker than inform
 # TODO: Make sure functions that call this pass in `value` argument (and that it's parsed properly)
 # TODO: Add a line about making sure the code to generate the value of `{option}` is also included in the .Rprofile
+# TODO: Fix line to add to .RProfile: should be '{value}' if option is "person", and as.Date('{value}') if option is due_date or test_date
 set_option_message <- function(option, value = NULL) {
   cli::cli_inform(
     c(
