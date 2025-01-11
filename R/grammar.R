@@ -1,9 +1,31 @@
 # helper functions relating to grammar in message, e.g. name/pronoun, tense of verb
-# person_pronoun(person)
-# tense(date1, date2)
+# get_subject(person)
+# get_tense(date1, date2)
 # to_be(person, tense)
 
+
+# a reworking of person_pronoun
 # used to pass into `to_be()`
+# returns "You", "I" or person
+get_subject <- function(person) {
+  # having this condition separately makes it easier to write check_person()
+  # as then check_person() can require a character vector
+  if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
+  
+  check_person(person)
+
+  if (tolower(person) %in% c("i", "1", "1st", "first")) {
+    return("I")
+  } else if (tolower(person) %in% c("you", "2", "2nd", "second")) {
+    return("you")
+  } else {
+    return(person)
+  }
+}
+
+# used to pass into `to_be()`
+# returns "You", "I" or person
+# TODO: deprecate in favour of get_subject
 person_pronoun <- function(person) {
   # having this condition separately makes it easier to write check_person()
   # as then check_person() can require a character vector
@@ -21,7 +43,7 @@ person_pronoun <- function(person) {
 }
 
 # used to pass into `to_be()`
-tense <- function(date1, date2) {
+get_tense <- function(date1, date2) {
   # date1 is typically `Sys.Date`
   # date2 is typically `on_date`
   # A positive diff means date2 is in the future
@@ -40,32 +62,28 @@ tense <- function(date1, date2) {
   }
 }
 
-# `person` must have been through `person_pronoun(person)` first
-# (that is where checks on `person` take place, all possible ways of specifying 2nd person are reduced to "You",
+# `subject` should be the result of get_subject(person)
+# (that is where checks on `person` take place, all possible ways of specifying 2nd person are reduced to "you",
 # and similarly for "I")
 # `tense` should be the result of tense(date1, date2)
-to_be <- function(person, tense = c("present", "past", "future")) {
-  # person should have been through person_pronoun, and hence check_person first
-  # but just being extra careful here
-  # this only ensures that person is a character vector of length 1
-  # not that the 'right' pronoun will be picked
-  check_person(person)
+to_be <- function(subject, tense = c("present", "past", "future")) {
 
+  # tense should be result of get_tense(), so this is a belt-and-braces check
   tense <- rlang::arg_match(tense)
 
-  # Assumes person has been through person_pronoun() first
-  if (!(person %in% c("I", "You"))) person <- "She"
+  # Assumes person has been through get_subject() first
+  if (!(subject %in% c("I", "you"))) subject <- "she"
 
   # above conditions ensure that person and tense will always match a row and a column name
   # to_be_mat is in R/sysdata.rda
-  to_be_mat[person, tense]
+  to_be_mat[subject, tense]
 }
 
 # set_person
 set_person <- function(person) {
-  # checks person and turns any first/second person option to I/You
+  # checks person and turns any first/second person option to I/you
   if (!is.null(person)) {
-    person <- person_pronoun(person)
+    person <- get_subject(person)
   }
 
   options("pregnancy.person" = person)

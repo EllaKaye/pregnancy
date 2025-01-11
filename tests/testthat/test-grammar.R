@@ -1,6 +1,6 @@
 # helper functions relating to grammar in message, e.g. name/pronoun, tense of verb
 # person_pronoun(person)
-# tense(date1, date2)
+# get_tense(date1, date2)
 # to_be(person, tense)
 
 
@@ -45,19 +45,19 @@ test_that("second person gives 'You'", {
 # testing tense(date1, date2) ---------------------------------------------
 
 test_that("dates are Dates", {
-  expect_error(tense("2023-01-01", as.Date("2023-01-01")), class = "pregnancy_error_class")
-  expect_error(tense(as.Date("2023-01-01"), "2023-01-01"), class = "pregnancy_error_class")
+  expect_error(get_tense("2023-01-01", as.Date("2023-01-01")), class = "pregnancy_error_class")
+  expect_error(get_tense(as.Date("2023-01-01"), "2023-01-01"), class = "pregnancy_error_class")
 })
 
 test_that("dates are length 1", {
-  expect_error(tense(c(as.Date("2023-01-01"), as.Date("2023-01-01")), as.Date("2023-01-01")), class = "pregnancy_error_length")
-  expect_error(tense(as.Date("2023-01-01"), c(as.Date("2023-01-01"), as.Date("2023-01-01"))), class = "pregnancy_error_length")
+  expect_error(get_tense(c(as.Date("2023-01-01"), as.Date("2023-01-01")), as.Date("2023-01-01")), class = "pregnancy_error_length")
+  expect_error(get_tense(as.Date("2023-01-01"), c(as.Date("2023-01-01"), as.Date("2023-01-01"))), class = "pregnancy_error_length")
 })
 
 test_that("date diff gives expected tense", {
-  expect_equal(tense(as.Date("2023-12-12"), as.Date("2023-01-01")), "past")
-  expect_equal(tense(as.Date("2023-01-01"), as.Date("2023-12-12")), "future")
-  expect_equal(tense(as.Date("2023-01-01"), as.Date("2023-01-01")), "present")
+  expect_equal(get_tense(as.Date("2023-12-12"), as.Date("2023-01-01")), "past")
+  expect_equal(get_tense(as.Date("2023-01-01"), as.Date("2023-12-12")), "future")
+  expect_equal(get_tense(as.Date("2023-01-01"), as.Date("2023-01-01")), "present")
 })
 
 

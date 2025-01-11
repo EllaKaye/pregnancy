@@ -9,14 +9,15 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   check_date(due_date)
 
   # grammar for output message
-  # TODO: consider putting this in separate function, if I use elsewhere
-  #   e.g. person_verb(date1, date2, person)
-  #   which returns, e.g. $upper = "You are", $lower = "you are"
-  person <- person %||% getOption("pregnancy.person") %||% "You"
-  person <- person_pronoun(person)
-  verb_tense <- tense(Sys.Date(), on_date)
-  verb <- to_be(person, verb_tense)
-  person_lower <- ifelse(person == "You", "you", person)
+  person <- person %||% getOption("pregnancy.person") %||% "you"
+  subject <- get_subject(person) # "I", "you" or person
+  tense <- get_tense(Sys.Date(), on_date) # "present", "past", "future"
+  verb <- to_be(subject, tense)
+
+  #verb_tense <- get_tense(Sys.Date(), on_date)
+  #person <- person_pronoun(person)
+  #verb <- to_be(person, verb_tense)
+  #person_lower <- ifelse(person == "You", "you", person)
 
   # date calculations
   start_date <- due_date - 280
@@ -40,13 +41,13 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   # num_days_left <- (weeks_due %% 1) * 7
   # num_weeks_left <- floor(weeks_due)
 
-  if (on_date == Sys.Date()) {
+  if (tense == "present") {
     cli::cli_inform(c(
-      "i" = "Today, {person_lower} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
+      "i" = "Today, {subject} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
     ))
   } else {
     cli::cli_inform(c(
-      "i" = "On {format(on_date, '%B %d, %Y')}, {person_lower} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
+      "i" = "On {format(on_date, '%B %d, %Y')}, {subject} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
     ))
   }
 
@@ -57,8 +58,17 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   invisible(days_along)
 }
 
+# A reworking of how_long_until
+date_when <- function(weeks, days = 0, on_date = Sys.Date(), due_date = NULL, person = NULL) {
+  check_date(on_date)
+
+  due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
+  check_date(due_date)  
+}
+
 # TODO: make this `date_when` and bring in line with my python implementation
 # TODO: redo args in this function.
+# TODO: proper grammar, with person and tense
 # Need on_date, due_date, weeks, days, person - think about order (not quiet or return)
 how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) {
   # TODO: get due_date instead
