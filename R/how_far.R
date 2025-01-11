@@ -21,24 +21,24 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   # date calculations
   start_date <- due_date - 280
 
-  #span_start <- lubridate::interval(start, on_date)
-  #span_due <- lubridate::interval(on_date, due_date)
-  #t_start <- lubridate::as.period(span_start, unit = "day")
-  #t_due <- lubridate::as.period(span_due, unit = "day")
-  #weeks_start <- lubridate::time_length(t_start, unit = "weeks")
-  #weeks_due <- lubridate::time_length(t_due, "weeks")
+  # span_start <- lubridate::interval(start, on_date)
+  # span_due <- lubridate::interval(on_date, due_date)
+  # t_start <- lubridate::as.period(span_start, unit = "day")
+  # t_due <- lubridate::as.period(span_due, unit = "day")
+  # weeks_start <- lubridate::time_length(t_start, unit = "weeks")
+  # weeks_due <- lubridate::time_length(t_due, "weeks")
 
-  #days_along <- lubridate::time_length(span_start, unit = "days")
+  # days_along <- lubridate::time_length(span_start, unit = "days")
   days_along <- as.numeric(difftime(on_date, start_date, units = "days"))
   weeks_pregnant <- floor(days_along / 7)
   days_pregnant <- round(days_along %% 7)
-  
+
   percent_along <- round((days_along / 280) * 100)
 
-  #num_days_preg <- round((weeks_start %% 1) * 7)
-  #num_weeks_preg <- floor(weeks_start)
-  #num_days_left <- (weeks_due %% 1) * 7
-  #num_weeks_left <- floor(weeks_due)
+  # num_days_preg <- round((weeks_start %% 1) * 7)
+  # num_weeks_preg <- floor(weeks_start)
+  # num_days_left <- (weeks_due %% 1) * 7
+  # num_weeks_left <- floor(weeks_due)
 
   if (on_date == Sys.Date()) {
     cli::cli_inform(c(
@@ -57,6 +57,7 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   invisible(days_along)
 }
 
+# TODO: make this `date_when` and bring in line with my python implementation
 # TODO: redo args in this function.
 # Need on_date, due_date, weeks, days, person - think about order (not quiet or return)
 how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) {
