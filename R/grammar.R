@@ -56,6 +56,7 @@ to_be <- function(person, tense = c("present", "past", "future")) {
   # Assumes person has been through person_pronoun() first
   if (!(person %in% c("I", "You"))) person <- "She"
 
+  # TODO: to_be_mat can be internal data - doesn't need to be created on every call to to_be
   `I` <- c("was", "am", "will be")
   You <- c("were", "are", "will be")
   She <- c("was", "is", "will be")
@@ -79,7 +80,7 @@ set_person <- function(person) {
 
   # TODO: different message if person = NULL
   cli::cli_alert_success("person set as '{person}'")
-  set_option_message("person")
+  set_option_message("person", person)
 }
 
 # get_person
