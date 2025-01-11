@@ -32,14 +32,12 @@ tense <- function(date1, date2) {
   diff <- date2 - date1
 
   if (diff > 0) {
-    out <- "future"
+    return("future")
   } else if (diff < 0) {
-    out <- "past"
+    return("past")
   } else {
-    out <- "present"
+    return("present")
   }
-
-  out
 }
 
 # `person` must have been through `person_pronoun(person)` first
