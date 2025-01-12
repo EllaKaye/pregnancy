@@ -1,8 +1,8 @@
 `I` <- c("was", "am", "will be")
-you <- c("were", "are", "will be")
-she <- c("was", "is", "will be")
+You <- c("were", "are", "will be")
+She <- c("was", "is", "will be")
 
-to_be_mat <- rbind(`I`, you, she)
+to_be_mat <- rbind(`I`, You, She)
 
 colnames(to_be_mat) <- c("past", "present", "future")
 

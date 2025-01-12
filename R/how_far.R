@@ -9,8 +9,8 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   check_date(due_date)
 
   # grammar for output message
-  person <- person %||% getOption("pregnancy.person") %||% "you"
-  subject <- get_subject(person) # "I", "you" or person
+  person <- person %||% getOption("pregnancy.person") %||% "You"
+  subject <- get_subject(person) # "I", "You" or person
   tense <- get_tense(Sys.Date(), on_date) # "present", "past", "future"
   verb <- to_be(subject, tense)
 
@@ -43,9 +43,10 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
 
   if (tense == "present") {
     cli::cli_inform(c(
-      "i" = "Today, {subject} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
+      "i" = "{subject} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
     ))
   } else {
+    subject = ifelse(subject == "You", "you", subject)
     cli::cli_inform(c(
       "i" = "On {format(on_date, '%B %d, %Y')}, {subject} {verb} {weeks_pregnant} week{?s} and {days_pregnant} day{?s} pregnant."
     ))

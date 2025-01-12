@@ -17,7 +17,7 @@ get_subject <- function(person) {
   if (tolower(person) %in% c("i", "1", "1st", "first")) {
     return("I")
   } else if (tolower(person) %in% c("you", "2", "2nd", "second")) {
-    return("you")
+    return("You")
   } else {
     return(person)
   }
@@ -72,7 +72,7 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
   tense <- rlang::arg_match(tense)
 
   # Assumes person has been through get_subject() first
-  if (!(subject %in% c("I", "you"))) subject <- "she"
+  if (!(subject %in% c("I", "You"))) subject <- "She"
 
   # above conditions ensure that person and tense will always match a row and a column name
   # to_be_mat is in R/sysdata.rda
