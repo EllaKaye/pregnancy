@@ -122,6 +122,8 @@ date_when <- function(weeks, days = 0, on_date = Sys.Date(), due_date = NULL, pe
     }
   
     duration_str <- cli::format_inline("{prefix} {weeks_str} {and_days_from_now} day{?s} {suffix}.")
+  } else {
+    duration_str = NULL
   }
 
   # print out information
@@ -135,6 +137,9 @@ date_when <- function(weeks, days = 0, on_date = Sys.Date(), due_date = NULL, pe
     ))    
   }
 
+  # TODO: when testing, take into account that cli is taking care of extraneous white space
+  # returned strings aren't necessarily what's printed
+  invisible(list(date_str = date_str, duration_str = duration_str))
 }
 
 # TODO: make this `date_when` and bring in line with my python implementation
@@ -179,3 +184,6 @@ how_long_until <- function(due, weeks, days = 0, quiet = FALSE, return = FALSE) 
     date_when
   }
 }
+
+# TODO: split out date calculations and printing of messages for easier testing
+# as per python version of package
