@@ -93,8 +93,10 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #'   Defaults to current system date.
 #' @param due_date Date object. The expected due date. If NULL, will try to use the
 #'   "pregnancy.due_date" option. Required if option not set.
-#' @param person Character string. The person who is pregnant. If NULL, will try to use
-#'   the "pregnancy.person" option. Defaults to "You" if neither is set.
+#' @param person The person who is pregnant, to determine the grammar for the output message. If NULL, will try to use
+#'   the "pregnancy.person" option. Defaults to "You" if neither the argument or option is set. Use `1` or "I"` to be 
+#'   addressed in the first person, use `2` or `"You"` to be addressed in the second person, or any other string to give 
+#'   a third-person name.
 #'
 #' @return
 #' Invisibly returns the number of days along in the pregnancy. Prints a formatted
@@ -106,7 +108,7 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' adjusting message grammar. If the calculation shows more than 42 weeks of pregnancy,
 #' a different message is displayed noting this unusual duration.
 #'
-#' The function uses the cli package for formatted message output and supports
+#' The function uses the [cli](https://cli.r-lib.org) package for formatted message output and supports
 #' proper pluralization of weeks/days in messages.
 #'
 #' @section Global Options:
@@ -114,23 +116,25 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' * pregnancy.person: Character string setting default person
 #'
 #' @examples
-#' \dontrun{
 #' # Current progress with explicit due date
-#' how_far(due_date = as.Date("2024-06-15"))
+#' # Note that output will depend on date the function is run
+#' how_far(due_date = as.Date("2025-07-01"))
 #'
 #' # Progress on a specific date
-#' how_far(on_date = as.Date("2024-01-01"),
-#'         due_date = as.Date("2024-06-15"))
+#' how_far(on_date = as.Date("2025-06-01"),
+#'         due_date = as.Date("2025-07-01"))
 #'
 #' # With custom person
-#' how_far(due_date = as.Date("2024-06-15"),
+#' how_far(on_date = as.Date("2025-06-01"),
+#'         due_date = as.Date("2024-07-01"),
 #'         person = "Sarah")
 #'
 #' # Set global options
-#' options(pregnancy.due_date = as.Date("2024-06-15"))
+#' \dontrun{
+#' set_due_date(as.Date("2025-07-01"))
 #' how_far()
 #' }
-#'
+#' @seealso [set_due_date()], [set_person()]
 #' @export
 how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   # Calculate pregnancy statistics
