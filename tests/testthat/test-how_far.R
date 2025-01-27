@@ -68,14 +68,15 @@ test_that("how_far_calculation errors appropriately", {
 
 
 # test how_far_message ---------------------------------------------------
-## TODO: Need to mock Sys.Date() to 2025-01-27, otherwise these tesets will fail.
 test_that("how_far_message formats messages correctly for present date", {
+  local_mocked_bindings(Sys.Date = function() as.Date("2027-01-27"))
+  withr::local_options(pregnancy.due_date = as.Date("2025-07-01"))
+  
   calc_results <- how_far_calculation(on_date = as.Date("2025-01-27", due_date = as.Date("2025-07-01")))
   
   # Test with default "You"
   result <- how_far_message(
     calc_results,
-    on_date = Sys.Date()
   )
   
   expect_length(result$messages, 3)
@@ -105,7 +106,8 @@ test_that("how_far_message formats messages correctly for present date", {
 })
 
 test_that("how_far_message formats messages correctly for past/future dates", {
-
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-01-27"))
+  withr::local_options(pregnancy.due_date = as.Date("2025-07-01"))
   # Test past date
   calc_results <- how_far_calculation(on_date = as.Date("2025-01-01", due_date = as.Date("2025-07-01")))
 
