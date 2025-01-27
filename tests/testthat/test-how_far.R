@@ -68,6 +68,7 @@ test_that("how_far_calculation errors appropriately", {
 
 
 # test how_far_message ---------------------------------------------------
+# TODO: something not quite right here because these tests fail on R CMD check without the local option, even though due_date is passed as arg.
 test_that("how_far_message formats messages correctly for present date", {
   local_mocked_bindings(Sys.Date = function() as.Date("2027-01-27"))
   withr::local_options(pregnancy.due_date = as.Date("2025-07-01"))
@@ -105,6 +106,7 @@ test_that("how_far_message formats messages correctly for present date", {
   expect_match(result$messages[3], "Sarah is 45% through the pregnancy")
 })
 
+# TODO: something not quite right here because these tests fail on R CMD check without the local option, even though due_date is passed as arg.
 test_that("how_far_message formats messages correctly for past/future dates", {
   local_mocked_bindings(Sys.Date = function() as.Date("2025-01-27"))
   withr::local_options(pregnancy.due_date = as.Date("2025-07-01"))
