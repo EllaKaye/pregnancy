@@ -2,7 +2,7 @@
 % Please edit documentation in R/how_far.R
 \name{how_far}
 \alias{how_far}
-\title{Calculate Pregnancy Progress and Time Remaining}
+\title{Calculate pregnancy progress and time remaining}
 \usage{
 how_far(on_date = Sys.Date(), due_date = NULL, person = NULL)
 }
@@ -45,6 +45,7 @@ proper pluralization of weeks/days in messages.
 \examples{
 # Current progress with explicit due date
 # Note that output will depend on date the function is run
+# This is run on 2025-01-27
 how_far(due_date = as.Date("2025-07-01"))
 
 # Progress on a specific date
@@ -53,7 +54,7 @@ how_far(on_date = as.Date("2025-06-01"),
 
 # With custom person
 how_far(on_date = as.Date("2025-06-01"),
-        due_date = as.Date("2024-07-01"),
+        due_date = as.Date("2025-07-01"),
         person = "Sarah")
 
 # Set global options
