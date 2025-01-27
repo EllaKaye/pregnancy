@@ -80,6 +80,53 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
 }
 
 # set_person
+#' Get or set the pregnancy.person option for pregnancy-related messages
+#'
+#' @description
+#' Functions to get and set the default person used in messages throughout the package.
+#' This affects the grammar and pronouns used in various function outputs. Settings
+#' persist for the current R session only, unless added to .Rprofile. `set_person()` sets the "pregnancy.person" option and `get_person()` retrieves it.
+#'
+#' @param person A character string or number specifying the person. Can be:
+#'   * "I", "1", "1st", "first", or numeric 1 for first person
+#'   * "you", "2", "2nd", "second", or numeric 2 for second person
+#'   * Any other name for third person
+#'   * NULL to unset the current value
+#'
+#' @return
+#' Both functions invisibly return the current person setting:
+#' * get_person() returns the current setting (a character string) or NULL if not set
+#' * set_person() returns the person value that was set
+#'
+#' @seealso [how_far()] and other functions that use the person setting for message formatting
+#'
+#' @examples
+#' # Store original setting
+#' original_person <- getOption("pregnancy.person")
+#'
+#' # Check current setting
+#' get_person()
+#'
+#' # Set to first person (using string)
+#' set_person("I")
+#' get_person()
+#'
+#' # Set to second person (using number)
+#' set_person(2)
+#' get_person()
+#'
+#' # Set to a specific name
+#' set_person("Sarah")
+#' get_person()
+#'
+#' # Restore original setting
+#' set_person(original_person)
+#'
+#' @name person
+NULL
+
+#' @rdname person
+#' @export
 set_person <- function(person) {
   # checks person and turns any first/second person option to I/you
   if (!is.null(person)) {
@@ -94,6 +141,8 @@ set_person <- function(person) {
 }
 
 # get_person
+#' @rdname person
+#' @export
 get_person <- function() {
   person <- getOption("pregnancy.person")
 
