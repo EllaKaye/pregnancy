@@ -79,7 +79,50 @@ ovulation_date_calculation <- function(start_date,
   ovulation_date
 }
 
+#' Get or set the pregnancy.due_date option
+#'
+#' @description
+#' Functions to get and set the default due date used throughout the package.
+#' This affects calculations in various functions that determine pregnancy progress
+#' and timing. Settings persist for the current R session only, unless added to
+#' .Rprofile. `set_due_date()` sets the "pregnancy.due_date" option and `get_due_date()` retrieves it.
+#'
+#' @param due_date A Date object specifying the estimated due date, or NULL to
+#'   unset the current value
+#'
+#' @return
+#' Both functions invisibly return the current due date setting:
+#' * get_due_date() returns the current setting (a Date object) or NULL if not set
+#' * set_due_date() returns the due date value that was set
+#'
+#' @seealso
+#' * [calculate_due_date()] to calculate a due date based on other dates
+#' * [how_far()] and other functions that use the due date for calculations
+#'
+#' @examples
+#' # Store original setting
+#' original_due_date <- getOption("pregnancy.due_date")
+#'
+#' # Check current setting
+#' get_due_date()
+#'
+#' # Set due date using as.Date
+#' set_due_date(as.Date("2024-09-15"))
+#' get_due_date()
+#'
+#' # Set due date using lubridate
+#' library(lubridate)
+#' set_due_date(ymd("2024-09-15"))
+#' get_due_date()
+#'
+#' # Restore original setting
+#' set_due_date(original_due_date)
+#'
+#' @name due_date-option
+NULL
 
+#' @rdname due_date-option
+#' @export
 get_due_date <- function() {
   due_date <- getOption("pregnancy.due_date")
 
@@ -93,6 +136,8 @@ get_due_date <- function() {
   invisible(due_date)
 }
 
+#' @rdname due_date-option
+#' @export
 set_due_date <- function(due_date) {
   # check date
   if (!is.null(due_date)) {
