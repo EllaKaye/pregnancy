@@ -16,3 +16,19 @@ template:
     heading_font: {google: "Outfit"}
     code_font: {google: "Fira Mono"}
 
+reference:
+- title: "Calculating dates in pregnancy"
+  contents:
+  - calculate_due_date
+  - calculate_test_date
+  - how_far
+  - date_when
+- title: "Set and get options"
+  contents:
+  - set_due_date
+  - get_due_date
+  - set_person
+  - get_person
+- title: "Medication"
+  contents:
+  - meds_remaining
