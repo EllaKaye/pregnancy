@@ -2,6 +2,7 @@
 
 export(calculate_due_date)
 export(calculate_test_date)
+export(date_when)
 export(get_due_date)
 export(get_person)
 export(how_far)

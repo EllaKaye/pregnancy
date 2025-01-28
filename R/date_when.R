@@ -61,6 +61,41 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
   # Need to check how this is handled in vignette and example building
 # TODO: check due date in relation to on_date and give appropriate message if > 42 weeks pregnant
 # TODO: maybe put `days = 0` argument back for more precise messages?
+#' Calculate and display date of specific pregnancy week
+#'
+#' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for
+#' @param due_date Date object indicating the due date. If NULL, uses the value set in options("pregnancy.due_date")
+#' @param person Character string indicating whose pregnancy is being tracked. If NULL, uses the value set in options("pregnancy.person"). 
+#'   Common values include "I", "You", or a name.
+#' @param today Date object representing the reference date for calculations. Default is Sys.Date(). 
+#'   This parameter exists primarily for testing and documentation purposes.
+#'
+#' @return Invisibly returns NULL. Prints messages to the console showing:
+#'   - When the specified week of pregnancy occurs/occurred/will occur
+#'   - How far in the past/future that date is from today (unless today is the date)
+#'
+#' @details
+#' The function calculates when someone will be/was a specific number of weeks pregnant based on their due date.
+#' It handles past, present and future dates appropriately in its messaging.
+#' The due date can be provided directly or set globally using options("pregnancy.due_date").
+#' Similarly, the person being referenced can be provided directly or set globally using options("pregnancy.person").
+#'
+#' @examples
+#' # Set a due date
+#' due <- as.Date("2024-09-01")
+#' 
+#' # When will they be 12 weeks pregnant?
+#' date_when(12, due_date = due)
+#' 
+#' # When will they be 20 weeks pregnant?
+#' date_when(20, due_date = due, person = "Sarah")
+#'
+#' @seealso 
+#' [calculate_due_date()] for calculating the due date
+#' [set_due_date()] for setting the due date as a global option
+#' [how_far()] for calculating current pregnancy progress
+#'
+#' @export
 date_when <- function(weeks, due_date = NULL, person = NULL, today = Sys.Date()) {
   
   dd_calc <- date_when_calculation(weeks = weeks, due_date = due_date, today = today)
