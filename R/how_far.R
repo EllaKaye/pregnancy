@@ -89,14 +89,15 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' Calculates and displays how far along a pregnancy is on a specific date, including
 #' weeks pregnant, days remaining until due date, and overall progress percentage.
 #'
-#' @param on_date Date object. The date for which to calculate pregnancy progress.
+#' @param on_date Date. The date for which to calculate pregnancy progress.
 #'   Defaults to current system date.
-#' @param due_date Date object. The expected due date. If NULL, will try to use the
+#' @param due_date Date. The expected due date. If NULL, will try to use the
 #'   "pregnancy.due_date" option. Required if option not set.
-#' @param person The person who is pregnant, to determine the grammar for the output message. If NULL, will try to use
-#'   the "pregnancy.person" option. Defaults to "You" if neither the argument or option is set. Use `1` or "I"` to be 
-#'   addressed in the first person, use `2` or `"You"` to be addressed in the second person, or any other string to give 
-#'   a third-person name.
+#' @param person The person who is pregnant, to determine the grammar for the output message. Can be:
+#'   * "I", "1", "1st", "first", or numeric `1` for first person
+#'   * "you", "2", "2nd", "second", or numeric `2` for second person
+#'   * Any other name for third person
+#'   * `NULL`: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set. 
 #'
 #' @return
 #' Invisibly returns the number of days along in the pregnancy. Prints a formatted

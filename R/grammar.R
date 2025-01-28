@@ -87,11 +87,7 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
 #' This affects the grammar and pronouns used in various function outputs. Settings
 #' persist for the current R session only, unless added to .Rprofile. `set_person()` sets the "pregnancy.person" option and `get_person()` retrieves it.
 #'
-#' @param person A character string or number specifying the person. Can be:
-#'   * "I", "1", "1st", "first", or numeric 1 for first person
-#'   * "you", "2", "2nd", "second", or numeric 2 for second person
-#'   * Any other name for third person
-#'   * NULL to unset the current value
+#' @inheritParams how_far
 #'
 #' @return
 #' Both functions invisibly return the current person setting:

@@ -7,15 +7,19 @@
 how_far(on_date = Sys.Date(), due_date = NULL, person = NULL)
 }
 \arguments{
-\item{on_date}{Date object. The date for which to calculate pregnancy progress.
+\item{on_date}{Date. The date for which to calculate pregnancy progress.
 Defaults to current system date.}
 
-\item{due_date}{Date object. The expected due date. If NULL, will try to use the
+\item{due_date}{Date. The expected due date. If NULL, will try to use the
 "pregnancy.due_date" option. Required if option not set.}
 
-\item{person}{The person who is pregnant, to determine the grammar for the output message. If NULL, will try to use
-the "pregnancy.person" option. Defaults to "You" if neither the argument or option is set. Use \code{1} or "I"\verb{to be  addressed in the first person, use}2\code{or}"You"` to be addressed in the second person, or any other string to give
-a third-person name.}
+\item{person}{The person who is pregnant, to determine the grammar for the output message. Can be:
+\itemize{
+\item "I", "1", "1st", "first", or numeric \code{1} for first person
+\item "you", "2", "2nd", "second", or numeric \code{2} for second person
+\item Any other name for third person
+\item \code{NULL}: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set.
+}}
 }
 \value{
 Invisibly returns the number of days along in the pregnancy. Prints a formatted

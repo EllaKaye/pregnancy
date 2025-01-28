@@ -64,12 +64,9 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
 #' Calculate and display date of specific pregnancy week
 #'
 #' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for
-#' @param due_date Date object indicating the due date. If NULL, uses the value set in options("pregnancy.due_date")
-#' @param person Character string indicating whose pregnancy is being tracked. If NULL, uses the value set in options("pregnancy.person"). 
-#'   Common values include "I", "You", or a name.
 #' @param today Date object representing the reference date for calculations. Default is Sys.Date(). 
-#'   This parameter exists primarily for testing and documentation purposes.
-#'
+#'   This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.
+#' @inheritParams how_far
 #' @return Invisibly returns NULL. Prints messages to the console showing:
 #'   - When the specified week of pregnancy occurs/occurred/will occur
 #'   - How far in the past/future that date is from today (unless today is the date)

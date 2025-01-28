@@ -11,12 +11,12 @@ set_person(person)
 get_person()
 }
 \arguments{
-\item{person}{A character string or number specifying the person. Can be:
+\item{person}{The person who is pregnant, to determine the grammar for the output message. Can be:
 \itemize{
-\item "I", "1", "1st", "first", or numeric 1 for first person
-\item "you", "2", "2nd", "second", or numeric 2 for second person
+\item "I", "1", "1st", "first", or numeric \code{1} for first person
+\item "you", "2", "2nd", "second", or numeric \code{2} for second person
 \item Any other name for third person
-\item NULL to unset the current value
+\item \code{NULL}: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set.
 }}
 }
 \value{

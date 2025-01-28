@@ -9,13 +9,19 @@ date_when(weeks, due_date = NULL, person = NULL, today = Sys.Date())
 \arguments{
 \item{weeks}{Numeric value indicating the number of weeks of pregnancy to calculate the date for}
 
-\item{due_date}{Date object indicating the due date. If NULL, uses the value set in options("pregnancy.due_date")}
+\item{due_date}{Date. The expected due date. If NULL, will try to use the
+"pregnancy.due_date" option. Required if option not set.}
 
-\item{person}{Character string indicating whose pregnancy is being tracked. If NULL, uses the value set in options("pregnancy.person").
-Common values include "I", "You", or a name.}
+\item{person}{The person who is pregnant, to determine the grammar for the output message. Can be:
+\itemize{
+\item "I", "1", "1st", "first", or numeric \code{1} for first person
+\item "you", "2", "2nd", "second", or numeric \code{2} for second person
+\item Any other name for third person
+\item \code{NULL}: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set.
+}}
 
 \item{today}{Date object representing the reference date for calculations. Default is Sys.Date().
-This parameter exists primarily for testing and documentation purposes.}
+This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.}
 }
 \value{
 Invisibly returns NULL. Prints messages to the console showing:
