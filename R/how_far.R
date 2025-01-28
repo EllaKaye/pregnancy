@@ -30,6 +30,7 @@ how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
   )
 }
 
+# TODO: think about messages 2 and 3 if on_date is not Sys.Date()
 how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
@@ -82,7 +83,6 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 }
 
 # TODO: check due date in relation to on_date/Sys.Date()
-# TODO: document
 #' Calculate pregnancy progress and time remaining
 #'
 #' @description
@@ -150,10 +150,14 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   
   # Print messages
   cli::cli_inform(c(
-    "i" = message_results$messages[1],
-    "i" = message_results$messages[2],
-    "i" = message_results$messages[3]
+    "i" = message_results$messages[1]
   ))
+  if (!is.na(message_results$messages[2])) {
+    cli::cli_inform(c(
+      "i" = message_results$messages[2],
+      "i" = message_results$messages[3]
+    ))
+  }
 
   # Return days along invisibly
   invisible(calc_results$days_along)
