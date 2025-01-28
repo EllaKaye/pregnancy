@@ -118,7 +118,6 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' @examples
 #' # Current progress with explicit due date
 #' # Note that output will depend on date the function is run
-#' # This is run on 2025-01-27
 #' how_far(due_date = as.Date("2025-07-01"))
 #'
 #' # Progress on a specific date
