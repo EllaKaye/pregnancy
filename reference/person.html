@@ -60,10 +60,10 @@ persist for the current R session only, unless added to .Rprofile. <code>set_per
 
 
 <dl><dt id="arg-person">person<a class="anchor" aria-label="anchor" href="#arg-person"></a></dt>
-<dd><p>A character string or number specifying the person. Can be:</p><ul><li><p>"I", "1", "1st", "first", or numeric 1 for first person</p></li>
-<li><p>"you", "2", "2nd", "second", or numeric 2 for second person</p></li>
+<dd><p>The person who is pregnant, to determine the grammar for the output message. Can be:</p><ul><li><p>"I", "1", "1st", "first", or numeric <code>1</code> for first person</p></li>
+<li><p>"you", "2", "2nd", "second", or numeric <code>2</code> for second person</p></li>
 <li><p>Any other name for third person</p></li>
-<li><p>NULL to unset the current value</p></li>
+<li><p><code>NULL</code>: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set.</p></li>
 </ul></dd>
 
 </dl></div>
