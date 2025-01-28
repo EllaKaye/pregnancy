@@ -50,7 +50,6 @@
 #'
 #' @seealso
 #' * [calculate_due_date()] for calculating the estimated due date
-#' * [days_until_test()] for finding how many days until the test date
 #'
 #' @export
 calculate_test_date <- function(start_date,

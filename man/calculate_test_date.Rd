@@ -81,6 +81,5 @@ calculate_test_date(my_start_date, cycle = 35)
 \seealso{
 \itemize{
 \item \code{\link[=calculate_due_date]{calculate_due_date()}} for calculating the estimated due date
-\item \code{\link[=days_until_test]{days_until_test()}} for finding how many days until the test date
 }
 }
