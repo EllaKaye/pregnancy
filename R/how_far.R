@@ -13,7 +13,7 @@ how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
   weeks_pregnant <- floor(days_along / 7)
   and_days_pregnant <- round(days_along %% 7)
 
-  days_to_go = 280 - days_along
+  days_to_go <- 280 - days_along
   weeks_to_go <- floor(days_to_go / 7)
   and_days_to_go <- round(days_to_go %% 7)
 
@@ -40,8 +40,8 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 
   # when more than a couple of weeks past due date (i.e. should no longer be pregnant)
   if (calc_results$weeks_pregnant > 42) {
-    subject = ifelse(subject == "You", "you", subject)
-    
+    subject <- ifelse(subject == "You", "you", subject)
+
     if (tense == "present") {
       message <- cli::format_inline(
         "Given a due date of {format(calc_results$due_date, '%B %d, %Y')}, {subject} would now be more than 42 weeks pregnant."
@@ -55,7 +55,7 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
         "Given a due date of {format(calc_results$due_date, '%B %d, %Y')}, on {format(on_date, '%B %d, %Y')}, {subject} would be more than 42 weeks pregnant."
       )
     }
-    
+
     return(list(messages = message))
   }
 
@@ -73,7 +73,7 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
       )
     )
   } else {
-    subject = ifelse(subject == "You", "you", subject)
+    subject <- ifelse(subject == "You", "you", subject)
     messages <- cli::format_inline(
       "On {format(on_date, '%B %d, %Y')}, {subject} {verb} {calc_results$weeks_pregnant} week{?s} and {calc_results$and_days_pregnant} day{?s} pregnant."
     )
@@ -97,7 +97,7 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #'   * "I", "1", "1st", "first", or numeric `1` for first person
 #'   * "you", "2", "2nd", "second", or numeric `2` for second person
 #'   * Any other name for third person
-#'   * `NULL`: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set. 
+#'   * `NULL`: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set.
 #'
 #' @return
 #' Invisibly returns the number of days along in the pregnancy. Prints a formatted
@@ -122,13 +122,17 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' how_far(due_date = as.Date("2025-07-01"))
 #'
 #' # Progress on a specific date
-#' how_far(on_date = as.Date("2025-06-01"),
-#'         due_date = as.Date("2025-07-01"))
+#' how_far(
+#'   on_date = as.Date("2025-06-01"),
+#'   due_date = as.Date("2025-07-01")
+#' )
 #'
 #' # With custom person
-#' how_far(on_date = as.Date("2025-06-01"),
-#'         due_date = as.Date("2025-07-01"),
-#'         person = "Sarah")
+#' how_far(
+#'   on_date = as.Date("2025-06-01"),
+#'   due_date = as.Date("2025-07-01"),
+#'   person = "Sarah"
+#' )
 #'
 #' # Set global options
 #' \dontrun{
@@ -140,14 +144,14 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   # Calculate pregnancy statistics
   calc_results <- how_far_calculation(on_date = on_date, due_date = due_date)
-  
+
   # Generate appropriate messages
   message_results <- how_far_message(
     calc_results = calc_results,
     on_date = on_date,
     person = person
   )
-  
+
   # Print messages
   cli::cli_inform(c(
     "i" = message_results$messages[1]
@@ -162,5 +166,3 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   # Return days along invisibly
   invisible(calc_results$days_along)
 }
-
-

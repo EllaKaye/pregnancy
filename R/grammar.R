@@ -11,7 +11,7 @@ get_subject <- function(person) {
   # having this condition separately makes it easier to write check_person()
   # as then check_person() can require a character vector
   if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
-  
+
   check_person(person)
 
   if (tolower(person) %in% c("i", "1", "1st", "first")) {
@@ -67,7 +67,6 @@ get_tense <- function(date1, date2) {
 # and similarly for "I")
 # `tense` should be the result of tense(date1, date2)
 to_be <- function(subject, tense = c("present", "past", "future")) {
-
   # tense should be result of get_tense(), so this is a belt-and-braces check
   tense <- rlang::arg_match(tense)
 

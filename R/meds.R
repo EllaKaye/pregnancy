@@ -58,74 +58,74 @@ meds_remaining <-
     meds_summary
   }
 
-  check_meds <- function(meds) {
-    if (!is.data.frame(meds)) {
-      cli::cli_abort(
-        c("{.var meds} must be a data frame.",
-          "i" = "It was {.type {meds}} instead."
-        ),
-        class = "pregnancy_error_class"
-      )
-    }
-  
-    colnames_meds <- colnames(meds)
-    needs_cols <- c("medication", "format", "quantity", "start_date", "stop_date")
-    diff <- setdiff(needs_cols, colnames_meds)
-  
-    if (length(diff) > 0) {
-      message <- c("{.var meds} is missing column{?s} {.code {diff}}.")
-      cli::cli_abort(message,
-        class = "pregnancy_error_missing"
-      )
-    }
-  
-    if (!lubridate::is.Date(meds[["start_date"]]) || !lubridate::is.Date(meds[["stop_date"]])) {
-      cli::cli_abort(
-        c(
-          "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
-          "i" = "{.var start_date} was class {.cls {class(meds[['start_date']])}}.",
-          "i" = "{.var stop_date} was class {.cls {class(meds[['stop_date']])}}."
-        ),
-        class = "pregnancy_error_class"
-      )
-    }
-  
-    if (!rlang::is_character(meds$medication) && !is.factor(meds$medication)) {
-      cli::cli_abort(
-        c(
-          "In {.var meds}, column {.code medication} must have class {.cls character} or {.cls factor}.",
-          "i" = "It was class {.cls {class(meds$medication)}}."
-        ),
-        class = "pregnancy_error_class"
-      )
-    }
-  
-    if (!rlang::is_character(meds$format) && !is.factor(meds$format)) {
-      cli::cli_abort(
-        c(
-          "In {.var meds}, column {.code format} must have class {.cls character} or {.cls factor}.",
-          "i" = "It was class {.cls {class(meds$format)}} instead."
-        ),
-        class = "pregnancy_error_class"
-      )
-    }
-  
-    if (!is.numeric(meds$quantity)) {
-      cli::cli_abort(
-        c(
-          "In {.var meds}, column {.code quantity} must have class {.cls numeric}.",
-          "i" = "It was class {.cls {class(meds$quantity)}} instead."
-        ),
-        class = "pregnancy_error_class"
-      )
-    }
-  
-    invisible(meds)
+check_meds <- function(meds) {
+  if (!is.data.frame(meds)) {
+    cli::cli_abort(
+      c("{.var meds} must be a data frame.",
+        "i" = "It was {.type {meds}} instead."
+      ),
+      class = "pregnancy_error_class"
+    )
   }
+
+  colnames_meds <- colnames(meds)
+  needs_cols <- c("medication", "format", "quantity", "start_date", "stop_date")
+  diff <- setdiff(needs_cols, colnames_meds)
+
+  if (length(diff) > 0) {
+    message <- c("{.var meds} is missing column{?s} {.code {diff}}.")
+    cli::cli_abort(message,
+      class = "pregnancy_error_missing"
+    )
+  }
+
+  if (!lubridate::is.Date(meds[["start_date"]]) || !lubridate::is.Date(meds[["stop_date"]])) {
+    cli::cli_abort(
+      c(
+        "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
+        "i" = "{.var start_date} was class {.cls {class(meds[['start_date']])}}.",
+        "i" = "{.var stop_date} was class {.cls {class(meds[['stop_date']])}}."
+      ),
+      class = "pregnancy_error_class"
+    )
+  }
+
+  if (!rlang::is_character(meds$medication) && !is.factor(meds$medication)) {
+    cli::cli_abort(
+      c(
+        "In {.var meds}, column {.code medication} must have class {.cls character} or {.cls factor}.",
+        "i" = "It was class {.cls {class(meds$medication)}}."
+      ),
+      class = "pregnancy_error_class"
+    )
+  }
+
+  if (!rlang::is_character(meds$format) && !is.factor(meds$format)) {
+    cli::cli_abort(
+      c(
+        "In {.var meds}, column {.code format} must have class {.cls character} or {.cls factor}.",
+        "i" = "It was class {.cls {class(meds$format)}} instead."
+      ),
+      class = "pregnancy_error_class"
+    )
+  }
+
+  if (!is.numeric(meds$quantity)) {
+    cli::cli_abort(
+      c(
+        "In {.var meds}, column {.code quantity} must have class {.cls numeric}.",
+        "i" = "It was class {.cls {class(meds$quantity)}} instead."
+      ),
+      class = "pregnancy_error_class"
+    )
+  }
+
+  invisible(meds)
+}
 
 # tibble output actually looks better than cli here
 # probably don't export this function, don't need it.
-# DON'T have on_date. Need to pass that as flag from meds_remaining 
+# DON'T have on_date. Need to pass that as flag from meds_remaining
 # (otherwise docuemnt that on_date must be set the same in both meds_remaining and meds_print)
 meds_print <- function(meds_summary, on_date = Sys.Date()) {
   # TODO: use person and have (via a new to_have function)

@@ -2,7 +2,7 @@ date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
   check_date(today)
 
   due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
-  check_date(due_date)  
+  check_date(due_date)
 
   # date calculations
   start_date <- due_date - 280
@@ -16,7 +16,6 @@ date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
 # returned strings aren't necessarily what's printed by cli
 # TODO: maybe put `days = 0` argument back for more precise messages?
 date_when_message <- function(total_days, date_when, weeks, person = NULL, today = Sys.Date()) {
-
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
   subject <- get_subject(person) # "I", "You" or person
@@ -31,7 +30,7 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
     prefix <- "Today"
   } else {
     prefix <- cli::format_inline("On {format(date_when, '%B %d, %Y')}")
-  } 
+  }
 
   date_str <- cli::format_inline("{prefix}, {subject} {verb} {weeks} weeks pregnant.")
 
@@ -51,20 +50,20 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
     }
     duration_str <- cli::format_inline("{prefix} {weeks_str} {and_days_from_now} day{?s} {suffix}.")
   } else {
-    duration_str = NULL
+    duration_str <- NULL
   }
-  
+
   invisible(list(date_str = date_str, duration_str = duration_str))
 }
 
 # For users, `today` should always be Sys.Date(). The argument exists purely for documenting and testing purposes.
-  # Need to check how this is handled in vignette and example building
+# Need to check how this is handled in vignette and example building
 # TODO: check due date in relation to on_date and give appropriate message if > 42 weeks pregnant
 # TODO: maybe put `days = 0` argument back for more precise messages?
 #' Calculate and display date of specific pregnancy week
 #'
 #' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for
-#' @param today Date object representing the reference date for calculations. Default is Sys.Date(). 
+#' @param today Date object representing the reference date for calculations. Default is Sys.Date().
 #'   This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.
 #' @inheritParams how_far
 #' @return Invisibly returns NULL. Prints messages to the console showing:
@@ -80,21 +79,20 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
 #' @examples
 #' # Set a due date
 #' due <- as.Date("2024-09-01")
-#' 
+#'
 #' # When will they be 12 weeks pregnant?
 #' date_when(12, due_date = due)
-#' 
+#'
 #' # When will they be 20 weeks pregnant?
 #' date_when(20, due_date = due, person = "Sarah")
 #'
-#' @seealso 
+#' @seealso
 #' [calculate_due_date()] for calculating the due date
 #' [set_due_date()] for setting the due date as a global option
 #' [how_far()] for calculating current pregnancy progress
 #'
 #' @export
 date_when <- function(weeks, due_date = NULL, person = NULL, today = Sys.Date()) {
-  
   dd_calc <- date_when_calculation(weeks = weeks, due_date = due_date, today = today)
 
   dd_message <- date_when_message(total_days = dd_calc$total_days, date_when = dd_calc$date_when, weeks = weeks, person = person)
@@ -107,6 +105,6 @@ date_when <- function(weeks, due_date = NULL, person = NULL, today = Sys.Date())
   if (!is.null(dd_message$duration_str) && today == Sys.Date()) {
     cli::cli_inform(c(
       "i" = dd_message$duration_str
-    ))    
+    ))
   }
 }
