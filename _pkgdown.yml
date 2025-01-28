@@ -32,3 +32,5 @@ reference:
 - title: "Medication"
   contents:
   - meds_remaining
+  - medications
+  
