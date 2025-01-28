@@ -1,5 +1,5 @@
-date_when_calculation <- function(weeks, on_date = Sys.Date(), due_date = NULL) {
-  check_date(on_date)
+date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
+  check_date(today)
 
   due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
   check_date(due_date)  
@@ -8,18 +8,19 @@ date_when_calculation <- function(weeks, on_date = Sys.Date(), due_date = NULL) 
   start_date <- due_date - 280
   date_when <- start_date + (weeks * 7)
   # on_date should always be "Sys.Date()", except for testing and documenting purposes
-  total_days <- abs(as.integer(difftime(date_when, on_date, units = "days"))) # days from today
+  total_days <- abs(as.integer(difftime(date_when, today, units = "days"))) # days from today
   list(total_days = total_days, date_when = date_when)
 }
 
 # TODO: when testing, take into account that cli is taking care of extraneous white space
 # returned strings aren't necessarily what's printed by cli
 # TODO: maybe put `days = 0` argument back for more precise messages?
-date_when_message <- function(total_days, date_when, weeks, person = NULL) {
+date_when_message <- function(total_days, date_when, weeks, person = NULL, today = Sys.Date()) {
+
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
   subject <- get_subject(person) # "I", "You" or person
-  tense <- get_tense(Sys.Date(), date_when) # "present", "past", "future"
+  tense <- get_tense(today, date_when) # "present", "past", "future"
   verb <- to_be(subject, tense)
   subject <- ifelse(subject == "You", "you", subject)
 
@@ -56,13 +57,13 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL) {
   invisible(list(date_str = date_str, duration_str = duration_str))
 }
 
-
-# TODO: put `on_date` into a testable helper function, but MAYBE not into date_when
+# For users, `today` should always be Sys.Date(). The argument exists purely for documenting and testing purposes.
   # Need to check how this is handled in vignette and example building
 # TODO: check due date in relation to on_date and give appropriate message if > 42 weeks pregnant
 # TODO: maybe put `days = 0` argument back for more precise messages?
-date_when <- function(weeks, on_date = Sys.Date(), due_date = NULL, person = NULL) {
-  dd_calc <- date_when_calculation(weeks = weeks, on_date = on_date, due_date = due_date)
+date_when <- function(weeks, due_date = NULL, person = NULL, today = Sys.Date()) {
+  
+  dd_calc <- date_when_calculation(weeks = weeks, due_date = due_date, today = today)
 
   dd_message <- date_when_message(total_days = dd_calc$total_days, date_when = dd_calc$date_when, weeks = weeks, person = person)
 
@@ -71,7 +72,7 @@ date_when <- function(weeks, on_date = Sys.Date(), due_date = NULL, person = NUL
     "i" = dd_message$date_str
   ))
 
-  if (!is.null(dd_message$duration_str)) {
+  if (!is.null(dd_message$duration_str) && today == Sys.Date()) {
     cli::cli_inform(c(
       "i" = dd_message$duration_str
     ))    
