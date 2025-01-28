@@ -4,6 +4,55 @@
 # get_test_date()
 # days_until_test_date() or two_week_wait()
 
+#' Calculate pregnancy test date
+#'
+#' Calculates the recommended date for taking a pregnancy test based on a start
+#' date and type. The function supports both urine and blood tests, with blood
+#' tests typically being viable 2 days earlier than urine tests.
+#'
+#' @inheritParams calculate_due_date
+#' @param test_type character. One of:
+#'   * "urine": Home pregnancy test (default)
+#'   * "blood": Blood test at clinic
+#'
+#' @return Returns a Date object invisibly representing the recommended test date.
+#'   Also prints informative messages showing:
+#'   * The recommended date for a urine test
+#'   * The recommended date for a blood test
+#'
+#' @details
+#' The test date is calculated as follows:
+#' 1. First, the ovulation date is calculated (see [calculate_due_date()] for details)
+#' 2. For urine tests: 14 days are added to the ovulation date
+#' 3. For blood tests: 12 days are added to the ovulation date
+#'
+#' Blood tests can typically detect pregnancy earlier than urine tests due to their
+#' greater sensitivity in detecting hCG hormone levels.
+#'
+#' @examples
+#' # Calculate test date from last menstrual period
+#' my_start_date <- as.Date("2023-01-31")
+#' calculate_test_date(my_start_date)
+#'
+#' # Calculate for blood test from conception date
+#' conception_date <- as.Date("2023-02-14")
+#' calculate_test_date(conception_date, 
+#'                    start_type = "conception",
+#'                    test_type = "blood")
+#'
+#' # Calculate from day 5 embryo transfer
+#' transfer_date <- as.Date("2023-02-19")
+#' calculate_test_date(transfer_date, 
+#'                    start_type = "transfer_day_5")
+#'
+#' # Calculate with non-standard cycle length
+#' calculate_test_date(my_start_date, cycle = 35)
+#'
+#' @seealso
+#' * [calculate_due_date()] for calculating the estimated due date
+#' * [days_until_test()] for finding how many days until the test date
+#'
+#' @export
 calculate_test_date <- function(start_date,
                                 start_type = c(
                                   "LMP",

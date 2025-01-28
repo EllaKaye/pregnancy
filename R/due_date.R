@@ -3,20 +3,63 @@
 # get_due_date()
 # set_due_date(due_date)
 
-#' Calculate due date
+#' Calculate estimated due date and birth period
 #'
-#' @param start_date Start date
-#' @param start_type Start type
-#' @param cycle Cycle length
+#' Calculates the estimated due date based on a start date and type. The function
+#' supports different start date types including last menstrual period (LMP),
+#' conception date, and embryo transfer dates. It also provides an estimated birth
+#' period, which spans from 37 weeks (birth period start) to 42 weeks (birth period
+#' end).
 #'
-#' @return Your due date
+#' @param start_date Date. The starting reference date. The interpretation of this
+#'   date depends on the `start_type` parameter.
+#' @param start_type character. One of:
+#'   * "LMP": Last Menstrual Period date (default)
+#'   * "conception": Date of conception
+#'   * "transfer_day_3": Date of day 3 embryo transfer
+#'   * "transfer_day_5": Date of day 5 embryo transfer
+#'   * "transfer_day_6": Date of day 6 embryo transfer
+#' @param cycle numeric. Length of menstrual cycle in days. Only used when
+#'   `start_type = "LMP"`. Must be between 20 and 44 days. Defaults to 28 days.
+#'
+#' @return Returns a Date object representing the estimated due date invisibly.
+#'   Also prints informative messages showing:
+#'   * The estimated due date
+#'   * When the birth period begins (37 weeks)
+#'   * When the birth period ends (42 weeks)
+#'
+#' @details
+#' The due date is calculated as follows:
+#' * For LMP: Ovulation is estimated as `start_date + cycle - 14 days`, then
+#'   266 days are added
+#' * For conception: 266 days are added to the conception date
+#' * For embryo transfers: The appropriate number of days are subtracted to get
+#'   to conception date (3, 5, or 6 days), then 266 days are added
+#'
+#' The birth period start date is 21 days before the due date (37 weeks pregnant),
+#' and the birth period end date is 14 days after the due date (42 weeks pregnant).
+#'
+#' @examples
+#' # Calculate due date from last menstrual period
+#' my_start_date <- as.Date("2023-01-31")
+#' calculate_due_date(my_start_date)
+#'
+#' # Calculate from conception date
+#' conception_date <- as.Date("2023-02-14")
+#' calculate_due_date(conception_date, start_type = "conception")
+#'
+#' # Calculate from day 5 embryo transfer
+#' transfer_date <- as.Date("2023-02-19")
+#' calculate_due_date(transfer_date, start_type = "transfer_day_5")
+#'
+#' # Calculate with non-standard cycle length
+#' calculate_due_date(my_start_date, cycle = 35)
+#'
+#' @seealso
+#' * [date_when()] for finding dates at specific weeks of pregnancy
+#' * [how_far()] for calculating current progress in pregnancy
+#'
 #' @export
-#'
-#' @examples my_start_date <- as.Date("2023-01-31")
-#' @examples calculate_due_date(my_start_date)
-#' @examples due_date <- calculate_due_date(my_start_date, "conception")
-#' @examples due_date
-#' @examples class(due_date)
 calculate_due_date <- function(start_date,
                                start_type = c(
                                  "LMP",

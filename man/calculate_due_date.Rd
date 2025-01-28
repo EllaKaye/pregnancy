@@ -2,7 +2,7 @@
 % Please edit documentation in R/due_date.R
 \name{calculate_due_date}
 \alias{calculate_due_date}
-\title{Calculate due date}
+\title{Calculate estimated due date and birth period}
 \usage{
 calculate_due_date(
   start_date,
@@ -12,22 +12,70 @@ calculate_due_date(
 )
 }
 \arguments{
-\item{start_date}{Start date}
+\item{start_date}{Date. The starting reference date. The interpretation of this
+date depends on the \code{start_type} parameter.}
 
-\item{start_type}{Start type}
+\item{start_type}{character. One of:
+\itemize{
+\item "LMP": Last Menstrual Period date (default)
+\item "conception": Date of conception
+\item "transfer_day_3": Date of day 3 embryo transfer
+\item "transfer_day_5": Date of day 5 embryo transfer
+\item "transfer_day_6": Date of day 6 embryo transfer
+}}
 
-\item{cycle}{Cycle length}
+\item{cycle}{numeric. Length of menstrual cycle in days. Only used when
+\code{start_type = "LMP"}. Must be between 20 and 44 days. Defaults to 28 days.}
 }
 \value{
-Your due date
+Returns a Date object representing the estimated due date invisibly.
+Also prints informative messages showing:
+\itemize{
+\item The estimated due date
+\item When the birth period begins (37 weeks)
+\item When the birth period ends (42 weeks)
+}
 }
 \description{
-Calculate due date
+Calculates the estimated due date based on a start date and type. The function
+supports different start date types including last menstrual period (LMP),
+conception date, and embryo transfer dates. It also provides an estimated birth
+period, which spans from 37 weeks (birth period start) to 42 weeks (birth period
+end).
+}
+\details{
+The due date is calculated as follows:
+\itemize{
+\item For LMP: Ovulation is estimated as \verb{start_date + cycle - 14 days}, then
+266 days are added
+\item For conception: 266 days are added to the conception date
+\item For embryo transfers: The appropriate number of days are subtracted to get
+to conception date (3, 5, or 6 days), then 266 days are added
+}
+
+The birth period start date is 21 days before the due date (37 weeks pregnant),
+and the birth period end date is 14 days after the due date (42 weeks pregnant).
 }
 \examples{
+# Calculate due date from last menstrual period
 my_start_date <- as.Date("2023-01-31")
 calculate_due_date(my_start_date)
-due_date <- calculate_due_date(my_start_date, "conception")
-due_date
-class(due_date)
+
+# Calculate from conception date
+conception_date <- as.Date("2023-02-14")
+calculate_due_date(conception_date, start_type = "conception")
+
+# Calculate from day 5 embryo transfer
+transfer_date <- as.Date("2023-02-19")
+calculate_due_date(transfer_date, start_type = "transfer_day_5")
+
+# Calculate with non-standard cycle length
+calculate_due_date(my_start_date, cycle = 35)
+
+}
+\seealso{
+\itemize{
+\item \code{\link[=date_when]{date_when()}} for finding dates at specific weeks of pregnancy
+\item \code{\link[=how_far]{how_far()}} for calculating current progress in pregnancy
+}
 }
