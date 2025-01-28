@@ -15,15 +15,15 @@
 #' @return prints in console, returns a data frame invisibly
 #' @export
 #'
-#' @examples meds_remaining(on_date = as.Date("2023-04-30"), meds = medications)
+#' @examples meds_remaining(on_date = as.Date("2025-04-30"), meds = medications)
 meds_remaining <-
-  function(on_date = Sys.Date(),
-           meds = NULL,
-           group = c("medication", "format")) {
+  function(meds = NULL,
+           group = c("medication", "format"),
+           on_date = Sys.Date()) {
     check_date(on_date)
 
     # TODO: better abort message (see date_abort)
-    meds <- meds %||% getOption("pregnancy.meds") %||% cli::cli_abort("NEEDS MEDS")
+    meds <- meds %||% getOption("pregnancy.medications") %||% cli::cli_abort("NEEDS MEDS")
     check_meds(meds)
 
     group <- rlang::arg_match(group)
@@ -155,26 +155,3 @@ check_meds <- function(meds) {
 
 
 # TODO: get/set_meds functions
-
-# TODO: delete this code
-# figuring stuff out
-# meds <- medications
-# needs_cols <- colnames(meds)
-# missing_colnames <- colnames(meds)[1:3]
-# missing_colname <- colnames(meds)[1:4]
-# missing_more_colnames <- colnames(meds)[1:2]
-# too_many_colnames <- c(colnames(meds), LETTERS[1:2])
-# mixed_colnames <- c(missing_colnames, LETTERS[1:2])
-#
-# diff1 <- base::setdiff(needs_cols, missing_colname)
-# diff2 <- base::setdiff(needs_cols, missing_colnames)
-# diff3 <- base::setdiff(needs_cols, missing_more_colnames)
-# no_diff <- base::setdiff(needs_cols, too_many_colnames)
-# base::setdiff(needs_cols, mixed_colnames)
-#
-#
-
-
-# meds_not_date <- mutate(pregnancy::medications, start_date = as.character(start_date))
-# transform is base, so better in tests
-# meds_not_date <- transform(medications, start_date = as.character(start_date))
