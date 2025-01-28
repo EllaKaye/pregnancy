@@ -5,17 +5,17 @@
 \title{Title}
 \usage{
 meds_remaining(
-  on_date = Sys.Date(),
   meds = NULL,
-  group = c("medication", "format")
+  group = c("medication", "format"),
+  on_date = Sys.Date()
 )
 }
 \arguments{
-\item{on_date}{date}
-
 \item{meds}{meds}
 
 \item{group}{group}
+
+\item{on_date}{date}
 }
 \value{
 prints in console, returns a data frame invisibly
@@ -24,5 +24,5 @@ prints in console, returns a data frame invisibly
 Title
 }
 \examples{
-meds_remaining(on_date = as.Date("2023-04-30"), meds = medications)
+meds_remaining(on_date = as.Date("2025-04-30"), meds = medications)
 }
