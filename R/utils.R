@@ -108,13 +108,14 @@ check_cycle <- function(cycle) {
 # TODO: Make sure functions that call this pass in `value` argument (and that it's parsed properly)
 # TODO: Add a line about making sure the code to generate the value of `{option}` is also included in the .Rprofile
 # TODO: Fix line to add to .RProfile: should be '{value}' if option is "person", and as.Date('{value}') if option is due_date or test_date
-set_option_message <- function(option, value = NULL) {
+# TODO: different message if option is set to NULL - or does this need to be in the individual set_* finctions?
+set_option_message <- function(option) {
   cli::cli_inform(
     c(
-      "i" = "For this R session only, functions in the pregnancy package will now use this `{option}` option.",
-      "i" = "So for now, you do not now need to supply a value to the `{option}` argument.",
-      "i" = "To make this `{option}` option available in all R sessions, include this code in your {.val .Rprofile}:",
-      " " = "options(pregnancy.{option} = {value})",
+      "i" = "Functions in the pregnancy package will now use this `{option}` option.",
+      "i" = "So, for this R session, you do not need to supply a value to the `{option}` argument (unless you wish to override the option).",
+      "i" = "To make this `{option}` option available in all R sessions, in your {.val .Rprofile},  set `options(pregnancy.{option} = ...)`",
+      " " = "where ... is the value of `{option}`.",
       "i" = "You can edit your {.val .Rprofile} by calling {.fn usethis::edit_r_profile}",
       "i" = "You can retrieve the `{option}` option with {.fn get_{option}},",
       " " = "or with `getOption('pregnancy.{option}')`."

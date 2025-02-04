@@ -173,7 +173,7 @@ get_due_date <- function() {
     null_option("due_date")
   } else {
     check_date(due_date)
-    cli::cli_inform("Your due date is set as {format(due_date, '%B %d, %Y')}.")
+    cli::cli_inform(c("i" = "Your due date is set as {format(due_date, '%B %d, %Y')}."))
   }
 
   invisible(due_date)
@@ -191,7 +191,7 @@ set_due_date <- function(due_date) {
 
   # TODO: different message if due_date = NULL
   cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
-  set_option_message("due_date", due_date)
+  set_option_message("due_date")
 
   invisible(due_date)
 }

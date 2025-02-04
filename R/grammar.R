@@ -132,7 +132,7 @@ set_person <- function(person) {
 
   # TODO: different message if person = NULL
   cli::cli_alert_success("person set as '{person}'")
-  set_option_message("person", person)
+  set_option_message("person")
 }
 
 # get_person
@@ -146,7 +146,7 @@ get_person <- function() {
   } else {
     if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
     check_person(person)
-    cli::cli_inform("The person option is set as '{person}'.")
+    cli::cli_inform(c("i" = "The person option is set as '{person}'."))
   }
 
   invisible(person)
