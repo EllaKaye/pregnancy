@@ -2,7 +2,7 @@
 % Please edit documentation in R/meds.R
 \name{medications_remaining}
 \alias{medications_remaining}
-\title{Title}
+\title{Calculate remaining medications to be taken}
 \usage{
 medications_remaining(
   medications = NULL,
@@ -11,18 +11,88 @@ medications_remaining(
 )
 }
 \arguments{
-\item{medications}{medications}
+\item{medications}{Data frame containing medication schedule. Must have the following columns:
+\itemize{
+\item medication (character/factor): Name of the medication
+\item format (character/factor): Format of the medication (e.g., pill, injection)
+\item quantity (numeric): Number of units to take per day
+\item start_date (Date): Date to start taking the medication
+\item stop_date (Date): Final date to take the medication
+If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
+}}
 
-\item{group}{group}
+\item{group}{Character string specifying how to group the results. One of:
+\itemize{
+\item "medication": Group by medication name (default)
+\item "format": Group by medication format
+}}
 
-\item{on_date}{date}
+\item{on_date}{Date object specifying the date for which to calculate remaining medications.
+Defaults to current system date. This parameter exists primarily for testing and
+documentation purposes and it is unlikely to make sense for the user to need or
+want to change it from the default.}
 }
 \value{
-prints in console, returns a data frame invisibly
+Invisibly returns a data frame containing remaining quantities, grouped as specified.
+The data frame has two columns:
+\itemize{
+\item First column: Either 'medication' or 'format' depending on grouping
+\item quantity_remaining: Total number of units remaining
+Only medications with remaining quantities > 0 are included.
+}
+
+Also prints a message to the console indicating either that no medications remain,
+or showing the quantities remaining for each medication/format.
 }
 \description{
-Title
+Calculates and displays how many medications remain to be taken as of a specific date,
+based on a schedule of medications with start and stop dates. Results can be grouped
+either by medication name or by format (e.g., tablet, injection).
 }
+\section{Global Options}{
+
+\itemize{
+\item pregnancy.medications: Data frame setting default medication schedule
+}
+}
+
 \examples{
-medications_remaining(on_date = as.Date("2025-04-30"), medications = medications)
+# Define medications table
+#' # Create example medication schedule
+meds <- data.frame(
+  medication = c("progynova", "prednisolone", "clexane"),
+  format = c("tablet", "tablet", "injection"),
+  quantity = c(3, 2, 1),
+  start_date = as.Date(c("2025-04-21", "2025-04-26", "2025-05-08")),
+  stop_date = as.Date(c("2025-04-30", "2025-05-07", "2025-09-05"))
+)
+
+# Calculate remaining medications for a specific date
+medications_remaining(
+  medications = meds,
+  on_date = as.Date("2025-04-21")
+)
+
+medications_remaining(
+  medications = meds,
+  group = "format",
+  on_date = as.Date("2025-04-21")
+)
+
+# Set and use global medications option
+#' Store original medications setting
+original_medications <- getOption("pregnancy.medications")
+set_medications(pregnancy::medications)
+medications_remaining(on_date = as.Date("2025-05-01"))
+
+# Restore original medications setting
+set_medications(original_medications)
+
+}
+\seealso{
+\itemize{
+\item \code{\link[=set_medications]{set_medications()}} for setting default medication schedule
+\item \code{\link[=get_medications]{get_medications()}} for retrieving current medication schedule
+\item \link{medications} for an example medications data frame
+}
 }

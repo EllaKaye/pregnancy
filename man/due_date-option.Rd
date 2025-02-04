@@ -2,13 +2,13 @@
 % Please edit documentation in R/due_date.R
 \name{due_date-option}
 \alias{due_date-option}
-\alias{get_due_date}
 \alias{set_due_date}
-\title{Get or set the pregnancy.due_date option}
+\alias{get_due_date}
+\title{Set or get the \code{pregnancy.due_date} option}
 \usage{
-get_due_date()
-
 set_due_date(due_date)
+
+get_due_date()
 }
 \arguments{
 \item{due_date}{A Date object specifying the estimated due date, or NULL to

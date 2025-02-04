@@ -4,20 +4,28 @@
 \alias{medications-option}
 \alias{set_medications}
 \alias{get_medications}
-\title{Get or set the pregnancy.medications option}
+\title{Set or Get the \code{pregnancy.medications} option}
 \usage{
 set_medications(medications)
 
 get_medications()
 }
 \arguments{
-\item{medications}{medications}
+\item{medications}{Data frame containing medication schedule. Must have the following columns:
+\itemize{
+\item medication (character/factor): Name of the medication
+\item format (character/factor): Format of the medication (e.g., pill, injection)
+\item quantity (numeric): Number of units to take per day
+\item start_date (Date): Date to start taking the medication
+\item stop_date (Date): Final date to take the medication
+If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
+}}
 }
 \value{
 Both functions invisibly return the current medications setting:
 \itemize{
-\item get_medications() returns the current setting (a Date object) or NULL if not set
-\item set_medications() returns the due date value that was set
+\item \code{\link[=get_medications]{get_medications()}} returns the current setting (a data frame) or NULL if not set
+\item \code{\link[=set_medications]{set_medications()}} returns the medications data frame that was set
 }
 }
 \description{

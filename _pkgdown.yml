@@ -23,6 +23,10 @@ reference:
   - calculate_test_date
   - how_far
   - date_when
+- title: "Medication"
+  contents:
+  - medications_remaining
+  - medications
 - title: "Set and get options"
   contents:
   - set_due_date
@@ -31,8 +35,3 @@ reference:
   - get_person
   - set_medications
   - get_medications
-- title: "Medication"
-  contents:
-  - medications_remaining
-  - medications
-  

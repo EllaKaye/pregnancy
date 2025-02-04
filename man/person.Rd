@@ -4,7 +4,7 @@
 \alias{person}
 \alias{set_person}
 \alias{get_person}
-\title{Get or set the pregnancy.person option for pregnancy-related messages}
+\title{Set or get the \code{pregnancy.person} option for pregnancy-related messages}
 \usage{
 set_person(person)
 

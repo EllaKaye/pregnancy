@@ -122,7 +122,7 @@ ovulation_date_calculation <- function(start_date,
   ovulation_date
 }
 
-#' Get or set the pregnancy.due_date option
+#' Set or get the `pregnancy.due_date` option
 #'
 #' @description
 #' Functions to get and set the default due date used throughout the package.
@@ -166,21 +166,6 @@ NULL
 
 #' @rdname due_date-option
 #' @export
-get_due_date <- function() {
-  due_date <- getOption("pregnancy.due_date")
-
-  if (is.null(due_date)) {
-    null_option("due_date")
-  } else {
-    check_date(due_date)
-    cli::cli_inform(c("i" = "Your due date is set as {format(due_date, '%B %d, %Y')}."))
-  }
-
-  invisible(due_date)
-}
-
-#' @rdname due_date-option
-#' @export
 set_due_date <- function(due_date) {
   # check date
   if (!is.null(due_date)) {
@@ -192,6 +177,21 @@ set_due_date <- function(due_date) {
   # TODO: different message if due_date = NULL
   cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
   set_option_message("due_date")
+
+  invisible(due_date)
+}
+
+#' @rdname due_date-option
+#' @export
+get_due_date <- function() {
+  due_date <- getOption("pregnancy.due_date")
+
+  if (is.null(due_date)) {
+    null_option("due_date")
+  } else {
+    check_date(due_date)
+    cli::cli_inform(c("i" = "Your due date is set as {format(due_date, '%B %d, %Y')}."))
+  }
 
   invisible(due_date)
 }

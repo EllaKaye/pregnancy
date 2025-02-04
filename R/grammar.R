@@ -79,7 +79,7 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
 }
 
 # set_person
-#' Get or set the pregnancy.person option for pregnancy-related messages
+#' Set or get the `pregnancy.person` option for pregnancy-related messages
 #'
 #' @description
 #' Functions to get and set the default person used in messages throughout the package.

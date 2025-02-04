@@ -3,17 +3,79 @@
 # get_medications()
 # set_medications()
 
-# need to copy over then modify code from EMKpregnancy package
-#' Title
+#' Calculate remaining medications to be taken
 #'
-#' @param on_date date
-#' @param medications medications
-#' @param group group
+#' @description
+#' Calculates and displays how many medications remain to be taken as of a specific date,
+#' based on a schedule of medications with start and stop dates. Results can be grouped
+#' either by medication name or by format (e.g., tablet, injection).
 #'
-#' @return prints in console, returns a data frame invisibly
+#' @param medications Data frame containing medication schedule. Must have the following columns:
+#'   * medication (character/factor): Name of the medication
+#'   * format (character/factor): Format of the medication (e.g., pill, injection)
+#'   * quantity (numeric): Number of units to take per day
+#'   * start_date (Date): Date to start taking the medication
+#'   * stop_date (Date): Final date to take the medication
+#'   If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
+#' @param group Character string specifying how to group the results. One of:
+#'   * "medication": Group by medication name (default)
+#'   * "format": Group by medication format
+#' @param on_date Date object specifying the date for which to calculate remaining medications.
+#'   Defaults to current system date. This parameter exists primarily for testing and
+#'   documentation purposes and it is unlikely to make sense for the user to need or
+#'   want to change it from the default.
+#'
+#' @return
+#' Invisibly returns a data frame containing remaining quantities, grouped as specified.
+#' The data frame has two columns:
+#'   * First column: Either 'medication' or 'format' depending on grouping
+#'   * quantity_remaining: Total number of units remaining
+#' Only medications with remaining quantities > 0 are included.
+#'
+#' Also prints a message to the console indicating either that no medications remain,
+#' or showing the quantities remaining for each medication/format.
+#'
+#' @section Global Options:
+#' * pregnancy.medications: Data frame setting default medication schedule
+#'
+#' @examples
+#' # Define medications table
+#' #' # Create example medication schedule
+#' meds <- data.frame(
+#'   medication = c("progynova", "prednisolone", "clexane"),
+#'   format = c("tablet", "tablet", "injection"),
+#'   quantity = c(3, 2, 1),
+#'   start_date = as.Date(c("2025-04-21", "2025-04-26", "2025-05-08")),
+#'   stop_date = as.Date(c("2025-04-30", "2025-05-07", "2025-09-05"))
+#' )
+#'
+#' # Calculate remaining medications for a specific date
+#' medications_remaining(
+#'   medications = meds,
+#'   on_date = as.Date("2025-04-21")
+#' )
+#' 
+#' medications_remaining(
+#'   medications = meds,
+#'   group = "format",
+#'   on_date = as.Date("2025-04-21")
+#' )
+#'
+#' # Set and use global medications option
+#' #' Store original medications setting
+#' original_medications <- getOption("pregnancy.medications")
+#' set_medications(pregnancy::medications)
+#' medications_remaining(on_date = as.Date("2025-05-01"))
+#'
+#' # Restore original medications setting
+#' set_medications(original_medications)
+#'
+#' @seealso
+#' * [set_medications()] for setting default medication schedule
+#' * [get_medications()] for retrieving current medication schedule
+#' * [medications] for an example medications data frame
+#'
 #' @export
-#'
-#' @examples medications_remaining(on_date = as.Date("2025-04-30"), medications = medications)
 medications_remaining <-
   function(medications = NULL,
            group = c("medication", "format"),
@@ -123,7 +185,7 @@ check_medications <- function(medications) {
   invisible(medications)
 }
 
-#' Get or set the pregnancy.medications option
+#' Set or Get the `pregnancy.medications` option
 #'
 #' @description
 #' Functions to get and set the default medications data frame used in the [medications_remaining()] function.
@@ -134,8 +196,8 @@ check_medications <- function(medications) {
 #'
 #' @return
 #' Both functions invisibly return the current medications setting:
-#' * get_medications() returns the current setting (a Date object) or NULL if not set
-#' * set_medications() returns the due date value that was set
+#' * [get_medications()] returns the current setting (a data frame) or NULL if not set
+#' * [set_medications()] returns the medications data frame that was set
 #'
 #' @seealso
 #' * [medications_remaining()], [medications] 
