@@ -119,16 +119,18 @@ greater sensitivity in detecting hCG hormone levels.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate for blood test from conception date</span></span></span>
 <span class="r-in"><span><span class="va">conception_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-02-14"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">conception_date</span>, </span></span>
-<span class="r-in"><span>                   start_type <span class="op">=</span> <span class="st">"conception"</span>,</span></span>
-<span class="r-in"><span>                   test_type <span class="op">=</span> <span class="st">"blood"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">conception_date</span>,</span></span>
+<span class="r-in"><span>  start_type <span class="op">=</span> <span class="st">"conception"</span>,</span></span>
+<span class="r-in"><span>  test_type <span class="op">=</span> <span class="st">"blood"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Tuesday, February 28, 2023</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Sunday, February 26, 2023</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate from day 5 embryo transfer</span></span></span>
 <span class="r-in"><span><span class="va">transfer_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-02-19"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">transfer_date</span>, </span></span>
-<span class="r-in"><span>                   start_type <span class="op">=</span> <span class="st">"transfer_day_5"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">transfer_date</span>,</span></span>
+<span class="r-in"><span>  start_type <span class="op">=</span> <span class="st">"transfer_day_5"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Tuesday, February 28, 2023</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Sunday, February 26, 2023</span>
 <span class="r-in"><span></span></span>

@@ -93,17 +93,17 @@ unset the current value</p></dd>
 <span class="r-in"><span><span class="co"># Set due date using as.Date</span></span></span>
 <span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2024-09-15"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as September 15, 2024</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For this R session only, functions in the pregnancy package will now use this</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `due_date` option.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So for now, you do not now need to supply a value to the `due_date` argument.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, include this code</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   in your <span style="color: #0000BB;">".Rprofile"</span>:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   options(pregnancy.due_date = 2024-09-15)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, in your</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">".Rprofile"</span>, set `options(pregnancy.due_date = ...)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   where ... is the value of `due_date`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can edit your <span style="color: #0000BB;">".Rprofile"</span> by calling `usethis::edit_r_profile()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
 <span class="r-in"><span><span class="fu">get_due_date</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Your due date is set as September 15, 2024.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your due date is set as September 15, 2024.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set due date using lubridate</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span></span>
@@ -114,27 +114,27 @@ unset the current value</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     date, intersect, setdiff, union</span>
 <span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2024-09-15"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as September 15, 2024</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For this R session only, functions in the pregnancy package will now use this</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `due_date` option.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So for now, you do not now need to supply a value to the `due_date` argument.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, include this code</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   in your <span style="color: #0000BB;">".Rprofile"</span>:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   options(pregnancy.due_date = 2024-09-15)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, in your</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">".Rprofile"</span>, set `options(pregnancy.due_date = ...)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   where ... is the value of `due_date`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can edit your <span style="color: #0000BB;">".Rprofile"</span> by calling `usethis::edit_r_profile()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
 <span class="r-in"><span><span class="fu">get_due_date</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Your due date is set as September 15, 2024.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your due date is set as September 15, 2024.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Restore original setting</span></span></span>
 <span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="va">original_due_date</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as NULL</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For this R session only, functions in the pregnancy package will now use this</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `due_date` option.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So for now, you do not now need to supply a value to the `due_date` argument.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, include this code</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   in your <span style="color: #0000BB;">".Rprofile"</span>:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   options(pregnancy.due_date = )</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, in your</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">".Rprofile"</span>, set `options(pregnancy.due_date = ...)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   where ... is the value of `due_date`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can edit your <span style="color: #0000BB;">".Rprofile"</span> by calling `usethis::edit_r_profile()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
