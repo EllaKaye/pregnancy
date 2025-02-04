@@ -65,14 +65,16 @@ calculate_test_date(my_start_date)
 
 # Calculate for blood test from conception date
 conception_date <- as.Date("2023-02-14")
-calculate_test_date(conception_date, 
-                   start_type = "conception",
-                   test_type = "blood")
+calculate_test_date(conception_date,
+  start_type = "conception",
+  test_type = "blood"
+)
 
 # Calculate from day 5 embryo transfer
 transfer_date <- as.Date("2023-02-19")
-calculate_test_date(transfer_date, 
-                   start_type = "transfer_day_5")
+calculate_test_date(transfer_date,
+  start_type = "transfer_day_5"
+)
 
 # Calculate with non-standard cycle length
 calculate_test_date(my_start_date, cycle = 35)

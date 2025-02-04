@@ -19,7 +19,7 @@ medications
 }
 \description{
 A data frame with example medications that might be used during fertility treatment/first trimester.
-It is an example of a data frame that might be used as the \code{meds} argument to \code{\link[=meds_remaining]{meds_remaining()}}.
+It is an example of a data frame that might be used as the \code{meds} argument to \code{\link[=medications_remaining]{medications_remaining()}}.
 }
 \details{
 Note that the same medication (prednisolone in this example) has several rows, first because the quantity taken per day changes, then because it needs to be taken on non-consecutive days.
@@ -28,6 +28,6 @@ Note that the same medication (prednisolone in this example) has several rows, f
 medications
 }
 \seealso{
-\code{\link[=meds_remaining]{meds_remaining()}}
+\code{\link[=medications_remaining]{medications_remaining()}}
 }
 \keyword{datasets}

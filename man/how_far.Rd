@@ -52,13 +52,17 @@ proper pluralization of weeks/days in messages.
 how_far(due_date = as.Date("2025-07-01"))
 
 # Progress on a specific date
-how_far(on_date = as.Date("2025-06-01"),
-        due_date = as.Date("2025-07-01"))
+how_far(
+  on_date = as.Date("2025-06-01"),
+  due_date = as.Date("2025-07-01")
+)
 
 # With custom person
-how_far(on_date = as.Date("2025-06-01"),
-        due_date = as.Date("2025-07-01"),
-        person = "Sarah")
+how_far(
+  on_date = as.Date("2025-06-01"),
+  due_date = as.Date("2025-07-01"),
+  person = "Sarah"
+)
 
 # Set global options
 \dontrun{
