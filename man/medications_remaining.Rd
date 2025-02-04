@@ -33,16 +33,17 @@ documentation purposes and it is unlikely to make sense for the user to need or
 want to change it from the default.}
 }
 \value{
-Invisibly returns a data frame containing remaining quantities, grouped as specified.
+Returns a data frame containing remaining quantities, grouped as specified.
 The data frame has two columns:
 \itemize{
 \item First column: Either 'medication' or 'format' depending on grouping
 \item quantity_remaining: Total number of units remaining
-Only medications with remaining quantities > 0 are included.
 }
 
-Also prints a message to the console indicating either that no medications remain,
-or showing the quantities remaining for each medication/format.
+Only medications with remaining quantities > 0 are included.
+
+If no medications remain, a message is printed to the console indicating this,
+and a data frame with 0 rows in returned invisibly.
 }
 \description{
 Calculates and displays how many medications remain to be taken as of a specific date,
@@ -52,7 +53,7 @@ either by medication name or by format (e.g., tablet, injection).
 \section{Global Options}{
 
 \itemize{
-\item pregnancy.medications: Data frame setting default medication schedule
+\item \code{pregnancy.medications}: Data frame setting default medication schedule
 }
 }
 
