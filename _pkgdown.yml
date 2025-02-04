@@ -29,8 +29,10 @@ reference:
   - get_due_date
   - set_person
   - get_person
+  - set_medications
+  - get_medications
 - title: "Medication"
   contents:
-  - meds_remaining
+  - medications_remaining
   - medications
   

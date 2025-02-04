@@ -123,7 +123,41 @@ check_medications <- function(medications) {
   invisible(medications)
 }
 
-# TODO: get/set_medications functions
+#' Get or set the pregnancy.medications option
+#'
+#' @description
+#' Functions to get and set the default medications data frame used in the [medications_remaining()] function.
+#' Settings persist for the current R session only, unless added to
+#' .Rprofile. `set_medications()` sets the "pregnancy.medications" option and `get_medications()` retrieves it.
+#'
+#' @inheritParams medications_remaining
+#'
+#' @return
+#' Both functions invisibly return the current medications setting:
+#' * get_medications() returns the current setting (a Date object) or NULL if not set
+#' * set_medications() returns the due date value that was set
+#'
+#' @seealso
+#' * [medications_remaining()], [medications] 
+#'
+#' @examples
+#' # Store original setting
+#' original_medications <- getOption("pregnancy.medications")
+#' 
+#' # Set the option
+#' set_medications(pregnancy::medications)
+#' 
+#' # Get the option
+#' get_medications()
+#'
+#' # Restore original setting
+#' set_medications(original_medications)
+#'
+#' @name medications-option
+NULL
+
+#' @rdname medications-option
+#' @export
 set_medications <- function(medications) {
   # check date
   if (!is.null(medications)) {
@@ -139,6 +173,8 @@ set_medications <- function(medications) {
   invisible(medications)
 }
 
+#' @rdname medications-option
+#' @export
 get_medications <- function() {
   medications <- getOption("pregnancy.medications")
 
