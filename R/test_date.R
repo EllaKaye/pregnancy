@@ -122,7 +122,7 @@ days_until_test <- function(test_date = NULL) {
 
   date_diff <- as.numeric(test_date - Sys.Date())
 
-  # TODO: different messages
+  # MAYBE: different messages (if releasing this function!)
   # date_diff > 0 -> test in future
   # date_diff == 0, -> test today
   # date_diff < 0 -> already past test date

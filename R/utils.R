@@ -102,12 +102,6 @@ check_cycle <- function(cycle) {
   invisible(cycle)
 }
 
-# TODO: Write line about editing RProfile
-# TODO: Make sure line of code for RProfile stands out - make it black,
-# though this could be an issue depending on light/dark theme, so some cli function (e.g. cli_bullets) that is darker than inform
-# TODO: Make sure functions that call this pass in `value` argument (and that it's parsed properly)
-# TODO: Add a line about making sure the code to generate the value of `{option}` is also included in the .Rprofile
-# TODO: Fix line to add to .RProfile: should be '{value}' if option is "person", and as.Date('{value}') if option is due_date or test_date
 # TODO: different message if option is set to NULL - or does this need to be in the individual set_* finctions?
 set_option_message <- function(option) {
   cli::cli_inform(
@@ -121,6 +115,11 @@ set_option_message <- function(option) {
       " " = "or with `getOption('pregnancy.{option}')`."
     )
   )
+}
+
+# TODO: write this function, to use instead of set_option_message when value is NULL
+set_option_null_message <- function(option) {
+  NULL
 }
 
 # Probably don't need this - use tests instead of in-function checks
@@ -153,7 +152,3 @@ null_option <- function(option) {
   )
 }
 
-# TODO: write this function, to use in set_{option} functions
-# set_option_null_message <- function(option) {
-#
-# }

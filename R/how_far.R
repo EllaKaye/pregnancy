@@ -82,7 +82,6 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
   list(messages = messages)
 }
 
-# TODO: check due date in relation to on_date/Sys.Date()
 #' Calculate pregnancy progress and time remaining
 #'
 #' @description

@@ -229,7 +229,7 @@ set_medications <- function(medications) {
 
   options("pregnancy.medications" = medications)
 
-  # TODO: different message if due_date = NULL
+  # TODO: different message if medications = NULL
   cli::cli_alert_success("medications option set")
   set_option_message("medications")
 
@@ -255,10 +255,11 @@ get_medications <- function() {
 
 # tibble output actually looks better than cli here
 # probably don't export this function, don't need it.
-# DON'T have on_date. Need to pass that as flag from medications_remaining
+# TODO: delete this function (or comment out)
+# TODO: don't have on_date. Need to pass that as flag from medications_remaining
 # (otherwise docuemnt that on_date must be set the same in both medications_remaining and medications_print)
 medications_print <- function(medications_summary, on_date = Sys.Date()) {
-  # TODO: use person and have (via a new to_have function)
+  # MAYBE: use person and have (via a new to_have function)
   if (nrow(medications_summary) == 0) {
     cli::cli_alert_success("There are no medications remaining.")
     return(invisible(medications_summary))
@@ -267,8 +268,6 @@ medications_print <- function(medications_summary, on_date = Sys.Date()) {
   # check col names
   thing <- medications_summary[[1]]
   quantity <- medications_summary[[2]]
-
-  # TODO: pick up here...
 
   if (on_date == Sys.Date()) {
     cli::cli_alert_info("As of first thing today, the following medications remain to be taken:")

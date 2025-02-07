@@ -7,14 +7,14 @@ date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
   # date calculations
   start_date <- due_date - 280
   date_when <- start_date + (weeks * 7)
-  # on_date should always be "Sys.Date()", except for testing and documenting purposes
+  # `today` should always be "Sys.Date()", except for testing and documenting purposes
   total_days <- abs(as.integer(difftime(date_when, today, units = "days"))) # days from today
   list(total_days = total_days, date_when = date_when)
 }
 
 # TODO: when testing, take into account that cli is taking care of extraneous white space
 # returned strings aren't necessarily what's printed by cli
-# TODO: maybe put `days = 0` argument back for more precise messages?
+# MAYBE: maybe put `days = 0` argument back for more precise messages?
 date_when_message <- function(total_days, date_when, weeks, person = NULL, today = Sys.Date()) {
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
@@ -58,8 +58,6 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
 
 # For users, `today` should always be Sys.Date(). The argument exists purely for documenting and testing purposes.
 # Need to check how this is handled in vignette and example building
-# TODO: check due date in relation to on_date and give appropriate message if > 42 weeks pregnant
-# TODO: maybe put `days = 0` argument back for more precise messages?
 #' Calculate and display date of specific pregnancy week
 #'
 #' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for
