@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pregnancy
+# pregnancy <a href="https://ellakaye.github.io/pregnancy/"><img src="man/figures/logo.png" align="right" height="137" alt="pregnancy website" /></a>
 
 <!-- badges: start -->
 
