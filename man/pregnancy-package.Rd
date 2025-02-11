@@ -6,6 +6,8 @@
 \alias{pregnancy-package}
 \title{pregnancy: Keep track of dates and medications through pregnancy and fertility treatment}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 What the package does (one paragraph).
 }
 \seealso{
