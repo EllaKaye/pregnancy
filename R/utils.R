@@ -117,7 +117,8 @@ set_option_message <- function(option) {
   )
 }
 
-# TODO: write this function, to use instead of set_option_message when value is NULL
+# MAYBE: write this function, to use instead of set_option_message when value is NULL
+# or maybe better in set_option_message above
 set_option_null_message <- function(option) {
   NULL
 }
