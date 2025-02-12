@@ -105,7 +105,9 @@ medications_remaining <-
 
     # TODO: more informative error message
     if (until_date < on_date) {
-      cli::cli_abort("`until_date` must be later than `on_date`.")
+      cli::cli_abort("`until_date` must be later than `on_date`.",
+      call = rlang::caller_env(),
+      class = "date_order_error")
     }
 
     medications_aug <- 
