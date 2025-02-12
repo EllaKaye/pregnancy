@@ -20,10 +20,10 @@
 #' @param group Character string specifying how to group the results. One of:
 #'   * "medication": Group by medication name (default)
 #'   * "format": Group by medication format
-#' @param on_date Date object specifying the date for which to calculate remaining medications.
-#'   Defaults to current system date. This parameter exists primarily for testing and
-#'   documentation purposes and it is unlikely to make sense for the user to need or
-#'   want to change it from the default.
+#' @param on_date Date object specifying the date from which to calculate remaining medications.
+#'   Defaults to current system date. 
+#' @param until_date Date object specifying cut-off date for remaining medications.
+#'   If NULL, defaults to the latest `stop_date` in `medications`
 #'
 #' @return
 #' Returns a data frame containing remaining quantities, grouped as specified.
@@ -50,7 +50,7 @@
 #'   stop_date = as.Date(c("2025-04-30", "2025-05-07", "2025-09-05"))
 #' )
 #'
-#' # Calculate remaining medications for a specific date
+#' # Calculate remaining medications
 #' medications_remaining(
 #'   medications = meds,
 #'   on_date = as.Date("2025-04-21")
@@ -60,6 +60,13 @@
 #'   medications = meds,
 #'   group = "format",
 #'   on_date = as.Date("2025-04-21")
+#' )
+#' 
+#' # Calculate medications in a given week
+#' medications_remaining(
+#'   medications = meds,
+#'   on_date = as.Date("2025-04-21"),
+#'   until_date = as.Date("2025-04-28")
 #' )
 #'
 #' # Set and use global medications option
@@ -80,7 +87,8 @@
 medications_remaining <-
   function(medications = NULL,
            group = c("medication", "format"),
-           on_date = Sys.Date()) {
+           on_date = Sys.Date(),
+           until_date = NULL) {
     check_date(on_date)
 
     # TODO: better abort message (see date_abort)
@@ -89,27 +97,43 @@ medications_remaining <-
 
     group <- rlang::arg_match(group)
 
-    medications_aug <- medications %>%
-      dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
-      dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
-      dplyr::mutate(days_remaining = dplyr::case_when(
-        on_date <= stop_date & on_date >= start_date ~ (as.integer(stop_date - on_date) + 1),
-        start_date > on_date ~ (as.integer(stop_date - start_date) + 1),
-        TRUE ~ 0
-      )) %>%
-      dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity))
+    latest_stop <- medications %>%
+      dplyr::pull(stop_date) %>%
+      max()
+    until_date <- until_date %||% latest_stop
+    check_date(until_date)
+
+    # TODO: more informative error message
+    if (until_date < on_date) {
+      cli::cli_abort("`until_date` must be later than `on_date`.")
+    }
+
+    medications_aug <- 
+      medications %>%
+      dplyr::mutate(from = pmax(on_date, start_date)) %>%
+      dplyr::mutate(to = pmin(until_date, stop_date)) %>%
+      #dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
+      #dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
+      # dplyr::mutate(days_remaining = dplyr::case_when(
+      #   on_date <= stop_date & on_date >= start_date ~ (as.integer(stop_date - on_date) + 1),
+      #   start_date > on_date ~ (as.integer(stop_date - start_date) + 1),
+      #   TRUE ~ 0
+      # )) %>%
+      dplyr::mutate(days = pmax(0, (as.integer(to - from) + 1))) %>%
+      #dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity)) %>%
+      dplyr::mutate(quant = as.integer(days * quantity))
 
     if (group == "medication") {
       medications_summary <- medications_aug %>%
         dplyr::group_by(medication) %>%
-        dplyr::summarise(quantity_remaining = sum(quantity_remaining)) %>%
+        dplyr::summarise(quantity_remaining = sum(quant)) %>%
         dplyr::filter(quantity_remaining > 0)
     }
 
     if (group == "format") {
       medications_summary <- medications_aug %>%
         dplyr::group_by(format) %>%
-        dplyr::summarise(quantity_remaining = sum(quantity_remaining)) %>%
+        dplyr::summarise(quantity_remaining = sum(quant)) %>%
         dplyr::filter(quantity_remaining > 0)
     }
 
@@ -120,6 +144,7 @@ medications_remaining <-
 
     medications_summary
   }
+
 
 check_medications <- function(medications) {
   if (!is.data.frame(medications)) {

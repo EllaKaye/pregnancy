@@ -7,7 +7,8 @@
 medications_remaining(
   medications = NULL,
   group = c("medication", "format"),
-  on_date = Sys.Date()
+  on_date = Sys.Date(),
+  until_date = NULL
 )
 }
 \arguments{
@@ -27,10 +28,11 @@ If NULL, will try to use the "pregnancy.medications" option. Required if option 
 \item "format": Group by medication format
 }}
 
-\item{on_date}{Date object specifying the date for which to calculate remaining medications.
-Defaults to current system date. This parameter exists primarily for testing and
-documentation purposes and it is unlikely to make sense for the user to need or
-want to change it from the default.}
+\item{on_date}{Date object specifying the date from which to calculate remaining medications.
+Defaults to current system date.}
+
+\item{until_date}{Date object specifying cut-off date for remaining medications.
+If NULL, defaults to the latest \code{stop_date} in \code{medications}}
 }
 \value{
 Returns a data frame containing remaining quantities, grouped as specified.
@@ -68,7 +70,7 @@ meds <- data.frame(
   stop_date = as.Date(c("2025-04-30", "2025-05-07", "2025-09-05"))
 )
 
-# Calculate remaining medications for a specific date
+# Calculate remaining medications
 medications_remaining(
   medications = meds,
   on_date = as.Date("2025-04-21")
@@ -78,6 +80,13 @@ medications_remaining(
   medications = meds,
   group = "format",
   on_date = as.Date("2025-04-21")
+)
+
+# Calculate medications in a given week
+medications_remaining(
+  medications = meds,
+  on_date = as.Date("2025-04-21"),
+  until_date = as.Date("2025-04-28")
 )
 
 # Set and use global medications option
