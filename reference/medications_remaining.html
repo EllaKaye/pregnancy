@@ -52,7 +52,8 @@ either by medication name or by format (e.g., tablet, injection).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">medications_remaining</span><span class="op">(</span></span>
 <span>  medications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"medication"</span>, <span class="st">"format"</span><span class="op">)</span>,</span>
-<span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  until_date <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -77,10 +78,13 @@ If NULL, will try to use the "pregnancy.medications" option. Required if option 
 
 
 <dt id="arg-on-date">on_date<a class="anchor" aria-label="anchor" href="#arg-on-date"></a></dt>
-<dd><p>Date object specifying the date for which to calculate remaining medications.
-Defaults to current system date. This parameter exists primarily for testing and
-documentation purposes and it is unlikely to make sense for the user to need or
-want to change it from the default.</p></dd>
+<dd><p>Date object specifying the date from which to calculate remaining medications.
+Defaults to current system date.</p></dd>
+
+
+<dt id="arg-until-date">until_date<a class="anchor" aria-label="anchor" href="#arg-until-date"></a></dt>
+<dd><p>Date object specifying cut-off date for remaining medications.
+If NULL, defaults to the latest <code>stop_date</code> in <code>medications</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -119,7 +123,7 @@ and a data frame with 0 rows in returned invisibly.</p>
 <span class="r-in"><span>  stop_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2025-04-30"</span>, <span class="st">"2025-05-07"</span>, <span class="st">"2025-09-05"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Calculate remaining medications for a specific date</span></span></span>
+<span class="r-in"><span><span class="co"># Calculate remaining medications</span></span></span>
 <span class="r-in"><span><span class="fu">medications_remaining</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  medications <span class="op">=</span> <span class="va">meds</span>,</span></span>
 <span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-21"</span><span class="op">)</span></span></span>
@@ -141,6 +145,18 @@ and a data frame with 0 rows in returned invisibly.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> injection                121</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> tablet                    54</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Calculate medications in a given week</span></span></span>
+<span class="r-in"><span><span class="fu">medications_remaining</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  medications <span class="op">=</span> <span class="va">meds</span>,</span></span>
+<span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-21"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  until_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-28"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity_remaining</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> prednisolone                  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> progynova                    24</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set and use global medications option</span></span></span>
 <span class="r-in"><span><span class="co">#' Store original medications setting</span></span></span>
