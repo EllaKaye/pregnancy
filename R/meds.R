@@ -15,7 +15,7 @@
 #'   * format (character/factor): Format of the medication (e.g., pill, injection)
 #'   * quantity (numeric): Number of units to take per day
 #'   * start_date (Date): Date to start taking the medication
-#'   * stop_date (Date): Final date to take the medication
+#'   * stop_date (Date): Final date on which the medication is taken
 #'   If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
 #' @param group Character string specifying how to group the results. One of:
 #'   * "medication": Group by medication name (default)
