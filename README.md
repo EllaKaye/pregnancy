@@ -184,17 +184,9 @@ how_far()
 ```
 
 ``` r
-set_person(NULL) # TODO: update output to reflect that option has been unset
-#> ✔ person set as ''
-#> ℹ Functions in the pregnancy package will now use this `person` option.
-#> ℹ So, for this R session, you do not need to supply a value to the `person`
-#>   argument (unless you wish to override the option).
-#> ℹ To make this `person` option available in all R sessions, in your
-#>   ".Rprofile", set `options(pregnancy.person = ...)`
-#>   where ... is the value of `person`.
-#> ℹ You can edit your ".Rprofile" by calling `usethis::edit_r_profile()`
-#> ℹ You can retrieve the `person` option with `get_person()`,
-#>   or with `getOption('pregnancy.person')`.
+set_person(NULL) 
+#> ✔ pregnancy.person option set to NULL.
+#> ℹ The `person` argument will now default to "You".
 ```
 
 ``` r
