@@ -21,7 +21,8 @@ and timing. Settings persist for the current R session only, unless added to
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/pregnancy.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/EllaKaye/pregnancy/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -87,7 +88,8 @@ unset the current value</p></dd>
 <span class="r-in"><span><span class="co"># Check current setting</span></span></span>
 <span class="r-in"><span><span class="fu">get_due_date</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> You do not have `pregnancy.due_date` set as an option.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can set it by...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can set it with `set_due_date()`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can also pass a value directly to the `due_date` argument where required.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set due date using as.Date</span></span></span>
 <span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2024-09-15"</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -127,16 +129,9 @@ unset the current value</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Restore original setting</span></span></span>
 <span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="va">original_due_date</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as NULL</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, in your</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">".Rprofile"</span>, set `options(pregnancy.due_date = ...)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   where ... is the value of `due_date`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can edit your <span style="color: #0000BB;">".Rprofile"</span> by calling `usethis::edit_r_profile()`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> pregnancy.due_date option set to NULL.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You will need to explicitly pass a value to the `due_date` argument</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   in functions that use it, or reset the option with `set_due_date()`.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
