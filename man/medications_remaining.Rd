@@ -40,8 +40,8 @@ Assumes that the function is being called first thing in the day,
 i.e. before any of \code{on_date}'s medications have been taken.
 The data frame has two columns:
 \itemize{
-\item First column: Either 'medication' or 'format' depending on grouping
-\item quantity_remaining: Total number of units remaining
+\item Either 'medication' or 'format' depending on grouping
+\item quantity: Total number of units remaining
 }
 
 Only medications with remaining quantities > 0 are included.

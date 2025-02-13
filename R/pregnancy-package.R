@@ -5,7 +5,6 @@
 # see https://r-pkgs.org/package-within.html#echo-a-working-package
 medication <- format <- quantity <- start_date <- stop_date <- NULL
 to <- from <- days <- quant <- NULL
-quantity_remaining <- format_remaining <- NULL
 
 # To allow mocking
 # see https://testthat.r-lib.org/reference/local_mocked_bindings.html

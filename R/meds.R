@@ -30,8 +30,8 @@
 #' Assumes that the function is being called first thing in the day, 
 #' i.e. before any of `on_date`'s medications have been taken.
 #' The data frame has two columns:
-#'   * First column: Either 'medication' or 'format' depending on grouping
-#'   * quantity_remaining: Total number of units remaining
+#'   * Either 'medication' or 'format' depending on grouping
+#'   * quantity: Total number of units remaining
 #' 
 #' Only medications with remaining quantities > 0 are included.
 #'
@@ -130,15 +130,15 @@ medications_remaining <-
     if (group == "medication") {
       medications_summary <- medications_aug %>%
         dplyr::group_by(medication) %>%
-        dplyr::summarise(quantity_remaining = sum(quant)) %>%
-        dplyr::filter(quantity_remaining > 0)
+        dplyr::summarise(quantity = sum(quant)) %>%
+        dplyr::filter(quantity > 0)
     }
 
     if (group == "format") {
       medications_summary <- medications_aug %>%
         dplyr::group_by(format) %>%
-        dplyr::summarise(quantity_remaining = sum(quant)) %>%
-        dplyr::filter(quantity_remaining > 0)
+        dplyr::summarise(quantity = sum(quant)) %>%
+        dplyr::filter(quantity > 0)
     }
 
     if (nrow(medications_summary) == 0) {
