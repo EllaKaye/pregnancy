@@ -5,3 +5,4 @@
 docs
 settings.json
 /.quarto/
+inst/doc
