@@ -36,6 +36,8 @@ If NULL, defaults to the latest \code{stop_date} in \code{medications}}
 }
 \value{
 Returns a data frame containing remaining quantities, grouped as specified.
+Assumes that the function is being called first thing in the day,
+i.e. before any of \code{on_date}'s medications have been taken.
 The data frame has two columns:
 \itemize{
 \item First column: Either 'medication' or 'format' depending on grouping
@@ -82,11 +84,11 @@ medications_remaining(
   on_date = as.Date("2025-04-21")
 )
 
-# Calculate medications in a given week
+# Calculate medications for a specified period
 medications_remaining(
   medications = meds,
-  on_date = as.Date("2025-04-21"),
-  until_date = as.Date("2025-04-28")
+  on_date = as.Date("2025-04-23"),
+  until_date = as.Date("2025-04-30")
 )
 
 # Set and use global medications option

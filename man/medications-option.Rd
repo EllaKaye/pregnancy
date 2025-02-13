@@ -4,7 +4,7 @@
 \alias{medications-option}
 \alias{set_medications}
 \alias{get_medications}
-\title{Set or Get the \code{pregnancy.medications} option}
+\title{Set or get the \code{pregnancy.medications} option}
 \usage{
 set_medications(medications)
 
