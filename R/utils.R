@@ -102,7 +102,6 @@ check_cycle <- function(cycle) {
   invisible(cycle)
 }
 
-# TODO: different message if option is set to NULL - or does this need to be in the individual set_* finctions?
 set_option_message <- function(option) {
   cli::cli_inform(
     c(
@@ -117,10 +116,26 @@ set_option_message <- function(option) {
   )
 }
 
-# MAYBE: write this function, to use instead of set_option_message when value is NULL
-# or maybe better in set_option_message above
 set_option_null_message <- function(option) {
-  NULL
+  cli::cli_alert_success("pregnancy.{option} option set to NULL.")
+  
+  if (option == "person") {
+    cli::cli_inform(
+      c(
+        "i" = 'The `person` argument will now default to "You".'
+      )
+    )
+  }
+  
+  else {
+    cli::cli_inform(
+      c(
+        "i" = "You will need to explicitly pass a value to the `{option}` argument",
+        " " = "in functions that use it, or reset the option with {.fn set_{option}}." 
+      )
+    )
+  }
+
 }
 
 # Probably don't need this - use tests instead of in-function checks
@@ -141,15 +156,19 @@ set_option_null_message <- function(option) {
 #
 # }
 
-# TODO: finish message in this function, to use in get_{option} functions
-# TODO: use it in all get_{option} function
 null_option <- function(option) {
   # message when getOption(pregnancy.{option}) is null
-  cli::cli_bullets(
-    c(
-      "!" = "You do not have {.code pregnancy.{option}} set as an option.",
-      "i" = "You can set it by..."
+  cli::cli_alert_warning("You do not have {.code pregnancy.{option}} set as an option.")
+
+  if (option == "person") {
+    cli::cli_alert_info('The `person` argument defaults to "You".')
+  } else {
+    cli::cli_inform(
+      c(
+        "i" = "You can set it with {.fn set_{option}}.",
+        "i" = "You can also pass a value directly to the {.code {option}} argument where required."
+      )
     )
-  )
+  }
 }
 

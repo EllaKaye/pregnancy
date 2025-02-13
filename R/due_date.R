@@ -174,9 +174,12 @@ set_due_date <- function(due_date) {
 
   options("pregnancy.due_date" = due_date)
 
-  # TODO: different message if due_date = NULL
-  cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
-  set_option_message("due_date")
+  if (is.null(due_date)) {
+    set_option_null_message("due_date")
+  } else {
+    cli::cli_alert_success("Due date set as {format(due_date, '%B %d, %Y')}")
+    set_option_message("due_date")
+  }
 
   invisible(due_date)
 }

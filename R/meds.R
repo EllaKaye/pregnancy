@@ -256,9 +256,12 @@ set_medications <- function(medications) {
 
   options("pregnancy.medications" = medications)
 
-  # TODO: different message if medications = NULL
-  cli::cli_alert_success("medications option set")
-  set_option_message("medications")
+  if (is.null(medications)) {
+    set_option_null_message("medications")
+  } else {
+    cli::cli_alert_success("medications set.")
+    set_option_message("medications")
+  }
 
   invisible(medications)
 }

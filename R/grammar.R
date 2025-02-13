@@ -130,9 +130,12 @@ set_person <- function(person) {
 
   options("pregnancy.person" = person)
 
-  # TODO: different message if person = NULL
-  cli::cli_alert_success("person set as '{person}'")
-  set_option_message("person")
+  if (is.null(person)) {
+    set_option_null_message("person")
+  } else {
+    cli::cli_alert_success("person set as '{person}'")
+    set_option_message("person")
+  }
 }
 
 # get_person
