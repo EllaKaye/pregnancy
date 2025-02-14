@@ -21,9 +21,9 @@ calculators and apps, plus there are no concerns(unlike with these sites
 and apps) about data privacy, tracking or advertising.
 
 > This R package is in the latter stages of development, with a view to
-> release in early March 2025. The main functionality is now in place.
-> Still to do: improved documentation, vignette(s), better test
-> coverage, improve some of messages in some utils functions.
+> in late February 2025. The main functionality is now in place. Still
+> to do: improved documentation, vignette(s), better test coverage,
+> improve some of messages in some utils functions.
 
 ## Installation
 
@@ -73,8 +73,12 @@ how_far(due_date = due_date)
 
 ``` r
 
-# alternative `on_date`, different subject
-how_far(on_date = as.Date("2025-04-02"), due_date = as.Date("2025-09-16"), person = "Ruth")
+# alternative `on_date`, different person
+how_far(
+  on_date = as.Date("2025-04-02"),
+  due_date = as.Date("2025-09-16"),
+  person = "Ruth"
+)
 #> ℹ On April 02, 2025, Ruth will be 16 weeks and 1 day pregnant.
 ```
 
@@ -94,7 +98,7 @@ meds <- dplyr::tribble(
   "progynova", "tablet", 6, as.Date("2025-05-01"), as.Date("2025-07-11"),
   "cyclogest", "pessary", 2, as.Date("2025-05-03"), as.Date("2025-07-11"),
   "clexane", "injection", 1, as.Date("2025-05-08"), as.Date("2025-09-05")
-  )
+)
 ```
 
 ``` r
@@ -110,11 +114,17 @@ medications_remaining(meds)
 
 ``` r
 # how much medication for a given week (useful if you need to request a prescription)
-medications_remaining(meds, on_date = as.Date("2025-04-23"), until_date = as.Date("2025-04-29"))
-#> # A tibble: 1 × 2
+medications_remaining(
+  meds, 
+  on_date = as.Date("2025-05-12"), 
+  until_date = as.Date("2025-05-18")
+)
+#> # A tibble: 3 × 2
 #>   medication quantity
 #>   <chr>         <int>
-#> 1 progynova        21
+#> 1 clexane           7
+#> 2 cyclogest        14
+#> 3 progynova        42
 ```
 
 ## Global options
@@ -125,9 +135,9 @@ since that date is constant throughout. Similarly for the medications
 table in `medications_remaining()`. To avoid this, the pregnancy package
 makes use of **global options**, which can be set with the `set_*`
 family of functions (`set_due_date()`, `set_person()`,
-`set_medications()`, and retrieved with the `get_*` family of functions.
-Any global option can be unset by calling its `set_*` function with the
-argument `NULL`.
+`set_medications()`, and retrieved with the corresponding `get_*` family
+of functions. Any global option can be unset by calling its `set_*`
+function with the argument `NULL`.
 
 ``` r
 set_due_date(due_date)
@@ -154,8 +164,6 @@ how_far()
 ```
 
 To check what the option is set to, use `get_due_date()`.
-
-*Write this section!*
 
 ### Options in `.RProfile`
 
