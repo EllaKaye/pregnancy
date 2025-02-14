@@ -21,18 +21,18 @@
 #'   * "medication": Group by medication name (default)
 #'   * "format": Group by medication format
 #' @param on_date Date object specifying the date from which to calculate remaining medications.
-#'   Defaults to current system date. 
+#'   Defaults to current system date.
 #' @param until_date Date object specifying cut-off date for remaining medications.
 #'   If NULL, defaults to the latest `stop_date` in `medications`
 #'
 #' @return
 #' Returns a data frame containing remaining quantities, grouped as specified.
-#' Assumes that the function is being called first thing in the day, 
+#' Assumes that the function is being called first thing in the day,
 #' i.e. before any of `on_date`'s medications have been taken.
 #' The data frame has two columns:
 #'   * Either 'medication' or 'format' depending on grouping
 #'   * quantity: Total number of units remaining
-#' 
+#'
 #' Only medications with remaining quantities > 0 are included.
 #'
 #' If no medications remain, a message is printed to the console indicating this,
@@ -57,13 +57,13 @@
 #'   medications = meds,
 #'   on_date = as.Date("2025-04-21")
 #' )
-#' 
+#'
 #' medications_remaining(
 #'   medications = meds,
 #'   group = "format",
 #'   on_date = as.Date("2025-04-21")
 #' )
-#' 
+#'
 #' # Calculate medications for a specified period
 #' medications_remaining(
 #'   medications = meds,
@@ -108,23 +108,24 @@ medications_remaining <-
     # TODO: more informative error message
     if (until_date < on_date) {
       cli::cli_abort("`until_date` must be later than `on_date`.",
-      call = rlang::caller_env(),
-      class = "date_order_error")
+        call = rlang::caller_env(),
+        class = "date_order_error"
+      )
     }
 
-    medications_aug <- 
+    medications_aug <-
       medications %>%
       dplyr::mutate(from = pmax(on_date, start_date)) %>%
       dplyr::mutate(to = pmin(until_date, stop_date)) %>%
-      #dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
-      #dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
+      # dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
+      # dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
       # dplyr::mutate(days_remaining = dplyr::case_when(
       #   on_date <= stop_date & on_date >= start_date ~ (as.integer(stop_date - on_date) + 1),
       #   start_date > on_date ~ (as.integer(stop_date - start_date) + 1),
       #   TRUE ~ 0
       # )) %>%
       dplyr::mutate(days = pmax(0, (as.integer(to - from) + 1))) %>%
-      #dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity)) %>%
+      # dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity)) %>%
       dplyr::mutate(quant = as.integer(days * quantity))
 
     if (group == "medication") {
@@ -230,15 +231,15 @@ check_medications <- function(medications) {
 #' * [set_medications()] returns the medications data frame that was set
 #'
 #' @seealso
-#' * [medications_remaining()], [medications] 
+#' * [medications_remaining()], [medications]
 #'
 #' @examples
 #' # Store original setting
 #' original_medications <- getOption("pregnancy.medications")
-#' 
+#'
 #' # Set the option
 #' set_medications(pregnancy::medications)
-#' 
+#'
 #' # Get the option
 #' get_medications()
 #'
@@ -313,8 +314,3 @@ medications_print <- function(medications_summary, on_date = Sys.Date()) {
 
   invisible(medications_summary)
 }
-
-
-
-
-

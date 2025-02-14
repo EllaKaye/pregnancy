@@ -129,7 +129,7 @@ If the option is not set, the default second-person will be used.
 ```{r}
 set_person(1)
 how_far()
-set_person(NULL) 
+set_person(NULL)
 how_far()
 ```
 

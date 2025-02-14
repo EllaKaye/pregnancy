@@ -1,7 +1,7 @@
 test_that("meds loads", {
   meds <- readRDS(test_path("fixtures", "meds.rds"))
   expect_equal(colnames(meds)[1], "medication")
-  expect_equal(meds$quantity, c(1,2,2,1))
+  expect_equal(meds$quantity, c(1, 2, 2, 1))
 })
 
 test_that("defaults spanning full date range", {

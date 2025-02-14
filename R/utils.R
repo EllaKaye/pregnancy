@@ -118,24 +118,21 @@ set_option_message <- function(option) {
 
 set_option_null_message <- function(option) {
   cli::cli_alert_success("pregnancy.{option} option set to NULL.")
-  
+
   if (option == "person") {
     cli::cli_inform(
       c(
         "i" = 'The `person` argument will now default to "You".'
       )
     )
-  }
-  
-  else {
+  } else {
     cli::cli_inform(
       c(
         "i" = "You will need to explicitly pass a value to the `{option}` argument",
-        " " = "in functions that use it, or reset the option with {.fn set_{option}}." 
+        " " = "in functions that use it, or reset the option with {.fn set_{option}}."
       )
     )
   }
-
 }
 
 # Probably don't need this - use tests instead of in-function checks
@@ -171,4 +168,3 @@ null_option <- function(option) {
     )
   }
 }
-
