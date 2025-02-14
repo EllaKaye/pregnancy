@@ -17,8 +17,8 @@ functions and features that I found useful at the time, and others that
 I added when adapting the package for general use.
 
 The functionality goes beyond what’s offered by online pregnancy
-calculators and apps, plus there are no concerns(unlike with these sites
-and apps) about data privacy, tracking or advertising.
+calculators and apps, plus there are no concerns (unlike with these
+sites and apps) about data privacy, tracking or advertising.
 
 > This R package is in the latter stages of development, with a view to
 > in late February 2025. The main functionality is now in place. Still
@@ -47,43 +47,51 @@ library(pregnancy)
 
 ## Date calculations
 
-The `calculate_due_date()` function estimates the pregnancy due date.
-The `start_date` is interpreted differently, depending on the
-`start_type`. By default, the `start_type` is the last menstrual period,
-and the `start_date` is the date this started. Other `start_date`
-options, like various transfer days, are useful for those using IVF.
-
 ``` r
 # invisibly returns a Date object with the estimated due date
+# by default, start date of last menstrual period, but other options available
 due_date <- calculate_due_date(as.Date("2024-12-10"))
 #> ℹ Estimated due date: Tuesday, September 16, 2025
 #> ℹ Estimated birth period begins: August 26, 2025 (37 weeks)
 #> ℹ Estimated birth period ends: September 30, 2025 (42 weeks)
 ```
 
+``` r
+# set the pregnancy.due_date option
+# avoids having to pass the due date as argument to other functions
+set_due_date(due_date)
+#> ✔ Due date set as September 16, 2025
+#> ℹ Functions in the pregnancy package will now use this `due_date` option.
+#> ℹ So, for this R session, you do not need to supply a value to the `due_date`
+#>   argument (unless you wish to override the option).
+#> ℹ To make this `due_date` option available in all R sessions, in your
+#>   ".Rprofile", set `options(pregnancy.due_date = ...)`
+#>   where ... is the value of `due_date`.
+#> ℹ You can edit your ".Rprofile" by calling `usethis::edit_r_profile()`
+#> ℹ You can retrieve the `due_date` option with `get_due_date()`,
+#>   or with `getOption('pregnancy.due_date')`.
+```
+
 This README was built on **February 14, 2025**, so for the purposes of
 reading this page, that counts as “today”.
 
 ``` r
-how_far(due_date = due_date)
+# don't need to specify `due_date` since option is set
+how_far()
 #> ℹ You are 9 weeks and 3 days pregnant.
 #> ℹ That's 30 weeks and 4 days until the due date (September 16, 2025).
 #> ℹ You are 24% through the pregnancy.
 ```
 
 ``` r
-
-# alternative `on_date`, different person
-how_far(
-  on_date = as.Date("2025-04-02"),
-  due_date = as.Date("2025-09-16"),
-  person = "Ruth"
-)
-#> ℹ On April 02, 2025, Ruth will be 16 weeks and 1 day pregnant.
+# alternative `on_date`, addressed as "I"
+how_far(on_date = as.Date("2025-04-02"), person = 1)
+#> ℹ On April 02, 2025, I will be 16 weeks and 1 day pregnant.
 ```
 
 ``` r
-date_when(28, due_date = due_date)
+# when a given week of the pregnancy is reached
+date_when(28)
 #> ℹ On June 24, 2025, you will be 28 weeks pregnant.
 #> ℹ That's 18 weeks and 4 days away.
 ```
@@ -102,7 +110,7 @@ meds <- dplyr::tribble(
 ```
 
 ``` r
-# how much of each medication is left to take, as of today
+# how much of each medication is left to take, as of "today"
 medications_remaining(meds)
 #> # A tibble: 3 × 2
 #>   medication quantity
@@ -113,7 +121,8 @@ medications_remaining(meds)
 ```
 
 ``` r
-# how much medication for a given week (useful if you need to request a prescription)
+# how much medication for a given week 
+# (useful if you need to request a prescription)
 medications_remaining(
   meds, 
   on_date = as.Date("2025-05-12"), 
@@ -129,19 +138,22 @@ medications_remaining(
 
 ## Global options
 
-It would be very tedious to have to enter a due date every time you call
-`how_far()` or `date_when()` over the course of a pregnancy, especially
-since that date is constant throughout. Similarly for the medications
-table in `medications_remaining()`. To avoid this, the pregnancy package
-makes use of **global options**, which can be set with the `set_*`
-family of functions (`set_due_date()`, `set_person()`,
-`set_medications()`, and retrieved with the corresponding `get_*` family
-of functions. Any global option can be unset by calling its `set_*`
-function with the argument `NULL`.
+`how_far()` and `date_when()` both need to know the pregnancy due date,
+and this can be passed directly to the `due_date` argument. It would be
+very tedious, however, to have to enter a due date every time you call
+these functions over the course of a pregnancy, especially since that
+date is constant throughout. Similarly for the medications table in
+`medications_remaining()`. To avoid this, the pregnancy package makes
+use of **global options**, which can be set with the `set_*` family of
+functions (`set_due_date()`, `set_person()`, `set_medications()`, and
+retrieved with the corresponding `get_*` family of functions. Any global
+option can be unset by calling its `set_*` function with the argument
+`NULL`.
 
 ``` r
-set_due_date(due_date)
-#> ✔ Due date set as September 16, 2025
+# a different due date from the earlier example
+set_due_date(as.Date("2025-07-01"))
+#> ✔ Due date set as July 01, 2025
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
 #>   argument (unless you wish to override the option).
@@ -153,17 +165,25 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-Then `how_far()` can be called without needing to specify any arguments,
-and `date_when()` only needs the target week:
-
 ``` r
 how_far()
-#> ℹ You are 9 weeks and 3 days pregnant.
-#> ℹ That's 30 weeks and 4 days until the due date (September 16, 2025).
-#> ℹ You are 24% through the pregnancy.
+#> ℹ You are 20 weeks and 3 days pregnant.
+#> ℹ That's 19 weeks and 4 days until the due date (July 01, 2025).
+#> ℹ You are 51% through the pregnancy.
 ```
 
-To check what the option is set to, use `get_due_date()`.
+``` r
+# check and then unset option
+get_due_date()
+#> ℹ Your due date is set as July 01, 2025.
+```
+
+``` r
+set_due_date(NULL)
+#> ✔ pregnancy.due_date option set to NULL.
+#> ℹ You will need to explicitly pass a value to the `due_date` argument
+#>   in functions that use it, or reset the option with `set_due_date()`.
+```
 
 ### Options in `.RProfile`
 

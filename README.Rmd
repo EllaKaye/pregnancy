@@ -26,7 +26,7 @@ It contains functions and features that I found useful at the time,
 and others that I added when adapting the package for general use.
 
 The functionality goes beyond what's offered by online pregnancy calculators and apps, 
-plus there are no concerns(unlike with these sites and apps) about data privacy, tracking or advertising.
+plus there are no concerns (unlike with these sites and apps) about data privacy, tracking or advertising.
 
 > This R package is in the latter stages of development, with a view to in late February 2025.
 > The main functionality is now in place.
@@ -53,34 +53,35 @@ library(pregnancy)
 
 ## Date calculations
 
-The `calculate_due_date()` function estimates the pregnancy due date. 
-The `start_date` is interpreted differently, depending on the `start_type`. 
-By default, the `start_type` is the last menstrual period, and the `start_date` is the date this started.
-Other `start_date` options, like various transfer days, are useful for those using IVF.
-
 ```{r}
 # invisibly returns a Date object with the estimated due date
+# by default, start date of last menstrual period, but other options available
 due_date <- calculate_due_date(as.Date("2024-12-10"))
+```
+
+```{r}
+# set the pregnancy.due_date option
+# avoids having to pass the due date as argument to other functions
+set_due_date(due_date)
 ```
 
 This README was built on **`r format(Sys.Date(), '%B %d, %Y')`**, 
 so for the purposes of reading this page, that counts as "today".
 
 ```{r}
-how_far(due_date = due_date)
-
-# alternative `on_date`, different person
-how_far(
-  on_date = as.Date("2025-04-02"),
-  due_date = as.Date("2025-09-16"),
-  person = "Ruth"
-)
+# don't need to specify `due_date` since option is set
+how_far()
 ```
 
 ```{r}
-date_when(28, due_date = due_date)
+# alternative `on_date`, addressed as "I"
+how_far(on_date = as.Date("2025-04-02"), person = 1)
 ```
 
+```{r}
+# when a given week of the pregnancy is reached
+date_when(28)
+```
 
 ## Tracking medications
 
@@ -96,12 +97,13 @@ meds <- dplyr::tribble(
 ```
 
 ```{r}
-# how much of each medication is left to take, as of today
+# how much of each medication is left to take, as of "today"
 medications_remaining(meds)
 ```
 
 ```{r}
-# how much medication for a given week (useful if you need to request a prescription)
+# how much medication for a given week 
+# (useful if you need to request a prescription)
 medications_remaining(
   meds, 
   on_date = as.Date("2025-05-12"), 
@@ -111,7 +113,9 @@ medications_remaining(
 
 ## Global options
 
-It would be very tedious to have to enter a due date every time you call `how_far()` or `date_when()` over the course of a pregnancy, 
+`how_far()` and `date_when()` both need to know the pregnancy due date,
+and this can be passed directly to the `due_date` argument.
+It would be very tedious, however, to have to enter a due date every time you call these functions over the course of a pregnancy, 
 especially since that date is constant throughout. 
 Similarly for the medications table in `medications_remaining()`.
 To avoid this, the pregnancy package makes use of **global options**, 
@@ -120,17 +124,19 @@ and retrieved with the corresponding `get_*` family of functions.
 Any global option can be unset by calling its `set_*` function with the argument `NULL`.
 
 ```{r}
-set_due_date(due_date)
+# a different due date from the earlier example
+set_due_date(as.Date("2025-07-01"))
 ```
-
-Then `how_far()` can be called without needing to specify any arguments, 
-and `date_when()` only needs the target week:
 
 ```{r}
 how_far()
 ```
 
-To check what the option is set to, use `get_due_date()`.
+```{r}
+# check and then unset option
+get_due_date()
+set_due_date(NULL)
+```
 
 ### Options in `.RProfile`
 
