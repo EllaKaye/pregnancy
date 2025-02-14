@@ -91,8 +91,10 @@ If NULL, defaults to the latest <code>stop_date</code> in <code>medications</cod
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns a data frame containing remaining quantities, grouped as specified.
-The data frame has two columns:</p><ul><li><p>First column: Either 'medication' or 'format' depending on grouping</p></li>
-<li><p>quantity_remaining: Total number of units remaining</p></li>
+Assumes that the function is being called first thing in the day,
+i.e. before any of <code>on_date</code>'s medications have been taken.
+The data frame has two columns:</p><ul><li><p>Either 'medication' or 'format' depending on grouping</p></li>
+<li><p>quantity: Total number of units remaining</p></li>
 </ul><p>Only medications with remaining quantities &gt; 0 are included.</p>
 <p>If no medications remain, a message is printed to the console indicating this,
 and a data frame with 0 rows in returned invisibly.</p>
@@ -130,11 +132,11 @@ and a data frame with 0 rows in returned invisibly.</p>
 <span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-21"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity_remaining</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> clexane                     121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> prednisolone                 24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> progynova                    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> clexane           121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> prednisolone       24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> progynova          30</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">medications_remaining</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  medications <span class="op">=</span> <span class="va">meds</span>,</span></span>
@@ -142,22 +144,22 @@ and a data frame with 0 rows in returned invisibly.</p>
 <span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-21"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   format    quantity_remaining</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> injection                121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> tablet                    54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   format    quantity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> injection      121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> tablet          54</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Calculate medications in a given week</span></span></span>
+<span class="r-in"><span><span class="co"># Calculate medications for a specified period</span></span></span>
 <span class="r-in"><span><span class="fu">medications_remaining</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  medications <span class="op">=</span> <span class="va">meds</span>,</span></span>
-<span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-21"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  until_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-28"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-23"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  until_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-30"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity_remaining</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> prednisolone                  6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> progynova                    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> prednisolone       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> progynova          24</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set and use global medications option</span></span></span>
 <span class="r-in"><span><span class="co">#' Store original medications setting</span></span></span>
@@ -175,14 +177,14 @@ and a data frame with 0 rows in returned invisibly.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.medications')`.</span>
 <span class="r-in"><span><span class="fu">medications_remaining</span><span class="op">(</span>on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-05-01"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity_remaining</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> LDA                           7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> clexane                     121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> cyclogest                   140</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> lubion                       70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> prednisolone                295</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> progynova                   432</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   medication   quantity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> LDA                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> clexane           121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> cyclogest         140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> lubion             70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> prednisolone      295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> progynova         432</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Restore original medications setting</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="medications-option.html">set_medications</a></span><span class="op">(</span><span class="va">original_medications</span><span class="op">)</span></span></span>
