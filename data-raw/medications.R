@@ -1,4 +1,5 @@
 ## code to prepare `medications` dataset goes here
+# fmt: skip
 medications <- tibble::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
   "progynova", "tablet", 3, as.Date("2025-04-21"), as.Date("2025-04-30"),

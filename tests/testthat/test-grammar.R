@@ -3,7 +3,6 @@
 # get_tense(date1, date2)
 # to_be(person, tense)
 
-
 # testing person_pronoun(person) ---------------------------------------------
 
 test_that("1 and 2 are allowed", {
@@ -13,7 +12,10 @@ test_that("1 and 2 are allowed", {
 
 test_that("person is a character vector of length 1", {
   expect_equal(person_pronoun("Ella"), "Ella")
-  expect_error(person_pronoun(c("Me", "You")), class = "pregnancy_error_class_or_length")
+  expect_error(
+    person_pronoun(c("Me", "You")),
+    class = "pregnancy_error_class_or_length"
+  )
   expect_error(person_pronoun(3), class = "pregnancy_error_class_or_length")
   expect_error(person_pronoun(NULL), class = "pregnancy_error_class_or_length")
 })
@@ -45,19 +47,43 @@ test_that("second person gives 'You'", {
 # testing tense(date1, date2) ---------------------------------------------
 
 test_that("dates are Dates", {
-  expect_error(get_tense("2023-01-01", as.Date("2023-01-01")), class = "pregnancy_error_class")
-  expect_error(get_tense(as.Date("2023-01-01"), "2023-01-01"), class = "pregnancy_error_class")
+  expect_error(
+    get_tense("2023-01-01", as.Date("2023-01-01")),
+    class = "pregnancy_error_class"
+  )
+  expect_error(
+    get_tense(as.Date("2023-01-01"), "2023-01-01"),
+    class = "pregnancy_error_class"
+  )
 })
 
 test_that("dates are length 1", {
-  expect_error(get_tense(c(as.Date("2023-01-01"), as.Date("2023-01-01")), as.Date("2023-01-01")), class = "pregnancy_error_length")
-  expect_error(get_tense(as.Date("2023-01-01"), c(as.Date("2023-01-01"), as.Date("2023-01-01"))), class = "pregnancy_error_length")
+  expect_error(
+    get_tense(
+      c(as.Date("2023-01-01"), as.Date("2023-01-01")),
+      as.Date("2023-01-01")
+    ),
+    class = "pregnancy_error_length"
+  )
+  expect_error(
+    get_tense(
+      as.Date("2023-01-01"),
+      c(as.Date("2023-01-01"), as.Date("2023-01-01"))
+    ),
+    class = "pregnancy_error_length"
+  )
 })
 
 test_that("date diff gives expected tense", {
   expect_equal(get_tense(as.Date("2023-12-12"), as.Date("2023-01-01")), "past")
-  expect_equal(get_tense(as.Date("2023-01-01"), as.Date("2023-12-12")), "future")
-  expect_equal(get_tense(as.Date("2023-01-01"), as.Date("2023-01-01")), "present")
+  expect_equal(
+    get_tense(as.Date("2023-01-01"), as.Date("2023-12-12")),
+    "future"
+  )
+  expect_equal(
+    get_tense(as.Date("2023-01-01"), as.Date("2023-01-01")),
+    "present"
+  )
 })
 
 

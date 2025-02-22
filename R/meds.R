@@ -80,14 +80,18 @@
 #'
 #' @export
 medications_remaining <-
-  function(meds = NULL,
-           group = c("medication", "format"),
-           on_date = Sys.Date(),
-           until_date = NULL) {
+  function(
+    meds = NULL,
+    group = c("medication", "format"),
+    on_date = Sys.Date(),
+    until_date = NULL
+  ) {
     check_date(on_date)
 
     # TODO: better abort message (see date_abort)
-    meds <- meds %||% getOption("pregnancy.medications") %||% cli::cli_abort("NEEDS medications")
+    meds <- meds %||%
+      getOption("pregnancy.medications") %||%
+      cli::cli_abort("NEEDS medications")
     check_medications(meds)
 
     group <- rlang::arg_match(group)
@@ -100,7 +104,8 @@ medications_remaining <-
 
     # TODO: more informative error message
     if (until_date < on_date) {
-      cli::cli_abort("`until_date` must be later than `on_date`.",
+      cli::cli_abort(
+        "`until_date` must be later than `on_date`.",
         call = rlang::caller_env(),
         class = "date_order_error"
       )
@@ -147,7 +152,8 @@ medications_remaining <-
 check_medications <- function(meds) {
   if (!is.data.frame(meds)) {
     cli::cli_abort(
-      c("{.var meds} must be a data frame.",
+      c(
+        "{.var meds} must be a data frame.",
         "i" = "It was {.type {meds}} instead."
       ),
       class = "pregnancy_error_class"
@@ -160,12 +166,13 @@ check_medications <- function(meds) {
 
   if (length(diff) > 0) {
     message <- c("{.var meds} is missing column{?s} {.code {diff}}.")
-    cli::cli_abort(message,
-      class = "pregnancy_error_missing"
-    )
+    cli::cli_abort(message, class = "pregnancy_error_missing")
   }
 
-  if (!lubridate::is.Date(meds[["start_date"]]) || !lubridate::is.Date(meds[["stop_date"]])) {
+  if (
+    !lubridate::is.Date(meds[["start_date"]]) ||
+      !lubridate::is.Date(meds[["stop_date"]])
+  ) {
     cli::cli_abort(
       c(
         "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
@@ -296,9 +303,13 @@ medications_print <- function(meds_summary, on_date = Sys.Date()) {
   quantity <- meds_summary[[2]]
 
   if (on_date == Sys.Date()) {
-    cli::cli_alert_info("As of first thing today, the following medications remain to be taken:")
+    cli::cli_alert_info(
+      "As of first thing today, the following medications remain to be taken:"
+    )
   } else {
-    cli::cli_alert_info("As of first thing on {format(on_date, '%B %d, %Y')}, the following medications remain to be taken:")
+    cli::cli_alert_info(
+      "As of first thing on {format(on_date, '%B %d, %Y')}, the following medications remain to be taken:"
+    )
   }
 
   for (i in 1:length(thing)) {

@@ -3,7 +3,6 @@
 # get_tense(date1, date2)
 # to_be(person, tense)
 
-
 # a reworking of person_pronoun
 # used to pass into `to_be()`
 # returns "You", "I" or person
@@ -35,7 +34,9 @@ person_pronoun <- function(person) {
 
   if (person %in% c("1st", "first", "First", "FIRST", "I", "i", "1")) {
     person <- "I"
-  } else if (person %in% c("2nd", "second", "Second", "SECOND", "You", "you", "YOU", "2")) {
+  } else if (
+    person %in% c("2nd", "second", "Second", "SECOND", "You", "you", "YOU", "2")
+  ) {
     person <- "You"
   }
 

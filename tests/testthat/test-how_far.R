@@ -61,7 +61,10 @@ test_that("how_far_calculation errors appropriately", {
   )
 
   expect_error(
-    how_far_calculation(on_date = as.Date("2025-02-11"), due_date = "2025-07-01"),
+    how_far_calculation(
+      on_date = as.Date("2025-02-11"),
+      due_date = "2025-07-01"
+    ),
     class = "pregnancy_error_class"
   )
 })
@@ -73,7 +76,9 @@ test_that("how_far_message formats messages correctly for present date", {
   local_mocked_bindings(Sys.Date = function() as.Date("2027-01-27"))
   withr::local_options(pregnancy.due_date = as.Date("2025-07-01"))
 
-  calc_results <- how_far_calculation(on_date = as.Date("2025-01-27", due_date = as.Date("2025-07-01")))
+  calc_results <- how_far_calculation(
+    on_date = as.Date("2025-01-27", due_date = as.Date("2025-07-01"))
+  )
 
   # Test with default "You"
   result <- how_far_message(
@@ -111,7 +116,9 @@ test_that("how_far_message formats messages correctly for past/future dates", {
   local_mocked_bindings(Sys.Date = function() as.Date("2025-01-27"))
   withr::local_options(pregnancy.due_date = as.Date("2025-07-01"))
   # Test past date
-  calc_results <- how_far_calculation(on_date = as.Date("2025-01-01", due_date = as.Date("2025-07-01")))
+  calc_results <- how_far_calculation(
+    on_date = as.Date("2025-01-01", due_date = as.Date("2025-07-01"))
+  )
 
   result <- how_far_message(
     calc_results,
@@ -126,7 +133,9 @@ test_that("how_far_message formats messages correctly for past/future dates", {
   )
 
   # Test future date
-  calc_results <- how_far_calculation(on_date = as.Date("2025-05-15", due_date = as.Date("2025-07-01")))
+  calc_results <- how_far_calculation(
+    on_date = as.Date("2025-05-15", due_date = as.Date("2025-07-01"))
+  )
 
   result <- how_far_message(
     calc_results,
@@ -183,7 +192,6 @@ test_that("how_far_message handles over 42 weeks appropriately", {
 
 
 # test how_far() ---------------------------------------------------------
-
 
 test_that("how_far integrates calculation and message correctly", {
   withr::local_options(

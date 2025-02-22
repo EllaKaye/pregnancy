@@ -3,43 +3,87 @@
 # get_due_date()
 # set_due_date(due_date)
 
-
 # testing calculate_due_date() --------------------------------------------
 
 test_that("start_date is correct format", {
-  expect_error(calculate_due_date(2023 - 01 - 01), class = "pregnancy_error_class")
-  expect_error(calculate_due_date("2023-01-01"), class = "pregnancy_error_class")
+  expect_error(
+    calculate_due_date(2023 - 01 - 01),
+    class = "pregnancy_error_class"
+  )
+  expect_error(
+    calculate_due_date("2023-01-01"),
+    class = "pregnancy_error_class"
+  )
 })
 
 test_that("start_type matches arg", {
   start_date <- as.Date("2023-01-31")
-  expect_error(calculate_due_date(start_date, start_type = "hello"), "must be one of")
+  expect_error(
+    calculate_due_date(start_date, start_type = "hello"),
+    "must be one of"
+  )
 })
 
 test_that("cycle is allowed value", {
   start_date <- as.Date("2023-01-31")
-  expect_error(calculate_due_date(start_date, cycle = "28"), class = "pregnancy_error_class_or_length")
-  expect_error(calculate_due_date(start_date, cycle = 27:28), class = "pregnancy_error_class_or_length")
-  expect_error(calculate_due_date(start_date, cycle = NULL), class = "pregnancy_error_class_or_length")
-  expect_error(calculate_due_date(start_date, cycle = 19), class = "pregnancy_error_value")
-  expect_error(calculate_due_date(start_date, cycle = 45), class = "pregnancy_error_value")
-  expect_error(calculate_due_date(start_date, cycle = 27.5), class = "pregnancy_error_value")
+  expect_error(
+    calculate_due_date(start_date, cycle = "28"),
+    class = "pregnancy_error_class_or_length"
+  )
+  expect_error(
+    calculate_due_date(start_date, cycle = 27:28),
+    class = "pregnancy_error_class_or_length"
+  )
+  expect_error(
+    calculate_due_date(start_date, cycle = NULL),
+    class = "pregnancy_error_class_or_length"
+  )
+  expect_error(
+    calculate_due_date(start_date, cycle = 19),
+    class = "pregnancy_error_value"
+  )
+  expect_error(
+    calculate_due_date(start_date, cycle = 45),
+    class = "pregnancy_error_value"
+  )
+  expect_error(
+    calculate_due_date(start_date, cycle = 27.5),
+    class = "pregnancy_error_value"
+  )
 })
 
 # correct output from each start_type
 test_that("correct due date for each start type", {
   start_date <- as.Date("2023-01-31")
   expect_equal(calculate_due_date(start_date), as.Date("2023-11-07"))
-  expect_equal(calculate_due_date(start_date, "conception"), as.Date("2023-10-24"))
-  expect_equal(calculate_due_date(start_date, "transfer_day_3"), as.Date("2023-10-21"))
-  expect_equal(calculate_due_date(start_date, "transfer_day_5"), as.Date("2023-10-19"))
-  expect_equal(calculate_due_date(start_date, "transfer_day_6"), as.Date("2023-10-18"))
+  expect_equal(
+    calculate_due_date(start_date, "conception"),
+    as.Date("2023-10-24")
+  )
+  expect_equal(
+    calculate_due_date(start_date, "transfer_day_3"),
+    as.Date("2023-10-21")
+  )
+  expect_equal(
+    calculate_due_date(start_date, "transfer_day_5"),
+    as.Date("2023-10-19")
+  )
+  expect_equal(
+    calculate_due_date(start_date, "transfer_day_6"),
+    as.Date("2023-10-18")
+  )
 })
 
 test_that("due date for LMP adjusts with cycle", {
   start_date <- as.Date("2023-01-31")
-  expect_equal(calculate_due_date(start_date, cycle = 27), as.Date("2023-11-06"))
-  expect_equal(calculate_due_date(start_date, cycle = 29), as.Date("2023-11-08"))
+  expect_equal(
+    calculate_due_date(start_date, cycle = 27),
+    as.Date("2023-11-06")
+  )
+  expect_equal(
+    calculate_due_date(start_date, cycle = 29),
+    as.Date("2023-11-08")
+  )
 })
 
 test_that("calculate_due_date message", {

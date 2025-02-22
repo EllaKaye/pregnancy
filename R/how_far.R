@@ -3,7 +3,9 @@
 how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
   check_date(on_date)
 
-  due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
+  due_date <- due_date %||%
+    getOption("pregnancy.due_date") %||%
+    date_abort(due_date)
   check_date(due_date)
 
   # date calculations

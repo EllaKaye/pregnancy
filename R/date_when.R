@@ -1,7 +1,9 @@
 date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
   check_date(today)
 
-  due_date <- due_date %||% getOption("pregnancy.due_date") %||% date_abort(due_date)
+  due_date <- due_date %||%
+    getOption("pregnancy.due_date") %||%
+    date_abort(due_date)
   check_date(due_date)
 
   # date calculations
@@ -15,7 +17,13 @@ date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
 # TODO: when testing, take into account that cli is taking care of extraneous white space
 # returned strings aren't necessarily what's printed by cli
 # MAYBE: maybe put `days = 0` argument back for more precise messages?
-date_when_message <- function(total_days, date_when, weeks, person = NULL, today = Sys.Date()) {
+date_when_message <- function(
+  total_days,
+  date_when,
+  weeks,
+  person = NULL,
+  today = Sys.Date()
+) {
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
   subject <- get_subject(person) # "I", "You" or person
@@ -32,7 +40,9 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
     prefix <- cli::format_inline("On {format(date_when, '%B %d, %Y')}")
   }
 
-  date_str <- cli::format_inline("{prefix}, {subject} {verb} {weeks} weeks pregnant.")
+  date_str <- cli::format_inline(
+    "{prefix}, {subject} {verb} {weeks} weeks pregnant."
+  )
 
   if (tense != "present") {
     if (tense == "past") {
@@ -48,7 +58,9 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
     } else {
       weeks_str <- cli::format_inline("{weeks_from_now} week{?s} and")
     }
-    duration_str <- cli::format_inline("{prefix} {weeks_str} {and_days_from_now} day{?s} {suffix}.")
+    duration_str <- cli::format_inline(
+      "{prefix} {weeks_str} {and_days_from_now} day{?s} {suffix}."
+    )
   } else {
     duration_str <- NULL
   }
@@ -90,10 +102,24 @@ date_when_message <- function(total_days, date_when, weeks, person = NULL, today
 #' [how_far()] for calculating current pregnancy progress
 #'
 #' @export
-date_when <- function(weeks, due_date = NULL, person = NULL, today = Sys.Date()) {
-  dd_calc <- date_when_calculation(weeks = weeks, due_date = due_date, today = today)
+date_when <- function(
+  weeks,
+  due_date = NULL,
+  person = NULL,
+  today = Sys.Date()
+) {
+  dd_calc <- date_when_calculation(
+    weeks = weeks,
+    due_date = due_date,
+    today = today
+  )
 
-  dd_message <- date_when_message(total_days = dd_calc$total_days, date_when = dd_calc$date_when, weeks = weeks, person = person)
+  dd_message <- date_when_message(
+    total_days = dd_calc$total_days,
+    date_when = dd_calc$date_when,
+    weeks = weeks,
+    person = person
+  )
 
   # print out information
   cli::cli_inform(c(

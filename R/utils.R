@@ -22,12 +22,14 @@ date_abort <- function(date) {
 
 check_date <- function(date) {
   message <-
-    c("{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
+    c(
+      "{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
       "i" = "It was {.type {date}} of length {length(date)} instead."
     )
 
   if (length(date) != 1) {
-    cli::cli_abort(message,
+    cli::cli_abort(
+      message,
       call = rlang::caller_env(),
       class = "pregnancy_error_length"
     )
@@ -49,10 +51,14 @@ check_date <- function(date) {
   if (!lubridate::is.Date(date)) {
     if (is.character(date)) {
       message <-
-        c(message, "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}")
+        c(
+          message,
+          "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}"
+        )
     }
 
-    cli::cli_abort(message,
+    cli::cli_abort(
+      message,
       call = rlang::caller_env(),
       class = "pregnancy_error_class"
     )
@@ -69,7 +75,8 @@ check_person <- function(person) {
       "i" = "It was {.type {person}} of length {length(person)} instead."
     )
 
-    cli::cli_abort(message,
+    cli::cli_abort(
+      message,
       call = rlang::caller_env(),
       class = "pregnancy_error_class_or_length"
     )
@@ -85,7 +92,8 @@ check_cycle <- function(cycle) {
       "i" = "It was {.cls {cycle}} of length {length(cycle)} instead."
     )
 
-    cli::cli_abort(message,
+    cli::cli_abort(
+      message,
       call = rlang::caller_env(),
       class = "pregnancy_error_class_or_length"
     )
@@ -155,7 +163,9 @@ set_option_null_message <- function(option) {
 
 null_option <- function(option) {
   # message when getOption(pregnancy.{option}) is null
-  cli::cli_alert_warning("You do not have {.code pregnancy.{option}} set as an option.")
+  cli::cli_alert_warning(
+    "You do not have {.code pregnancy.{option}} set as an option."
+  )
 
   if (option == "person") {
     cli::cli_alert_info('The `person` argument defaults to "You".')

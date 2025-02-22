@@ -54,16 +54,18 @@
 #' * [calculate_due_date()] for calculating the estimated due date
 #'
 #' @export
-calculate_test_date <- function(start_date,
-                                start_type = c(
-                                  "LMP",
-                                  "conception",
-                                  "transfer_day_3",
-                                  "transfer_day_5",
-                                  "transfer_day_6"
-                                ),
-                                cycle = 28,
-                                test_type = c("urine", "blood")) {
+calculate_test_date <- function(
+  start_date,
+  start_type = c(
+    "LMP",
+    "conception",
+    "transfer_day_3",
+    "transfer_day_5",
+    "transfer_day_6"
+  ),
+  cycle = 28,
+  test_type = c("urine", "blood")
+) {
   test_type <- rlang::arg_match(test_type)
 
   urine_test_date <-
@@ -71,7 +73,8 @@ calculate_test_date <- function(start_date,
       start_date = start_date,
       start_type = start_type,
       cycle = cycle
-    ) + lubridate::days(14)
+    ) +
+    lubridate::days(14)
 
   blood_test_date <- urine_test_date - lubridate::days(2)
 
@@ -95,7 +98,9 @@ get_test_date <- function() {
   if (is.null(test_date)) {
     null_option("test_date")
   } else {
-    cli::cli_inform("Your test date is set as {format(test_date, '%B %d, %Y')}.")
+    cli::cli_inform(
+      "Your test date is set as {format(test_date, '%B %d, %Y')}."
+    )
     check_date(test_date)
   }
 
@@ -116,7 +121,9 @@ set_test_date <- function(test_date) {
 }
 
 days_until_test <- function(test_date = NULL) {
-  test_date <- test_date %||% getOption("pregnancy.test_date") %||% date_abort(test_date)
+  test_date <- test_date %||%
+    getOption("pregnancy.test_date") %||%
+    date_abort(test_date)
 
   check_date(test_date)
 
