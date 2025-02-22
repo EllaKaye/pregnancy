@@ -10,7 +10,7 @@
 #' based on a schedule of medications with start and stop dates. Results can be grouped
 #' either by medication name or by format (e.g., tablet, injection).
 #'
-#' @param medications Data frame containing medication schedule. Must have the following columns:
+#' @param meds Data frame containing medication schedule. Must have the following columns:
 #'   * medication (character/factor): Name of the medication
 #'   * format (character/factor): Format of the medication (e.g., pill, injection)
 #'   * quantity (numeric): Number of units to take per day
@@ -53,20 +53,13 @@
 #' )
 #'
 #' # Calculate remaining medications
-#' medications_remaining(
-#'   medications = meds,
-#'   on_date = as.Date("2025-04-21")
-#' )
+#' medications_remaining(meds, on_date = as.Date("2025-04-21"))
 #'
-#' medications_remaining(
-#'   medications = meds,
-#'   group = "format",
-#'   on_date = as.Date("2025-04-21")
-#' )
+#' medications_remaining(meds, group = "format", on_date = as.Date("2025-04-21"))
 #'
 #' # Calculate medications for a specified period
 #' medications_remaining(
-#'   medications = meds,
+#'   meds = meds,
 #'   on_date = as.Date("2025-04-23"),
 #'   until_date = as.Date("2025-04-30")
 #' )
@@ -87,19 +80,19 @@
 #'
 #' @export
 medications_remaining <-
-  function(medications = NULL,
+  function(meds = NULL,
            group = c("medication", "format"),
            on_date = Sys.Date(),
            until_date = NULL) {
     check_date(on_date)
 
     # TODO: better abort message (see date_abort)
-    medications <- medications %||% getOption("pregnancy.medications") %||% cli::cli_abort("NEEDS medications")
-    check_medications(medications)
+    meds <- meds %||% getOption("pregnancy.medications") %||% cli::cli_abort("NEEDS medications")
+    check_medications(meds)
 
     group <- rlang::arg_match(group)
 
-    latest_stop <- medications %>%
+    latest_stop <- meds %>%
       dplyr::pull(stop_date) %>%
       max()
     until_date <- until_date %||% latest_stop
@@ -113,8 +106,8 @@ medications_remaining <-
       )
     }
 
-    medications_aug <-
-      medications %>%
+    meds_aug <-
+      meds %>%
       dplyr::mutate(from = pmax(on_date, start_date)) %>%
       dplyr::mutate(to = pmin(until_date, stop_date)) %>%
       # dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
@@ -129,91 +122,91 @@ medications_remaining <-
       dplyr::mutate(quant = as.integer(days * quantity))
 
     if (group == "medication") {
-      medications_summary <- medications_aug %>%
+      meds_summary <- meds_aug %>%
         dplyr::group_by(medication) %>%
         dplyr::summarise(quantity = sum(quant)) %>%
         dplyr::filter(quantity > 0)
     }
 
     if (group == "format") {
-      medications_summary <- medications_aug %>%
+      meds_summary <- meds_aug %>%
         dplyr::group_by(format) %>%
         dplyr::summarise(quantity = sum(quant)) %>%
         dplyr::filter(quantity > 0)
     }
 
-    if (nrow(medications_summary) == 0) {
+    if (nrow(meds_summary) == 0) {
       cli::cli_alert_success("There are no medications remaining.")
-      return(invisible(medications_summary))
+      return(invisible(meds_summary))
     }
 
-    medications_summary
+    meds_summary
   }
 
 
-check_medications <- function(medications) {
-  if (!is.data.frame(medications)) {
+check_medications <- function(meds) {
+  if (!is.data.frame(meds)) {
     cli::cli_abort(
-      c("{.var medications} must be a data frame.",
-        "i" = "It was {.type {medications}} instead."
+      c("{.var meds} must be a data frame.",
+        "i" = "It was {.type {meds}} instead."
       ),
       class = "pregnancy_error_class"
     )
   }
 
-  colnames_medications <- colnames(medications)
+  colnames_meds <- colnames(meds)
   needs_cols <- c("medication", "format", "quantity", "start_date", "stop_date")
-  diff <- setdiff(needs_cols, colnames_medications)
+  diff <- setdiff(needs_cols, colnames_meds)
 
   if (length(diff) > 0) {
-    message <- c("{.var medications} is missing column{?s} {.code {diff}}.")
+    message <- c("{.var meds} is missing column{?s} {.code {diff}}.")
     cli::cli_abort(message,
       class = "pregnancy_error_missing"
     )
   }
 
-  if (!lubridate::is.Date(medications[["start_date"]]) || !lubridate::is.Date(medications[["stop_date"]])) {
+  if (!lubridate::is.Date(meds[["start_date"]]) || !lubridate::is.Date(meds[["stop_date"]])) {
     cli::cli_abort(
       c(
-        "In {.var medications}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
-        "i" = "{.var start_date} was class {.cls {class(medications[['start_date']])}}.",
-        "i" = "{.var stop_date} was class {.cls {class(medications[['stop_date']])}}."
+        "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
+        "i" = "{.var start_date} was class {.cls {class(meds[['start_date']])}}.",
+        "i" = "{.var stop_date} was class {.cls {class(meds[['stop_date']])}}."
       ),
       class = "pregnancy_error_class"
     )
   }
 
-  if (!rlang::is_character(medications$medication) && !is.factor(medications$medication)) {
+  if (!rlang::is_character(meds$medication) && !is.factor(meds$medication)) {
     cli::cli_abort(
       c(
-        "In {.var medications}, column {.code medication} must have class {.cls character} or {.cls factor}.",
-        "i" = "It was class {.cls {class(medications$medication)}}."
+        "In {.var meds}, column {.code medication} must have class {.cls character} or {.cls factor}.",
+        "i" = "It was class {.cls {class(meds$medication)}}."
       ),
       class = "pregnancy_error_class"
     )
   }
 
-  if (!rlang::is_character(medications$format) && !is.factor(medications$format)) {
+  if (!rlang::is_character(meds$format) && !is.factor(meds$format)) {
     cli::cli_abort(
       c(
-        "In {.var medications}, column {.code format} must have class {.cls character} or {.cls factor}.",
-        "i" = "It was class {.cls {class(medications$format)}} instead."
+        "In {.var meds}, column {.code format} must have class {.cls character} or {.cls factor}.",
+        "i" = "It was class {.cls {class(meds$format)}} instead."
       ),
       class = "pregnancy_error_class"
     )
   }
 
-  if (!is.numeric(medications$quantity)) {
+  if (!is.numeric(meds$quantity)) {
     cli::cli_abort(
       c(
-        "In {.var medications}, column {.code quantity} must have class {.cls numeric}.",
-        "i" = "It was class {.cls {class(medications$quantity)}} instead."
+        "In {.var meds}, column {.code quantity} must have class {.cls numeric}.",
+        "i" = "It was class {.cls {class(meds$quantity)}} instead."
       ),
       class = "pregnancy_error_class"
     )
   }
 
-  invisible(medications)
+  invisible(meds)
 }
 
 #' Set or get the `pregnancy.medications` option
@@ -251,38 +244,38 @@ NULL
 
 #' @rdname medications-option
 #' @export
-set_medications <- function(medications) {
+set_medications <- function(meds) {
   # check date
-  if (!is.null(medications)) {
-    check_medications(medications)
+  if (!is.null(meds)) {
+    check_medications(meds)
   }
 
-  options("pregnancy.medications" = medications)
+  options("pregnancy.medications" = meds)
 
-  if (is.null(medications)) {
+  if (is.null(meds)) {
     set_option_null_message("medications")
   } else {
     cli::cli_alert_success("medications set.")
     set_option_message("medications")
   }
 
-  invisible(medications)
+  invisible(meds)
 }
 
 #' @rdname medications-option
 #' @export
 get_medications <- function() {
-  medications <- getOption("pregnancy.medications")
+  meds <- getOption("pregnancy.medications")
 
-  if (is.null(medications)) {
+  if (is.null(meds)) {
     null_option("medications")
   } else {
-    check_medications(medications)
+    check_medications(meds)
     cli::cli_inform("Your medications table is set as")
-    print(medications)
+    print(meds)
   }
 
-  invisible(medications)
+  invisible(meds)
 }
 
 
@@ -291,16 +284,16 @@ get_medications <- function() {
 # TODO: delete this function (or comment out)
 # TODO: don't have on_date. Need to pass that as flag from medications_remaining
 # (otherwise docuemnt that on_date must be set the same in both medications_remaining and medications_print)
-medications_print <- function(medications_summary, on_date = Sys.Date()) {
+medications_print <- function(meds_summary, on_date = Sys.Date()) {
   # MAYBE: use person and have (via a new to_have function)
-  if (nrow(medications_summary) == 0) {
+  if (nrow(meds_summary) == 0) {
     cli::cli_alert_success("There are no medications remaining.")
-    return(invisible(medications_summary))
+    return(invisible(meds_summary))
   }
 
   # check col names
-  thing <- medications_summary[[1]]
-  quantity <- medications_summary[[2]]
+  thing <- meds_summary[[1]]
+  quantity <- meds_summary[[2]]
 
   if (on_date == Sys.Date()) {
     cli::cli_alert_info("As of first thing today, the following medications remain to be taken:")
@@ -312,5 +305,5 @@ medications_print <- function(medications_summary, on_date = Sys.Date()) {
     cli::cli_bullets(c("*" = "{quantity[i]} {thing[i]}"))
   }
 
-  invisible(medications_summary)
+  invisible(meds_summary)
 }

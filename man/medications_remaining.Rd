@@ -5,14 +5,14 @@
 \title{Calculate remaining medications to be taken}
 \usage{
 medications_remaining(
-  medications = NULL,
+  meds = NULL,
   group = c("medication", "format"),
   on_date = Sys.Date(),
   until_date = NULL
 )
 }
 \arguments{
-\item{medications}{Data frame containing medication schedule. Must have the following columns:
+\item{meds}{Data frame containing medication schedule. Must have the following columns:
 \itemize{
 \item medication (character/factor): Name of the medication
 \item format (character/factor): Format of the medication (e.g., pill, injection)
@@ -73,20 +73,13 @@ meds <- data.frame(
 )
 
 # Calculate remaining medications
-medications_remaining(
-  medications = meds,
-  on_date = as.Date("2025-04-21")
-)
+medications_remaining(meds, on_date = as.Date("2025-04-21"))
 
-medications_remaining(
-  medications = meds,
-  group = "format",
-  on_date = as.Date("2025-04-21")
-)
+medications_remaining(meds, group = "format", on_date = as.Date("2025-04-21"))
 
 # Calculate medications for a specified period
 medications_remaining(
-  medications = meds,
+  meds = meds,
   on_date = as.Date("2025-04-23"),
   until_date = as.Date("2025-04-30")
 )

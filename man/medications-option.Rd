@@ -6,12 +6,12 @@
 \alias{get_medications}
 \title{Set or get the \code{pregnancy.medications} option}
 \usage{
-set_medications(medications)
+set_medications(meds)
 
 get_medications()
 }
 \arguments{
-\item{medications}{Data frame containing medication schedule. Must have the following columns:
+\item{meds}{Data frame containing medication schedule. Must have the following columns:
 \itemize{
 \item medication (character/factor): Name of the medication
 \item format (character/factor): Format of the medication (e.g., pill, injection)
