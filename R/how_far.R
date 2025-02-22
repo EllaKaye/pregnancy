@@ -33,12 +33,13 @@ how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
 }
 
 # TODO: think about messages 2 and 3 if on_date is not Sys.Date()
+# lintr gives false positives for objects only used in `cli::format_inline`
 how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
   subject <- get_subject(person) # "I", "You" or person
   tense <- get_tense(Sys.Date(), on_date) # "present", "past", "future"
-  verb <- to_be(subject, tense)
+  verb <- to_be(subject, tense) # nolint: object_usage_linter
 
   # when more than a couple of weeks past due date (i.e. should no longer be pregnant)
   if (calc_results$weeks_pregnant > 42) {

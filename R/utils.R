@@ -86,7 +86,7 @@ check_person <- function(person) {
 }
 
 check_cycle <- function(cycle) {
-  if (length(cycle) != 1 | !is.numeric(cycle)) {
+  if (length(cycle) != 1 || !is.numeric(cycle)) {
     message <- c(
       "{.var {rlang::caller_arg(cycle)}} must be a {.cls numeric} vector of length 1.",
       "i" = "It was {.cls {cycle}} of length {length(cycle)} instead."

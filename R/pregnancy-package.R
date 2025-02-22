@@ -8,7 +8,7 @@ to <- from <- days <- quant <- NULL
 
 # To allow mocking
 # see https://testthat.r-lib.org/reference/local_mocked_bindings.html
-Sys.Date <- NULL
+Sys.Date <- NULL # nolint: object_name_linter
 
 ## usethis namespace: start
 #' @importFrom dplyr %>%

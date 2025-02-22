@@ -25,19 +25,20 @@ date_when_message <- function(
   today = Sys.Date()
 ) {
   # grammar for output message
+  # lintr gives false positives for objects only used in `cli::format_inline`
   person <- person %||% getOption("pregnancy.person") %||% "You"
   subject <- get_subject(person) # "I", "You" or person
   tense <- get_tense(today, date_when) # "present", "past", "future"
-  verb <- to_be(subject, tense)
+  verb <- to_be(subject, tense) # nolint: object_usage_linter
   subject <- ifelse(subject == "You", "you", subject)
 
   weeks_from_now <- floor(total_days / 7)
-  and_days_from_now <- round(total_days %% 7)
+  and_days_from_now <- round(total_days %% 7) # nolint: object_usage_linter
 
   if (tense == "present") {
-    prefix <- "Today"
+    prefix <- "Today" # nolint: object_usage_linter
   } else {
-    prefix <- cli::format_inline("On {format(date_when, '%B %d, %Y')}")
+    prefix <- cli::format_inline("On {format(date_when, '%B %d, %Y')}") # nolint: object_usage_linter
   }
 
   date_str <- cli::format_inline(
@@ -45,6 +46,7 @@ date_when_message <- function(
   )
 
   if (tense != "present") {
+    # nolint start: object_usage_linter
     if (tense == "past") {
       prefix <- "That was"
       suffix <- "ago"
@@ -52,11 +54,12 @@ date_when_message <- function(
       prefix <- "That's"
       suffix <- "away"
     }
+    # nolint end
 
     if (weeks_from_now == 0) {
-      weeks_str <- ""
+      weeks_str <- "" # nolint: object_usage_linter
     } else {
-      weeks_str <- cli::format_inline("{weeks_from_now} week{?s} and")
+      weeks_str <- cli::format_inline("{weeks_from_now} week{?s} and") # nolint: object_usage_linter
     }
     duration_str <- cli::format_inline(
       "{prefix} {weeks_str} {and_days_from_now} day{?s} {suffix}."

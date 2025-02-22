@@ -75,8 +75,11 @@ calculate_due_date <- function(
     ovulation_date_calculation(start_date, start_type, cycle)
   due_date <- ovulation_date + lubridate::days(266)
 
+  # lintr gives false positives for objects only used in `cli::format_inline`
+  # nolint start: object_usage_linter
   birth_period_start <- due_date - lubridate::days(21)
   birth_period_end <- due_date + lubridate::days(14)
+  # nolint end
 
   cli::cli_inform(
     c(
