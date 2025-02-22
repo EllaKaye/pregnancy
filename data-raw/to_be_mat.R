@@ -1,6 +1,8 @@
+# nolint start: object_name_linter
 `I` <- c("was", "am", "will be")
 You <- c("were", "are", "will be")
 She <- c("was", "is", "will be")
+# nolint end
 
 to_be_mat <- rbind(`I`, You, She)
 
