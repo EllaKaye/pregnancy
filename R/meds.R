@@ -284,37 +284,3 @@ get_medications <- function() {
 
   invisible(meds)
 }
-
-
-# tibble output actually looks better than cli here
-# probably don't export this function, don't need it.
-# TODO: delete this function (or comment out)
-# TODO: don't have on_date. Need to pass that as flag from medications_remaining
-# (otherwise docuemnt that on_date must be set the same in both medications_remaining and medications_print)
-medications_print <- function(meds_summary, on_date = Sys.Date()) {
-  # MAYBE: use person and have (via a new to_have function)
-  if (nrow(meds_summary) == 0) {
-    cli::cli_alert_success("There are no medications remaining.")
-    return(invisible(meds_summary))
-  }
-
-  # check col names
-  thing <- meds_summary[[1]]
-  quantity <- meds_summary[[2]]
-
-  if (on_date == Sys.Date()) {
-    cli::cli_alert_info(
-      "As of first thing today, the following medications remain to be taken:"
-    )
-  } else {
-    cli::cli_alert_info(
-      "As of first thing on {format(on_date, '%B %d, %Y')}, the following medications remain to be taken:"
-    )
-  }
-
-  for (i in 1:length(thing)) {
-    cli::cli_bullets(c("*" = "{quantity[i]} {thing[i]}"))
-  }
-
-  invisible(meds_summary)
-}
