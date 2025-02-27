@@ -21,7 +21,7 @@ calculators and apps, plus there are no concerns (unlike with these
 sites and apps) about data privacy, tracking or advertising.
 
 > This R package is in the final stages of development, with a view to
-> release in late February 2025.
+> release in early/mid March 2025.
 >
 > The main functionality is now in place.
 >
@@ -76,15 +76,15 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-This README was built on **February 22, 2025**, so for the purposes of
+This README was built on **February 27, 2025**, so for the purposes of
 reading this page, that counts as “today”.
 
 ``` r
 # don't need to specify `due_date` since option is set
 how_far()
-#> ℹ You are 10 weeks and 4 days pregnant.
-#> ℹ That's 29 weeks and 3 days until the due date (September 16, 2025).
-#> ℹ You are 26% through the pregnancy.
+#> ℹ You are 11 weeks and 2 days pregnant.
+#> ℹ That's 28 weeks and 5 days until the due date (September 16, 2025).
+#> ℹ You are 28% through the pregnancy.
 ```
 
 ``` r
@@ -97,7 +97,7 @@ how_far(on_date = as.Date("2025-04-02"), person = 1)
 # when a given week of the pregnancy is reached
 date_when(28)
 #> ℹ On June 24, 2025, you will be 28 weeks pregnant.
-#> ℹ That's 17 weeks and 3 days away.
+#> ℹ That's 16 weeks and 5 days away.
 ```
 
 ## Tracking medications
@@ -171,9 +171,9 @@ set_due_date(as.Date("2025-07-01"))
 
 ``` r
 how_far()
-#> ℹ You are 21 weeks and 4 days pregnant.
-#> ℹ That's 18 weeks and 3 days until the due date (July 01, 2025).
-#> ℹ You are 54% through the pregnancy.
+#> ℹ You are 22 weeks and 2 days pregnant.
+#> ℹ That's 17 weeks and 5 days until the due date (July 01, 2025).
+#> ℹ You are 56% through the pregnancy.
 ```
 
 ``` r

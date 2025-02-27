@@ -28,7 +28,7 @@ and others that I added when adapting the package for general use.
 The functionality goes beyond what's offered by online pregnancy calculators and apps, 
 plus there are no concerns (unlike with these sites and apps) about data privacy, tracking or advertising.
 
-> This R package is in the final stages of development, with a view to release in late February 2025.
+> This R package is in the final stages of development, with a view to release in early/mid March 2025.
 > 
 > The main functionality is now in place.
 > 
