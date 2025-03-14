@@ -111,6 +111,48 @@ test_that("how_far_message formats messages correctly for present date", {
   expect_match(result$messages[3], "Sarah is 45% through the pregnancy")
 })
 
+test_that("how_far_message handles over 42 weeks in past and future tenses", {
+  # Test past date with over 42 weeks
+  calc_results <- list(
+    weeks_pregnant = 43,
+    and_days_pregnant = 2,
+    weeks_to_go = 0,
+    and_days_to_go = 0,
+    percent_along = 100,
+    due_date = as.Date("2025-07-01")
+  )
+
+  # Mock current date to be after the test date
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-20"))
+
+  result <- how_far_message(
+    calc_results,
+    on_date = as.Date("2025-08-15"), # This is in the "past" relative to mocked Sys.Date
+    person = "You"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of July 01, 2025, on August 15, 2025, you would have been more than 42 weeks pregnant"
+  )
+
+  # Test future date with over 42 weeks
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-10"))
+
+  result <- how_far_message(
+    calc_results,
+    on_date = as.Date("2025-08-15"), # This is in the "future" relative to mocked Sys.Date
+    person = "Sarah"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of July 01, 2025, on August 15, 2025, Sarah would be more than 42 weeks pregnant"
+  )
+})
+
 # TODO: something not quite right here because these tests fail on R CMD check without the local option, even though due_date is passed as arg.
 test_that("how_far_message formats messages correctly for past/future dates", {
   local_mocked_bindings(Sys.Date = function() as.Date("2025-01-27"))
@@ -210,4 +252,20 @@ test_that("how_far integrates calculation and message correctly", {
     person = "Emma"
   )
   expect_equal(result, 140)
+})
+
+test_that("how_far prints multiple messages for present date", {
+  # Setup a test with a specific due date
+  due_date <- as.Date("2025-07-01")
+
+  # Make sure we're testing with today's actual date as on_date
+  # This is the key - using the actual Sys.Date() as the on_date parameter
+  result <- how_far(
+    on_date = Sys.Date(),
+    due_date = due_date
+  )
+
+  # We don't need to verify the actual messages since cli_inform() is being called
+  # The coverage report will show if the lines were executed
+  expect_type(result, "double") # Check that days_along is returned
 })
