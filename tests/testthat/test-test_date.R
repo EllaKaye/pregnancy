@@ -111,8 +111,118 @@ test_that("NULL if test_date not set", {
   expect_equal(get_test_date(), NULL)
 })
 
-# snapshot tests for get_test_date (both when date is set and when NULL)
-# TODO: add these when I've improved the message!
+# Test suite for get_test_date() and set_test_date() functions
+
+# testing get_test_date() --------------------------------------------------
+test_that("get_test_date retrieves test_date option", {
+  withr::local_options(pregnancy.test_date = as.Date("2023-01-31"))
+  expect_equal(get_test_date(), as.Date("2023-01-31"))
+})
+
+test_that("get_test_date returns NULL if test_date not set", {
+  withr::local_options(pregnancy.test_date = NULL)
+  expect_null(get_test_date())
+})
+
+test_that("get_test_date informs about current test date setting", {
+  withr::local_options(pregnancy.test_date = as.Date("2023-02-15"))
+
+  # Test that the message is informative about the current test date
+  expect_message(
+    get_test_date(),
+    "Your test date is set as February 15, 2023"
+  )
+})
+
+test_that("get_test_date informs when test date is not set", {
+  withr::local_options(pregnancy.test_date = NULL)
+
+  # Test that the message warns about missing option
+  expect_snapshot(
+    get_test_date()
+  )
+})
 
 # testing set_test_date(test_date) ------------------------------------------
-# How to do this?
+test_that("set_test_date sets test_date option", {
+  # Store original option
+  original_option <- getOption("pregnancy.test_date")
+  withr::defer(options(pregnancy.test_date = original_option))
+
+  # Set option to NULL first to ensure clean state
+  options(pregnancy.test_date = NULL)
+
+  # Test setting the option
+  set_test_date(as.Date("2023-04-30"))
+  expect_equal(getOption("pregnancy.test_date"), as.Date("2023-04-30"))
+})
+
+test_that("set_test_date sets test_date to NULL", {
+  # Store original option
+  original_option <- getOption("pregnancy.test_date")
+  withr::defer(options(pregnancy.test_date = original_option))
+
+  # Set option to a date first
+  options(pregnancy.test_date = as.Date("2023-04-30"))
+
+  # Test setting the option to NULL
+  set_test_date(NULL)
+  expect_null(getOption("pregnancy.test_date"))
+})
+
+test_that("set_test_date validates date input", {
+  # Test with invalid date types
+  expect_error(
+    set_test_date("2023-04-30"),
+    class = "pregnancy_error_class"
+  )
+
+  expect_error(
+    set_test_date(c(as.Date("2023-04-30"), as.Date("2023-05-01"))),
+    class = "pregnancy_error_length"
+  )
+
+  expect_error(
+    set_test_date(NA),
+    class = "pregnancy_error_value"
+  )
+})
+
+test_that("get_test_date informs when test date is not set", {
+  withr::local_options(pregnancy.test_date = NULL)
+
+  # Use snapshot testing to capture the full formatted output
+  expect_snapshot(
+    get_test_date()
+  )
+})
+
+test_that("set_test_date provides appropriate messages", {
+  # Store original option to restore it later
+  original_option <- getOption("pregnancy.test_date")
+  withr::defer(options(pregnancy.test_date = original_option))
+
+  # Test that setting a date provides expected output
+  expect_snapshot(
+    set_test_date(as.Date("2023-04-30"))
+  )
+
+  # Test that setting NULL provides expected output
+  expect_snapshot(
+    set_test_date(NULL)
+  )
+})
+
+test_that("set_test_date returns the set date invisibly", {
+  # Test that the function returns the date invisibly
+  test_date <- as.Date("2023-04-30")
+  expect_equal(
+    suppressMessages(set_test_date(test_date)),
+    test_date
+  )
+
+  # Test that NULL is returned invisibly when setting NULL
+  expect_null(
+    suppressMessages(set_test_date(NULL))
+  )
+})
