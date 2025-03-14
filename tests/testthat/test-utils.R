@@ -53,3 +53,39 @@ test_that("cycle is in the allowed range", {
   expect_error(check_cycle(45), class = "pregnancy_error_value")
   expect_error(check_cycle(27.5), class = "pregnancy_error_value")
 })
+
+
+# testing set_option_message() -------------------------------------------
+
+test_that("set_option_message provides complete information about option usage", {
+  # Use expect_snapshot to capture and test the console output for different options
+  expect_snapshot(set_option_message("person"))
+  expect_snapshot(set_option_message("due_date"))
+  expect_snapshot(set_option_message("medications"))
+})
+
+# testing set_option_null_message() --------------------------------------
+
+test_that("set_option_null_message works correctly for person option", {
+  # Use expect_snapshot to capture and test the console output
+  expect_snapshot(set_option_null_message("person"))
+})
+
+test_that("set_option_null_message works correctly for other options", {
+  expect_snapshot(set_option_null_message("due_date"))
+  expect_snapshot(set_option_null_message("medications"))
+})
+
+test_that("set_option_null_message works correctly for unknown option", {
+  expect_snapshot(set_option_null_message("unknown_option"))
+})
+
+
+# testing null_option() --------------------------------------------------
+
+test_that("null_option displays warning for any option", {
+  # Use expect_snapshot to capture and test the console output for different options
+  expect_snapshot(null_option("person"))
+  expect_snapshot(null_option("due_date"))
+  expect_snapshot(null_option("medications"))
+})
