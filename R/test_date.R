@@ -115,11 +115,17 @@ set_test_date <- function(test_date) {
 
   options("pregnancy.test_date" = test_date)
 
-  # TODO: different message if test_date = NULL
-  cli::cli_alert_success("Test date set as {format(test_date, '%B %d, %Y')}")
-  set_option_message("test_date")
+  if (is.null(test_date)) {
+    set_option_null_message("test_date")
+  } else {
+    cli::cli_alert_success("Test date set as {format(test_date, '%B %d, %Y')}")
+    set_option_message("test_date")
+  }
+
+  invisible(test_date)
 }
 
+# TODO: complete this function
 days_until_test <- function(test_date = NULL) {
   test_date <- test_date %||%
     getOption("pregnancy.test_date") %||%
