@@ -125,18 +125,18 @@ set_test_date <- function(test_date) {
   invisible(test_date)
 }
 
-# TODO: complete this function
-days_until_test <- function(test_date = NULL) {
-  test_date <- test_date %||%
-    getOption("pregnancy.test_date") %||%
-    date_abort(test_date)
+# MAYBE: complete this function
+# days_until_test <- function(test_date = NULL) {
+#   test_date <- test_date %||%
+#     getOption("pregnancy.test_date") %||%
+#     date_abort(test_date)
 
-  check_date(test_date)
+#   check_date(test_date)
 
-  # date_diff <- as.numeric(test_date - Sys.Date())
+# date_diff <- as.numeric(test_date - Sys.Date())
 
-  # MAYBE: different messages (if releasing this function!)
-  # date_diff > 0 -> test in future
-  # date_diff == 0, -> test today
-  # date_diff < 0 -> already past test date
-}
+# MAYBE: different messages (if releasing this function!)
+# date_diff > 0 -> test in future
+# date_diff == 0, -> test today
+# date_diff < 0 -> already past test date
+#}
