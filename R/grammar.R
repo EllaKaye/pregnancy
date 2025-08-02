@@ -6,10 +6,13 @@
 # a reworking of person_pronoun
 # used to pass into `to_be()`
 # returns "You", "I" or person
+# nolint start: return_linter
 get_subject <- function(person) {
   # having this condition separately makes it easier to write check_person()
   # as then check_person() can require a character vector
-  if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
+  if (length(person) == 1 && (person %in% 1:2)) {
+    person <- as.character(person)
+  }
 
   check_person(person)
 
@@ -21,6 +24,7 @@ get_subject <- function(person) {
     return(person)
   }
 }
+# nolint end
 
 # used to pass into `to_be()`
 # returns "You", "I" or person
@@ -28,7 +32,9 @@ get_subject <- function(person) {
 person_pronoun <- function(person) {
   # having this condition separately makes it easier to write check_person()
   # as then check_person() can require a character vector
-  if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
+  if (length(person) == 1 && (person %in% 1:2)) {
+    person <- as.character(person)
+  }
 
   check_person(person)
 
@@ -44,6 +50,8 @@ person_pronoun <- function(person) {
 }
 
 # used to pass into `to_be()`
+
+# nolint start: return_linter
 get_tense <- function(date1, date2) {
   # date1 is typically `Sys.Date`
   # date2 is typically `on_date`
@@ -62,6 +70,7 @@ get_tense <- function(date1, date2) {
     return("present")
   }
 }
+# nolint end
 
 # `subject` should be the result of get_subject(person)
 # (that is where checks on `person` take place, all possible ways of specifying 2nd person are reduced to "you",
@@ -72,7 +81,9 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
   tense <- rlang::arg_match(tense)
 
   # Assumes person has been through get_subject() first
-  if (!(subject %in% c("I", "You"))) subject <- "She"
+  if (!(subject %in% c("I", "You"))) {
+    subject <- "She"
+  }
 
   # above conditions ensure that person and tense will always match a row and a column name
   # to_be_mat is in R/sysdata.rda
@@ -148,7 +159,9 @@ get_person <- function() {
   if (is.null(person)) {
     null_option("person")
   } else {
-    if (length(person) == 1 && (person %in% 1:2)) person <- as.character(person)
+    if (length(person) == 1 && (person %in% 1:2)) {
+      person <- as.character(person)
+    }
     check_person(person)
     cli::cli_inform(c("i" = "The person option is set as '{person}'."))
   }
