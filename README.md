@@ -7,7 +7,7 @@
 
 [![R-CMD-check](https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/EllaKaye/pregnancy/branch/main/graph/badge.svg)](https://app.codecov.io/gh/EllaKaye/pregnancy?branch=main)
+coverage](https://codecov.io/gh/EllaKaye/pregnancy/graph/badge.svg)](https://app.codecov.io/gh/EllaKaye/pregnancy)
 <!-- badges: end -->
 
 This is an R package for calculating dates and tracking medications
@@ -76,28 +76,28 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-This README was built on **February 27, 2025**, so for the purposes of
+This README was built on **August 02, 2025**, so for the purposes of
 reading this page, that counts as “today”.
 
 ``` r
 # don't need to specify `due_date` since option is set
 how_far()
-#> ℹ You are 11 weeks and 2 days pregnant.
-#> ℹ That's 28 weeks and 5 days until the due date (September 16, 2025).
-#> ℹ You are 28% through the pregnancy.
+#> ℹ You are 33 weeks and 4 days pregnant.
+#> ℹ That's 6 weeks and 3 days until the due date (September 16, 2025).
+#> ℹ You are 84% through the pregnancy.
 ```
 
 ``` r
 # alternative `on_date`, addressed as "I"
 how_far(on_date = as.Date("2025-04-02"), person = 1)
-#> ℹ On April 02, 2025, I will be 16 weeks and 1 day pregnant.
+#> ℹ On April 02, 2025, I was 16 weeks and 1 day pregnant.
 ```
 
 ``` r
 # when a given week of the pregnancy is reached
 date_when(28)
-#> ℹ On June 24, 2025, you will be 28 weeks pregnant.
-#> ℹ That's 16 weeks and 5 days away.
+#> ℹ On June 24, 2025, you were 28 weeks pregnant.
+#> ℹ That was 5 weeks and 4 days ago.
 ```
 
 ## Tracking medications
@@ -116,12 +116,10 @@ meds <- dplyr::tribble(
 ``` r
 # how much of each medication is left to take, as of "today"
 medications_remaining(meds)
-#> # A tibble: 3 × 2
+#> # A tibble: 1 × 2
 #>   medication quantity
 #>   <chr>         <int>
-#> 1 clexane         121
-#> 2 cyclogest       140
-#> 3 progynova       462
+#> 1 clexane          35
 ```
 
 ``` r
@@ -171,18 +169,14 @@ set_due_date(as.Date("2025-07-01"))
 
 ``` r
 how_far()
-#> ℹ You are 22 weeks and 2 days pregnant.
-#> ℹ That's 17 weeks and 5 days until the due date (July 01, 2025).
-#> ℹ You are 56% through the pregnancy.
+#> ℹ Given a due date of July 01, 2025, you would now be more than 42 weeks
+#>   pregnant.
 ```
 
 ``` r
 # check and then unset option
 get_due_date()
 #> ℹ Your due date is set as July 01, 2025.
-```
-
-``` r
 set_due_date(NULL)
 #> ✔ pregnancy.due_date option set to NULL.
 #> ℹ You will need to explicitly pass a value to the `due_date` argument
