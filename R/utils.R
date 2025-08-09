@@ -1,12 +1,12 @@
 # (non-exported) helper functions for getting and checking due dates
-# date_abort_null(date)
+# date_stop_null(date)
 # check_person(person)
 # check_date(date)
 # check_cycle(cycle)
 
 # this throws an error regardless on the value of date
-# the date argument is only to allow an informative error message when date_abort called within another function
-date_abort <- function(date) {
+# the date argument is only to allow an informative error message when date_stop called within another function
+date_stop <- function(date) {
   # TODO: link to documentation
   cli::cli_abort(
     c(

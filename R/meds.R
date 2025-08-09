@@ -88,7 +88,7 @@ medications_remaining <-
   ) {
     check_date(on_date)
 
-    # TODO: better abort message (see date_abort)
+    # TODO: better abort message (see date_stop)
     meds <- meds %||%
       getOption("pregnancy.medications") %||%
       cli::cli_abort("NEEDS medications")

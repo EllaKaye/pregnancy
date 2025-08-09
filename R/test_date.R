@@ -129,7 +129,7 @@ set_test_date <- function(test_date) {
 # days_until_test <- function(test_date = NULL) {
 #   test_date <- test_date %||%
 #     getOption("pregnancy.test_date") %||%
-#     date_abort(test_date)
+#     date_stop(test_date)
 
 #   check_date(test_date)
 

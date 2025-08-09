@@ -3,7 +3,7 @@ date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
 
   due_date <- due_date %||%
     getOption("pregnancy.due_date") %||%
-    date_abort(due_date)
+    date_stop(due_date)
   check_date(due_date)
 
   # date calculations

@@ -1,9 +1,9 @@
-# date_abort(date)
+# date_stop(date)
 # check_date(date)
 # check_person(person)
 # check_cycle(cycle)
 
-# testing date_abort(date) ------------------------------------------------
+# testing date_stop(date) ------------------------------------------------
 # use snapshot test
 # WAIT UNTIL DECIDED ON MESSAGE!
 
