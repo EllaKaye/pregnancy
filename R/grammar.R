@@ -3,7 +3,6 @@
 # get_tense(date1, date2)
 # to_be(person, tense)
 
-# a reworking of person_pronoun
 # used to pass into `to_be()`
 # returns "You", "I" or person
 # nolint start: return_linter
@@ -27,30 +26,6 @@ get_subject <- function(person) {
 # nolint end
 
 # used to pass into `to_be()`
-# returns "You", "I" or person
-# TODO: deprecate in favour of get_subject
-person_pronoun <- function(person) {
-  # having this condition separately makes it easier to write check_person()
-  # as then check_person() can require a character vector
-  if (length(person) == 1 && (person %in% 1:2)) {
-    person <- as.character(person)
-  }
-
-  check_person(person)
-
-  if (person %in% c("1st", "first", "First", "FIRST", "I", "i", "1")) {
-    person <- "I"
-  } else if (
-    person %in% c("2nd", "second", "Second", "SECOND", "You", "you", "YOU", "2")
-  ) {
-    person <- "You"
-  }
-
-  person
-}
-
-# used to pass into `to_be()`
-
 # nolint start: return_linter
 get_tense <- function(date1, date2) {
   # date1 is typically `Sys.Date`

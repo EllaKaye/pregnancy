@@ -3,47 +3,6 @@
 # get_tense(date1, date2)
 # to_be(person, tense)
 
-# testing person_pronoun(person) ---------------------------------------------
-
-test_that("1 and 2 are allowed", {
-  expect_equal(person_pronoun(1), "I")
-  expect_equal(person_pronoun(2), "You")
-})
-
-test_that("person is a character vector of length 1", {
-  expect_equal(person_pronoun("Ella"), "Ella")
-  expect_error(
-    person_pronoun(c("Me", "You")),
-    class = "pregnancy_error_class_or_length"
-  )
-  expect_error(person_pronoun(3), class = "pregnancy_error_class_or_length")
-  expect_error(person_pronoun(NULL), class = "pregnancy_error_class_or_length")
-})
-
-test_that("first person gives 'I'", {
-  expect_equal(person_pronoun("1st"), "I")
-  expect_equal(person_pronoun("first"), "I")
-  expect_equal(person_pronoun("First"), "I")
-  expect_equal(person_pronoun("FIRST"), "I")
-  expect_equal(person_pronoun("I"), "I")
-  expect_equal(person_pronoun("i"), "I")
-  expect_equal(person_pronoun("1"), "I")
-  expect_equal(person_pronoun("II"), "II")
-})
-
-test_that("second person gives 'You'", {
-  expect_equal(person_pronoun("2nd"), "You")
-  expect_equal(person_pronoun("second"), "You")
-  expect_equal(person_pronoun("Second"), "You")
-  expect_equal(person_pronoun("SECOND"), "You")
-  expect_equal(person_pronoun("You"), "You")
-  expect_equal(person_pronoun("you"), "You")
-  expect_equal(person_pronoun("YOU"), "You")
-  expect_equal(person_pronoun("2"), "You")
-  expect_equal(person_pronoun("Youu"), "Youu")
-})
-
-
 # testing tense(date1, date2) ---------------------------------------------
 
 test_that("dates are Dates", {
@@ -95,7 +54,7 @@ test_that("date diff gives expected tense", {
 # })
 # may need snapshot test here
 
-# N.B. `person` should have been through `person_pronoun(person)` first (hence also `check_person()`)
+# N.B. `person` should have been through `get_subject(person)` first (hence also `check_person()`)
 test_that("get correct verb given person and tense", {
   expect_equal(to_be("I"), "am")
   expect_equal(to_be("You"), "are")
