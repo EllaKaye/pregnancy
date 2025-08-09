@@ -7,13 +7,15 @@
 # this throws an error regardless on the value of date
 # the date argument is only to allow an informative error message when date_stop called within another function
 date_stop <- function(date) {
-  # TODO: link to documentation
   cli::cli_abort(
     c(
       "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
       "i" = "It was {.type {date}} instead.",
-      "i" = "You can {.emph EITHER} set the {.var {rlang::caller_arg(date)}} argument {.emph OR} (recommended) set {.code options(pregnancy.{rlang::caller_arg(date)})} in your .Rprofile.",
-      "i" = "{.emph LINK TO OPTIONS MAN PAGE (ONCE WRITTEN!) FOR FURTHER DETAILS.}"
+      "i" = "You can do one of the following:",
+      "*" = "set the {.var {rlang::caller_arg(date)}} argument",
+      "*" = "set the 'pregnancy.due_date' option for this R session with {.code set_due_date({rlang::caller_arg(date)})}",
+      "*" = "({.emph recommended}) set {.code options(pregnancy.{rlang::caller_arg(date)})} in your {.file .Rprofile}.",
+      "i" = "See the {.vignette pregnancy::pregnancy} vignette for further details."
     ),
     call = rlang::caller_env(),
     class = "pregnancy_error_date"
@@ -115,9 +117,9 @@ set_option_message <- function(option) {
     c(
       "i" = "Functions in the pregnancy package will now use this `{option}` option.",
       "i" = "So, for this R session, you do not need to supply a value to the `{option}` argument (unless you wish to override the option).",
-      "i" = "To make this `{option}` option available in all R sessions, in your {.val .Rprofile},  set `options(pregnancy.{option} = ...)`",
+      "i" = "To make this `{option}` option available in all R sessions, in your {.file .Rprofile},  set `options(pregnancy.{option} = ...)`",
       " " = "where ... is the value of `{option}`.",
-      "i" = "You can edit your {.val .Rprofile} by calling {.fn usethis::edit_r_profile}",
+      "i" = "You can edit your {.file .Rprofile} by calling {.fn usethis::edit_r_profile}",
       "i" = "You can retrieve the `{option}` option with {.fn get_{option}},",
       " " = "or with `getOption('pregnancy.{option}')`."
     )
