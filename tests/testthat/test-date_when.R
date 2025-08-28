@@ -356,3 +356,59 @@ test_that("date_when_message uses person from options", {
 
   expect_match(result$date_str, "Today.*Emma is.*12 weeks pregnant")
 })
+
+# Tests for date_when() function
+test_that("date_when prints the main message", {
+  due_date <- as.Date("2025-10-08")
+
+  expect_message(
+    date_when(weeks = 12, due_date = due_date, today = as.Date("2025-03-26")),
+    "On March 26, 2025, you were 12 weeks pregnant."
+  )
+})
+
+test_that("date_when prints duration message when today == Sys.Date()", {
+  due_date <- as.Date("2025-10-08")
+
+  # Mock Sys.Date() and use same date for today parameter
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-28"))
+  expect_message(
+    date_when(weeks = 12, due_date = due_date, today = as.Date("2025-08-28")),
+    "That was 22 weeks and 1 day ago."
+  )
+})
+
+test_that("date_when does not print duration message when duration_str is NULL", {
+  due_date <- as.Date("2025-10-08")
+
+  # Calculate when someone will be 12 weeks pregnant
+  # This should result in duration_str being NULL (present tense)
+  weeks_12_date <- due_date - 280 + (12 * 7) # March 26, 2025
+
+  # Test that only the main message is printed, not the duration message
+  expect_message(
+    date_when(weeks = 12, due_date = due_date, today = weeks_12_date),
+    "On March 26, 2025, you were 12 weeks pregnant."
+  )
+
+  # Verify no duration message is printed by capturing all messages
+  messages <- capture_messages(
+    date_when(weeks = 12, due_date = due_date, today = weeks_12_date)
+  )
+
+  # Should only have one message (the date_str, not duration_str)
+  expect_length(messages, 1)
+})
+
+
+test_that("date_when returns invisibly", {
+  withr::local_options(pregnancy.due_date = as.Date("2026-03-01"))
+
+  # Suppress messages to test return value
+  result <- suppressMessages(date_when(
+    weeks = 12,
+    today = as.Date("2025-08-10")
+  ))
+
+  expect_null(result)
+})
