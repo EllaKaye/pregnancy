@@ -19,8 +19,9 @@ medications_remaining(
 \item quantity (numeric): Number of units to take per day
 \item start_date (Date): Date to start taking the medication
 \item stop_date (Date): Final date on which the medication is taken
-If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
-}}
+}
+
+If NULL, will try to use the "pregnancy.medications" option. Required if option not set.}
 
 \item{group}{Character string specifying how to group the results. One of:
 \itemize{
@@ -29,10 +30,10 @@ If NULL, will try to use the "pregnancy.medications" option. Required if option 
 }}
 
 \item{on_date}{Date object specifying the date from which to calculate remaining medications.
-Defaults to current system date.}
+Defaults to current system date}
 
 \item{until_date}{Date object specifying cut-off date for remaining medications.
-If NULL, defaults to the latest \code{stop_date} in \code{medications}}
+If NULL, defaults to the latest \code{stop_date} in \code{medications}.}
 }
 \value{
 Returns a data frame containing remaining quantities, grouped as specified.

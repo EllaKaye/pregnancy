@@ -18,8 +18,9 @@ get_medications()
 \item quantity (numeric): Number of units to take per day
 \item start_date (Date): Date to start taking the medication
 \item stop_date (Date): Final date on which the medication is taken
-If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
-}}
+}
+
+If NULL, will try to use the "pregnancy.medications" option. Required if option not set.}
 }
 \value{
 Both functions invisibly return the current medications setting:

@@ -1,5 +1,6 @@
 # functions related to medications
 # medications_remaining()
+# check_medications()
 # get_medications()
 # set_medications()
 
@@ -16,14 +17,15 @@
 #'   * quantity (numeric): Number of units to take per day
 #'   * start_date (Date): Date to start taking the medication
 #'   * stop_date (Date): Final date on which the medication is taken
-#'   If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
+#'
+#' If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
 #' @param group Character string specifying how to group the results. One of:
 #'   * "medication": Group by medication name (default)
 #'   * "format": Group by medication format
 #' @param on_date Date object specifying the date from which to calculate remaining medications.
-#'   Defaults to current system date.
+#'   Defaults to current system date
 #' @param until_date Date object specifying cut-off date for remaining medications.
-#'   If NULL, defaults to the latest `stop_date` in `medications`
+#'   If NULL, defaults to the latest `stop_date` in `medications`.
 #'
 #' @return
 #' Returns a data frame containing remaining quantities, grouped as specified.
@@ -112,7 +114,6 @@ medications_remaining <-
     until_date <- until_date %||% latest_stop
     check_date(until_date)
 
-    # TODO: more informative error message
     if (until_date < on_date) {
       cli::cli_abort(
         "`until_date` must be later than `on_date`.",
