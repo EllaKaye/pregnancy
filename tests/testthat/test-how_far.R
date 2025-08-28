@@ -196,17 +196,21 @@ test_that("how_far_message handles pregnancy.person option", {
   withr::local_options(pregnancy.person = "Emma")
 
   calc_results <- list(
-    weeks_pregnant = 20,
-    and_days_pregnant = 3,
-    weeks_to_go = 19,
-    and_days_to_go = 4,
-    percent_along = 51,
+    days_along = 250,
+    weeks_pregnant = 35,
+    and_days_pregnant = 5,
+    weeks_to_go = 4,
+    and_days_to_go = 2,
+    percent_along = 89,
     due_date = as.Date("2025-07-01")
   )
 
-  result <- how_far_message(calc_results, on_date = Sys.Date())
+  result <- how_far_message(calc_results, on_date = as.Date("2025-06-01"))
 
-  expect_match(result$messages[1], "Emma is 20 weeks and 3 days pregnant")
+  expect_match(
+    result$messages[1],
+    "On June 01, 2025, Emma was 35 weeks and 5 days pregnant."
+  )
 })
 
 test_that("how_far_message handles over 42 weeks appropriately", {

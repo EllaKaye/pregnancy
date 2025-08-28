@@ -1,5 +1,4 @@
 # functions relating to pregnancy progress
-
 how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
   check_date(on_date)
 
@@ -56,6 +55,27 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
     } else {
       message <- cli::format_inline(
         "Given a due date of {format(calc_results$due_date, '%B %d, %Y')}, on {format(on_date, '%B %d, %Y')}, {subject} would be more than 42 weeks pregnant."
+      )
+    }
+
+    return(list(messages = message))
+  }
+
+  # When shouldn't yet be pregnant (i.e. weeks_pregnant < 0)
+  if (calc_results$days_along <= 0) {
+    subject <- ifelse(subject == "You", "you", subject)
+
+    if (tense == "present") {
+      message <- cli::format_inline(
+        "Given a due date of {format(calc_results$due_date, '%B %d, %Y')}, {subject} wouldn't yet be pregnant."
+      )
+    } else if (tense == "past") {
+      message <- cli::format_inline(
+        "Given a due date of {format(calc_results$due_date, '%B %d, %Y')}, on {format(on_date, '%B %d, %Y')}, {subject} would have not yet been pregnant."
+      )
+    } else {
+      message <- cli::format_inline(
+        "Given a due date of {format(calc_results$due_date, '%B %d, %Y')}, on {format(on_date, '%B %d, %Y')}, {subject} will not yet be pregnant."
       )
     }
 
