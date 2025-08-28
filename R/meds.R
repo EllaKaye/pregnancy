@@ -88,10 +88,20 @@ medications_remaining <-
   ) {
     check_date(on_date)
 
-    # TODO: better abort message (see date_stop)
     meds <- meds %||%
       getOption("pregnancy.medications") %||%
-      cli::cli_abort("NEEDS medications")
+      cli::cli_abort(
+        c(
+          "{.var meds} must be a data frame, not `NULL`.",
+          "i" = "You can do one of the following:",
+          "*" = "set the {.var meds} argument",
+          "*" = "set the 'pregnancy.medications' option for this R session with {.fun pregnancy::set_medications}",
+          "*" = "({.emph recommended}) set {.code options(pregnancy.medications)} in your {.var .Rprofile}.",
+          "i" = "See the {.vignette pregnancy::pregnancy} vignette for further details."
+        ),
+        call = rlang::caller_env(),
+        class = "pregnancy_error_meds"
+      )
     check_medications(meds)
 
     group <- rlang::arg_match(group)
