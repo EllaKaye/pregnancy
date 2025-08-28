@@ -21,7 +21,7 @@ calculators and apps, plus there are no concerns (unlike with these
 sites and apps) about data privacy, tracking or advertising.
 
 > This R package is in the final stages of development, with a view to
-> release in early/mid March 2025.
+> release in early September 2025.
 >
 > The main functionality is now in place.
 >
@@ -54,17 +54,17 @@ library(pregnancy)
 ``` r
 # invisibly returns a Date object with the estimated due date
 # by default, start date of last menstrual period, but other options available
-due_date <- calculate_due_date(as.Date("2024-12-10"))
-#> ℹ Estimated due date: Tuesday, September 16, 2025
-#> ℹ Estimated birth period begins: August 26, 2025 (37 weeks)
-#> ℹ Estimated birth period ends: September 30, 2025 (42 weeks)
+due_date <- calculate_due_date(as.Date("2025-02-24"))
+#> ℹ Estimated due date: Monday, December 01, 2025
+#> ℹ Estimated birth period begins: November 10, 2025 (37 weeks)
+#> ℹ Estimated birth period ends: December 15, 2025 (42 weeks)
 ```
 
 ``` r
 # set the pregnancy.due_date option
 # avoids having to pass the due date as argument to other functions
 set_due_date(due_date)
-#> ✔ Due date set as September 16, 2025
+#> ✔ Due date set as December 01, 2025
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
 #>   argument (unless you wish to override the option).
@@ -76,28 +76,28 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-This README was built on **August 02, 2025**, so for the purposes of
+This README was built on **August 28, 2025**, so for the purposes of
 reading this page, that counts as “today”.
 
 ``` r
 # don't need to specify `due_date` since option is set
 how_far()
-#> ℹ You are 33 weeks and 4 days pregnant.
-#> ℹ That's 6 weeks and 3 days until the due date (September 16, 2025).
-#> ℹ You are 84% through the pregnancy.
+#> ℹ You are 26 weeks and 3 days pregnant.
+#> ℹ That's 13 weeks and 4 days until the due date (December 01, 2025).
+#> ℹ You are 66% through the pregnancy.
 ```
 
 ``` r
 # alternative `on_date`, addressed as "I"
-how_far(on_date = as.Date("2025-04-02"), person = 1)
-#> ℹ On April 02, 2025, I was 16 weeks and 1 day pregnant.
+how_far(on_date = as.Date("2025-09-17"), person = 1)
+#> ℹ On September 17, 2025, I will be 29 weeks and 2 days pregnant.
 ```
 
 ``` r
 # when a given week of the pregnancy is reached
-date_when(28)
-#> ℹ On June 24, 2025, you were 28 weeks pregnant.
-#> ℹ That was 5 weeks and 4 days ago.
+date_when(33)
+#> ℹ On October 13, 2025, you will be 33 weeks pregnant.
+#> ℹ That's 6 weeks and 4 days away.
 ```
 
 ## Tracking medications
@@ -106,20 +106,22 @@ date_when(28)
 # a simplified medication schedule
 meds <- dplyr::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-  "progynova", "tablet", 3, as.Date("2025-04-21"), as.Date("2025-04-30"),
-  "progynova", "tablet", 6, as.Date("2025-05-01"), as.Date("2025-07-11"),
-  "cyclogest", "pessary", 2, as.Date("2025-05-03"), as.Date("2025-07-11"),
-  "clexane", "injection", 1, as.Date("2025-05-08"), as.Date("2025-09-05")
+  "progynova", "tablet", 3, as.Date("2025-08-21"), as.Date("2025-08-30"),
+  "progynova", "tablet", 6, as.Date("2025-09-01"), as.Date("2025-09-11"),
+  "cyclogest", "pessary", 2, as.Date("2025-09-03"), as.Date("2025-09-11"),
+  "clexane", "injection", 1, as.Date("2025-09-08"), as.Date("2025-11-05")
 )
 ```
 
 ``` r
 # how much of each medication is left to take, as of "today"
 medications_remaining(meds)
-#> # A tibble: 1 × 2
+#> # A tibble: 3 × 2
 #>   medication quantity
 #>   <chr>         <int>
-#> 1 clexane          35
+#> 1 clexane          59
+#> 2 cyclogest        18
+#> 3 progynova        75
 ```
 
 ``` r
@@ -127,15 +129,14 @@ medications_remaining(meds)
 # (useful if you need to request a prescription)
 medications_remaining(
   meds, 
-  on_date = as.Date("2025-05-12"), 
-  until_date = as.Date("2025-05-18")
+  on_date = as.Date("2025-09-01"), 
+  until_date = as.Date("2025-09-06")
 )
-#> # A tibble: 3 × 2
+#> # A tibble: 2 × 2
 #>   medication quantity
 #>   <chr>         <int>
-#> 1 clexane           7
-#> 2 cyclogest        14
-#> 3 progynova        42
+#> 1 cyclogest         8
+#> 2 progynova        36
 ```
 
 ## Global options
@@ -148,14 +149,15 @@ date is constant throughout. Similarly for the medications table in
 `medications_remaining()`. To avoid this, the pregnancy package makes
 use of **global options**, which can be set with the `set_*` family of
 functions (`set_due_date()`, `set_person()`, `set_medications()`, and
-retrieved with the corresponding `get_*` family of functions. Any global
-option can be unset by calling its `set_*` function with the argument
-`NULL`.
+retrieved with the corresponding `get_*` family of functions. These
+options will persist for the duration of the current R session. Any
+global option can be unset by calling its `set_*` function with the
+argument `NULL`.
 
 ``` r
 # a different due date from the earlier example
-set_due_date(as.Date("2025-07-01"))
-#> ✔ Due date set as July 01, 2025
+set_due_date(as.Date("2026-04-01"))
+#> ✔ Due date set as April 01, 2026
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
 #>   argument (unless you wish to override the option).
@@ -169,14 +171,15 @@ set_due_date(as.Date("2025-07-01"))
 
 ``` r
 how_far()
-#> ℹ Given a due date of July 01, 2025, you would now be more than 42 weeks
-#>   pregnant.
+#> ℹ You are 9 weeks and 1 day pregnant.
+#> ℹ That's 30 weeks and 6 days until the due date (April 01, 2026).
+#> ℹ You are 23% through the pregnancy.
 ```
 
 ``` r
 # check and then unset option
 get_due_date()
-#> ℹ Your due date is set as July 01, 2025.
+#> ℹ Your due date is set as April 01, 2026.
 set_due_date(NULL)
 #> ✔ pregnancy.due_date option set to NULL.
 #> ℹ You will need to explicitly pass a value to the `due_date` argument
@@ -186,7 +189,14 @@ set_due_date(NULL)
 ### Options in `.RProfile`
 
 We recommend adding your options to your `.RProfile` so they persist
-across R sessions. Here’s an example of what that might look like:
+across R sessions. R should read in these options when it loads, and you
+should then not need to use the `set_*` family of functions. The `get_*`
+family of functions should retrieve the options set in `.RProfile`.
+**Note: there appears to be an
+[issue](https://github.com/posit-dev/positron/issues/9211) in Positron
+where the R console *isn’t* properly loading `.RProfile` on start-up.**
+
+Here’s an example of what that might look like:
 
 ``` r
 options(
