@@ -282,7 +282,13 @@ test_that("retreives medication option", {
     stop_date = as.Date("2025-04-04")
   )
   withr::local_options(pregnancy.medications = meds)
-  med_option <- suppressMessages(get_medications())
+
+  # Suppress print output but get the return value
+  med_option <- suppressMessages({
+    invisible(capture.output(result <- get_medications(), type = "output"))
+    result
+  })
+
   expect_equal(med_option$medication, "A")
 })
 
