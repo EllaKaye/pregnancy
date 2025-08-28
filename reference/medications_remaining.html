@@ -67,9 +67,8 @@ either by medication name or by format (e.g., tablet, injection).</p>
 <li><p>format (character/factor): Format of the medication (e.g., pill, injection)</p></li>
 <li><p>quantity (numeric): Number of units to take per day</p></li>
 <li><p>start_date (Date): Date to start taking the medication</p></li>
-<li><p>stop_date (Date): Final date on which the medication is taken
-If NULL, will try to use the "pregnancy.medications" option. Required if option not set.</p></li>
-</ul></dd>
+<li><p>stop_date (Date): Final date on which the medication is taken</p></li>
+</ul><p>If NULL, will try to use the "pregnancy.medications" option. Required if option not set.</p></dd>
 
 
 <dt id="arg-group">group<a class="anchor" aria-label="anchor" href="#arg-group"></a></dt>
@@ -80,12 +79,12 @@ If NULL, will try to use the "pregnancy.medications" option. Required if option 
 
 <dt id="arg-on-date">on_date<a class="anchor" aria-label="anchor" href="#arg-on-date"></a></dt>
 <dd><p>Date object specifying the date from which to calculate remaining medications.
-Defaults to current system date.</p></dd>
+Defaults to current system date</p></dd>
 
 
 <dt id="arg-until-date">until_date<a class="anchor" aria-label="anchor" href="#arg-until-date"></a></dt>
 <dd><p>Date object specifying cut-off date for remaining medications.
-If NULL, defaults to the latest <code>stop_date</code> in <code>medications</code></p></dd>
+If NULL, defaults to the latest <code>stop_date</code> in <code>medications</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
