@@ -307,33 +307,22 @@ test_that("how_far integrates calculation and message correctly", {
     pregnancy.person = "Sarah"
   )
 
-  # We can't easily test the cli output, but we can test the invisible return value
-  result <- how_far(on_date = as.Date("2025-02-11"))
+  # Test integration: calculation + messaging work together, return correct value
+  result <- suppressMessages(how_far(on_date = as.Date("2025-02-11")))
   expect_equal(result, 140) # 20 weeks = 140 days
 
   # Test with explicitly provided arguments
-  result <- how_far(
+  result <- suppressMessages(how_far(
     on_date = as.Date("2025-02-11"),
     due_date = as.Date("2025-07-01"),
     person = "Emma"
-  )
+  ))
   expect_equal(result, 140)
-})
 
-test_that("how_far prints multiple messages for present date", {
-  # Setup a test with a specific due date
-  due_date <- as.Date("2025-07-01")
-
-  # Make sure we're testing with today's actual date as on_date
-  # This is the key - using the actual Sys.Date() as the on_date parameter
-  result <- how_far(
-    on_date = Sys.Date(),
-    due_date = due_date
-  )
-
-  # We don't need to verify the actual messages since cli_inform() is being called
-  # The coverage report will show if the lines were executed
-  expect_type(result, "double") # Check that days_along is returned
+  # Verify the messages are actually being generated (integration aspect)
+  messages <- capture_messages(how_far(on_date = as.Date("2025-02-11")))
+  expect_length(messages, 1) # Confirms messaging system is working
+  expect_match(messages[1], "Sarah was 20 weeks and 0 days pregnant")
 })
 
 test_that("how_far prints additional messages when in normal pregnancy range", {
