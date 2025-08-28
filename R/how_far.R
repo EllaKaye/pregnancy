@@ -178,11 +178,10 @@ how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {
   cli::cli_inform(c(
     "i" = message_results$messages[1]
   ))
+
   if (!is.na(message_results$messages[2])) {
-    cli::cli_inform(c(
-      "i" = message_results$messages[2],
-      "i" = message_results$messages[3]
-    ))
+    cli::cli_inform(c("i" = message_results$messages[2]))
+    cli::cli_inform(c("i" = message_results$messages[3]))
   }
 
   # Return days along invisibly

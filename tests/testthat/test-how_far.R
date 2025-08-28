@@ -111,47 +111,6 @@ test_that("how_far_message formats messages correctly for present date", {
   expect_match(result$messages[3], "Sarah is 45% through the pregnancy")
 })
 
-test_that("how_far_message handles over 42 weeks in past and future tenses", {
-  # Test past date with over 42 weeks
-  calc_results <- list(
-    weeks_pregnant = 43,
-    and_days_pregnant = 2,
-    weeks_to_go = 0,
-    and_days_to_go = 0,
-    percent_along = 100,
-    due_date = as.Date("2025-07-01")
-  )
-
-  # Mock current date to be after the test date
-  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-20"))
-
-  result <- how_far_message(
-    calc_results,
-    on_date = as.Date("2025-08-15"), # This is in the "past" relative to mocked Sys.Date
-    person = "You"
-  )
-
-  expect_length(result$messages, 1)
-  expect_match(
-    result$messages[1],
-    "Given a due date of July 01, 2025, on August 15, 2025, you would have been more than 42 weeks pregnant"
-  )
-
-  # Test future date with over 42 weeks
-  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-10"))
-
-  result <- how_far_message(
-    calc_results,
-    on_date = as.Date("2025-08-15"), # This is in the "future" relative to mocked Sys.Date
-    person = "Sarah"
-  )
-
-  expect_length(result$messages, 1)
-  expect_match(
-    result$messages[1],
-    "Given a due date of July 01, 2025, on August 15, 2025, Sarah would be more than 42 weeks pregnant"
-  )
-})
 
 # TODO: something not quite right here because these tests fail on R CMD check without the local option, even though due_date is passed as arg.
 test_that("how_far_message formats messages correctly for past/future dates", {
@@ -236,6 +195,109 @@ test_that("how_far_message handles over 42 weeks appropriately", {
   )
 })
 
+test_that("how_far_message handles over 42 weeks in past and future tenses", {
+  # Test past date with over 42 weeks
+  calc_results <- list(
+    weeks_pregnant = 43,
+    and_days_pregnant = 2,
+    weeks_to_go = 0,
+    and_days_to_go = 0,
+    percent_along = 100,
+    due_date = as.Date("2025-07-01")
+  )
+
+  # Mock current date to be after the test date
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-20"))
+
+  result <- how_far_message(
+    calc_results,
+    on_date = as.Date("2025-08-15"), # This is in the "past" relative to mocked Sys.Date
+    person = "You"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of July 01, 2025, on August 15, 2025, you would have been more than 42 weeks pregnant"
+  )
+
+  # Test future date with over 42 weeks
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-10"))
+
+  result <- how_far_message(
+    calc_results,
+    on_date = as.Date("2025-08-15"), # This is in the "future" relative to mocked Sys.Date
+    person = "Sarah"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of July 01, 2025, on August 15, 2025, Sarah would be more than 42 weeks pregnant"
+  )
+})
+
+test_that("how_far_message handles under 0 days appropriately", {
+  calc_results <- how_far_calculation(due_date = as.Date("2030-01-01"))
+
+  result <- how_far_message(
+    calc_results,
+    on_date = Sys.Date(),
+    person = "You"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of January 01, 2030, you wouldn't yet be pregnant."
+  )
+})
+
+test_that("how_far_message handles under 0 days appropriately in past", {
+  # due_date 2026-01-01, on_date 2025-01-01
+  calc_results <- list(
+    days_along = -85,
+    weeks_pregnant = -13,
+    and_days_pregnant = 6,
+    weeks_to_go = 52,
+    and_days_to_go = 1,
+    percent_along = -30,
+    due_date = as.Date("2026-01-01")
+  )
+
+  result <- how_far_message(
+    calc_results,
+    on_date = as.Date("2025-01-01"),
+    person = "You"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of January 01, 2026, on January 01, 2025, you would have not yet been pregnant."
+  )
+})
+
+test_that("how_far_message handles under 0 days appropriately, in the future", {
+  # due_date 2027-01-01, on_date 2026-01-01
+
+  calc_results <- how_far_calculation(
+    on_date = as.Date("2026-01-01"),
+    due_date = as.Date("2027-01-01")
+  )
+
+  result <- how_far_message(
+    calc_results,
+    on_date = as.Date("2026-01-01"),
+    person = "You"
+  )
+
+  expect_length(result$messages, 1)
+  expect_match(
+    result$messages[1],
+    "Given a due date of January 01, 2027, on January 01, 2026, you will not yet be pregnant."
+  )
+})
 
 # test how_far() ---------------------------------------------------------
 
@@ -272,4 +334,26 @@ test_that("how_far prints multiple messages for present date", {
   # We don't need to verify the actual messages since cli_inform() is being called
   # The coverage report will show if the lines were executed
   expect_type(result, "double") # Check that days_along is returned
+})
+
+test_that("how_far prints additional messages when in normal pregnancy range", {
+  due_date <- as.Date("2025-12-01")
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-08-28"))
+
+  # Capture all messages
+  messages <- capture_messages(
+    how_far(due_date = due_date)
+  )
+
+  # Should have 3 messages for present tense normal pregnancy
+  expect_length(messages, 3)
+
+  # Verify messages contain expected content
+  expect_match(messages[1], "You are 26 weeks and 3 days pregnant")
+  expect_match(
+    messages[2],
+    "That's 13 weeks and 4 days until the due date (December 01, 2025).",
+    fixed = TRUE
+  )
+  expect_match(messages[3], "You are 66% through the pregnancy.")
 })
