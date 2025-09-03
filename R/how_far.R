@@ -31,7 +31,7 @@ how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
   )
 }
 
-# TODO: think about messages 2 and 3 if on_date is not Sys.Date()
+# MAYBE: think about messages 2 and 3 if on_date is not Sys.Date()
 # lintr gives false positives for objects only used in `cli::format_inline`
 how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
   # grammar for output message

@@ -14,7 +14,7 @@ date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
   list(total_days = total_days, date_when = date_when)
 }
 
-# TODO: when testing, take into account that cli is taking care of extraneous white space
+# NOTE: when testing, take into account that cli is taking care of extraneous white space
 # returned strings aren't necessarily what's printed by cli
 # MAYBE: maybe put `days = 0` argument back for more precise messages?
 date_when_message <- function(
