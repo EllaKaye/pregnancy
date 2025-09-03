@@ -75,7 +75,7 @@ date_when_message <- function(
 # Need to check how this is handled in vignette and example building
 #' Calculate and display date of specific pregnancy week
 #'
-#' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for
+#' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for.
 #' @param today Date object representing the reference date for calculations. Default is Sys.Date().
 #'   This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.
 #' @inheritParams how_far
@@ -93,13 +93,13 @@ date_when_message <- function(
 #'
 #' @examples
 #' # Set a due date
-#' due <- as.Date("2024-09-01")
+#' due <- as.Date("2025-12-01")
 #'
 #' # When will they be 12 weeks pregnant?
-#' date_when(12, due_date = due)
+#' date_when(20, due_date = due)
 #'
 #' # When will they be 20 weeks pregnant?
-#' date_when(20, due_date = due, person = "Sarah")
+#' date_when(33, due_date = due, person = "Sarah")
 #'
 #' @seealso
 #' [calculate_due_date()] for calculating the due date

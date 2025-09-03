@@ -401,7 +401,7 @@ test_that("date_when does not print duration message when duration_str is NULL",
 })
 
 
-test_that("date_when returns invisibly", {
+test_that("date_when returns date invisibly", {
   withr::local_options(pregnancy.due_date = as.Date("2026-03-01"))
 
   # Suppress messages to test return value
@@ -410,5 +410,5 @@ test_that("date_when returns invisibly", {
     today = as.Date("2025-08-10")
   ))
 
-  expect_null(result)
+  expect_equal(result, as.Date("2025-08-17"))
 })

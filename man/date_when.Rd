@@ -7,7 +7,7 @@
 date_when(weeks, due_date = NULL, person = NULL, today = Sys.Date())
 }
 \arguments{
-\item{weeks}{Numeric value indicating the number of weeks of pregnancy to calculate the date for}
+\item{weeks}{Numeric value indicating the number of weeks of pregnancy to calculate the date for.}
 
 \item{due_date}{Date. The expected due date. If NULL, will try to use the
 "pregnancy.due_date" option. Required if option not set.}
@@ -43,13 +43,13 @@ Similarly, the person being referenced can be provided directly or set globally 
 }
 \examples{
 # Set a due date
-due <- as.Date("2024-09-01")
+due <- as.Date("2025-12-01")
 
 # When will they be 12 weeks pregnant?
-date_when(12, due_date = due)
+date_when(20, due_date = due)
 
 # When will they be 20 weeks pregnant?
-date_when(20, due_date = due, person = "Sarah")
+date_when(33, due_date = due, person = "Sarah")
 
 }
 \seealso{
