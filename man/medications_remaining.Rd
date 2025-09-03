@@ -48,7 +48,7 @@ The data frame has two columns:
 Only medications with remaining quantities > 0 are included.
 
 If no medications remain, a message is printed to the console indicating this,
-and a data frame with 0 rows in returned invisibly.
+and a data frame with 0 rows is returned invisibly.
 }
 \description{
 Calculates and displays how many medications remain to be taken as of a specific date,

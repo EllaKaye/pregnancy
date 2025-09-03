@@ -38,7 +38,7 @@
 #' Only medications with remaining quantities > 0 are included.
 #'
 #' If no medications remain, a message is printed to the console indicating this,
-#' and a data frame with 0 rows in returned invisibly.
+#' and a data frame with 0 rows is returned invisibly.
 #'
 #' @section Global Options:
 #' * `pregnancy.medications`: Data frame setting default medication schedule
