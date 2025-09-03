@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Keep track of dates and medications through pregnancy and fertility treatment • pregnancy</title>
+<title>Calculate and Track Dates and Medications During Pregnancy • pregnancy</title>
 <script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Figtree-0.4.10/font.css" rel="stylesheet">
@@ -13,9 +13,9 @@
 <link href="deps/Outfit-0.4.10/font.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Keep track of dates and medications through pregnancy and fertility treatment">
-<meta name="description" content="What the package does (one paragraph).">
-<meta property="og:description" content="What the package does (one paragraph).">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Calculate and Track Dates and Medications During Pregnancy">
+<meta name="description" content="Provides functionality for calculating pregnancy-related dates and tracking medications during pregnancy and fertility treatment. Calculates due dates from various starting points including last menstrual period and IVF transfer dates, determines pregnancy progress on any given date, and identifies when specific pregnancy weeks are reached. Includes medication tracking capabilities for individuals undergoing fertility treatment or during pregnancy, allowing users to monitor remaining doses and quantities needed over specified time periods. Designed for those tracking their own pregnancies or supporting partners through the process, making use of options to personalise output messages.">
+<meta property="og:description" content="Provides functionality for calculating pregnancy-related dates and tracking medications during pregnancy and fertility treatment. Calculates due dates from various starting points including last menstrual period and IVF transfer dates, determines pregnancy progress on any given date, and identifies when specific pregnancy weeks are reached. Includes medication tracking capabilities for individuals undergoing fertility treatment or during pregnancy, allowing users to monitor remaining doses and quantities needed over specified time periods. Designed for those tracking their own pregnancies or supporting partners through the process, making use of options to personalise output messages.">
 <meta property="og:image" content="https://ellakaye.github.io/pregnancy/logo.png">
 </head>
 <body>
@@ -37,6 +37,7 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/pregnancy.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -71,29 +72,34 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of pregnancy from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p><strong>pregnancy</strong> is available on CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes") </span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"EllaKaye/pregnancy"</span><span class="op">)</span> </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pregnancy"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version from or R-universe:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pregnancy"</span>, repos <span class="op">=</span> <span class="st">"https://ellakaye.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, install the development version from <a href="https://github.com/EllaKaye/pregnancy" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"EllaKaye/pregnancy"</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>This is a quick tour. For a more extensive guide, see the <a href="https://ellakaye.github.io/pregnancy/articles/pregnancy.html">Get Started</a> vignette, <code><a href="articles/pregnancy.html">vignette("pregnancy")</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ellakaye.github.io/pregnancy/">pregnancy</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="date-calculations">Date calculations<a class="anchor" aria-label="anchor" href="#date-calculations"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># invisibly returns a Date object with the estimated due date</span></span>
 <span><span class="co"># by default, start date of last menstrual period, but other options available</span></span>
 <span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_due_date.html">calculate_due_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-02-24"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Estimated due date: Monday, December 01, 2025</span></span>
 <span><span class="co">#&gt; ℹ Estimated birth period begins: November 10, 2025 (37 weeks)</span></span>
 <span><span class="co">#&gt; ℹ Estimated birth period ends: December 15, 2025 (42 weeks)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set the pregnancy.due_date option</span></span>
 <span><span class="co"># avoids having to pass the due date as argument to other functions</span></span>
 <span><span class="fu"><a href="reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="va">due_date</span><span class="op">)</span></span>
@@ -108,18 +114,18 @@
 <span><span class="co">#&gt; ℹ You can retrieve the `due_date` option with `get_due_date()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.due_date')`.</span></span></code></pre></div>
 <p>This README was built on <strong>September 03, 2025</strong>, so for the purposes of reading this page, that counts as “today”.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># don't need to specify `due_date` since option is set</span></span>
 <span><span class="co"># invisibly returns number of days into the pregnancy</span></span>
 <span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ You are 27 weeks and 2 days pregnant.</span></span>
 <span><span class="co">#&gt; ℹ That's 12 weeks and 5 days until the due date (December 01, 2025).</span></span>
 <span><span class="co">#&gt; ℹ You are 68% through the pregnancy.</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># alternative `on_date`, addressed as "I"</span></span>
 <span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-17"</span><span class="op">)</span>, person <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ On September 17, 2025, I will be 29 weeks and 2 days pregnant.</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># when a given week of the pregnancy is reached</span></span>
 <span><span class="co"># invisibly returns the Date when that week is reached</span></span>
 <span><span class="fu"><a href="reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span><span class="op">)</span></span>
@@ -129,7 +135,7 @@
 <div class="section level2">
 <h2 id="tracking-medications">Tracking medications<a class="anchor" aria-label="anchor" href="#tracking-medications"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a simplified medication schedule</span></span>
 <span><span class="va">meds</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
@@ -138,7 +144,7 @@
 <span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-03"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-11"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-08"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-11-05"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># how much of each medication is left to take, as of "today"</span></span>
 <span><span class="fu"><a href="reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 2</span></span>
@@ -147,7 +153,7 @@
 <span><span class="co">#&gt; 1 clexane          59</span></span>
 <span><span class="co">#&gt; 2 cyclogest        18</span></span>
 <span><span class="co">#&gt; 3 progynova        54</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># how much medication for a given week </span></span>
 <span><span class="co"># (useful if you need to request a prescription to cover a certain time period)</span></span>
 <span><span class="fu"><a href="reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span></span>
@@ -167,7 +173,7 @@
 <p><code><a href="reference/how_far.html">how_far()</a></code> and <code><a href="reference/date_when.html">date_when()</a></code> both need to know the pregnancy due date, and this can be passed directly to the <code>due_date</code> argument. It would be very tedious, however, to have to enter a due date every time you call these functions over the course of a pregnancy, especially since that date is constant throughout. The same holds for the for medications table required for <code><a href="reference/medications_remaining.html">medications_remaining()</a></code>.</p>
 <p>To avoid this, the pregnancy package makes use of <strong>global options</strong>, which can be set with the <code>set_*</code> family of functions (<code><a href="reference/due_date-option.html">set_due_date()</a></code>, <code><a href="reference/person.html">set_person()</a></code>, <code><a href="reference/medications-option.html">set_medications()</a></code>), and retrieved with the corresponding <code>get_*</code> family of functions (<code><a href="reference/due_date-option.html">get_due_date()</a></code>, <code><a href="reference/person.html">get_person()</a></code>, <code><a href="reference/medications-option.html">get_medications()</a></code>). These options will persist for the duration of the current R session.</p>
 <p>Any global option can be unset by calling its <code>set_*</code> function with the argument <code>NULL</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a different due date from the earlier example</span></span>
 <span><span class="fu"><a href="reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2026-04-01"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ✔ Due date set as April 01, 2026</span></span>
@@ -180,12 +186,12 @@
 <span><span class="co">#&gt; ℹ You can edit your ".Rprofile" by calling `usethis::edit_r_profile()`</span></span>
 <span><span class="co">#&gt; ℹ You can retrieve the `due_date` option with `get_due_date()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.due_date')`.</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ You are 10 weeks and 0 days pregnant.</span></span>
 <span><span class="co">#&gt; ℹ That's 30 weeks and 0 days until the due date (April 01, 2026).</span></span>
 <span><span class="co">#&gt; ℹ You are 25% through the pregnancy.</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># check and then unset option</span></span>
 <span><span class="fu"><a href="reference/due_date-option.html">get_due_date</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Your due date is set as April 01, 2026.</span></span>
@@ -199,7 +205,7 @@
 </h3>
 <p>We recommend adding your options to your <code>.Rprofile</code> so they persist across R sessions. R will read in these options at the start of each session, and you will not need to use the <code>set_*</code> family of functions, nor pass them as arguments to the package functions. The <code>get_*</code> family of functions will still retrieve the options set in <code>.Rprofile</code>.</p>
 <p>Here’s an example of what that might look like:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
 <span>  pregnancy.due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-16"</span><span class="op">)</span>,</span>
 <span>  pregnancy.person <span class="op">=</span> <span class="st">"I"</span>, <span class="co"># addressed in first person</span></span>
@@ -221,13 +227,14 @@
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p>See package website at <a href="https://ellakaye.github.io/pregnancy" class="uri">https://ellakaye.github.io/pregnancy</a> and also in the installed package: <code><a href="https://ellakaye.github.io/pregnancy/reference">help(package = "pregnancy")</a></code>.</p>
+<p>See package website at <a href="https://ellakaye.github.io/pregnancy/" class="uri">https://ellakaye.github.io/pregnancy/</a> and also in the installed package: <code><a href="https://ellakaye.github.io/pregnancy/reference">help(package = "pregnancy")</a></code>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/EllaKaye/pregnancy/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/EllaKaye/pregnancy/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -260,6 +267,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/EllaKaye/pregnancy" class="external-link"><img src="https://codecov.io/gh/EllaKaye/pregnancy/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://CRAN.R-project.org/package=pregnancy" class="external-link"><img src="https://www.r-pkg.org/badges/version/pregnancy" alt="CRAN status"></a></li>
 </ul>
 </div>
 
