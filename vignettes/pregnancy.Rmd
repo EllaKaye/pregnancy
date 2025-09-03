@@ -202,7 +202,7 @@ options(
 )
 ```
 
-Note that it is best to avoid creating R objects in your ".Rprofile", e.g. a `medications` data frame outside of the call to `options()`, otherwise that object will be loaded into your global environment at the start of every R session.
+Note that it is best to avoid creating R objects in your `.Rprofile`, e.g. a `medications` data frame outside of the call to `options()`, otherwise that object will be loaded into your global environment at the start of every R session.
 
 ```{r echo = FALSE}
 # reset original options
