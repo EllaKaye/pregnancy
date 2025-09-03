@@ -138,7 +138,7 @@
 <code class="sourceCode R"><span><span class="co"># a simplified medication schedule</span></span>
 <span><span class="va">meds</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
-<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-21"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-30"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-21"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-31"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-01"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-11"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-03"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-11"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-08"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-11-05"</span><span class="op">)</span></span>
@@ -154,17 +154,17 @@
 <span><span class="co">#&gt; 3 progynova        54</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># how much medication for a given week </span></span>
-<span><span class="co"># (useful if you need to request a prescription)</span></span>
+<span><span class="co"># (useful if you need to request a prescription to cover a certain time period)</span></span>
 <span><span class="fu"><a href="reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span></span>
 <span>  <span class="va">meds</span>, </span>
 <span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-01"</span><span class="op">)</span>, </span>
-<span>  until_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-06"</span><span class="op">)</span></span>
+<span>  until_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-07"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
 <span><span class="co">#&gt;   medication quantity</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;         &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 cyclogest         8</span></span>
-<span><span class="co">#&gt; 2 progynova        36</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 cyclogest        10</span></span>
+<span><span class="co">#&gt; 2 progynova        42</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="global-options">Global options<a class="anchor" aria-label="anchor" href="#global-options"></a>
@@ -199,23 +199,28 @@
 <span><span class="co">#&gt; ℹ You will need to explicitly pass a value to the `due_date` argument</span></span>
 <span><span class="co">#&gt;   in functions that use it, or reset the option with `set_due_date()`.</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="options-in-rprofile">Options in <code>.RProfile</code>
+<h3 id="options-in-rprofile">Options in <code>.Rprofile</code>
 <a class="anchor" aria-label="anchor" href="#options-in-rprofile"></a>
 </h3>
-<p>We recommend adding your options to your <code>.RProfile</code> so they persist across R sessions. R will read in these options at the start of each session, and you will not need to use the <code>set_*</code> family of functions, nor pass them as arguments to the package functions. The <code>get_*</code> family of functions will still retrieve the options set in <code>.RProfile</code>.</p>
+<p>We recommend adding your options to your <code>.Rprofile</code> so they persist across R sessions. R will read in these options at the start of each session, and you will not need to use the <code>set_*</code> family of functions, nor pass them as arguments to the package functions. The <code>get_*</code> family of functions will still retrieve the options set in <code>.Rprofile</code>.</p>
 <p>Here’s an example of what that might look like:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
 <span>  pregnancy.due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-16"</span><span class="op">)</span>,</span>
 <span>  pregnancy.person <span class="op">=</span> <span class="st">"I"</span>, <span class="co"># addressed in first person</span></span>
-<span>  pregnancy.medications <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>    <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
-<span>    <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-21"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-30"</span><span class="op">)</span>,</span>
-<span>    <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-05-01"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-07-11"</span><span class="op">)</span>,</span>
-<span>    <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-05-03"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-07-11"</span><span class="op">)</span>,</span>
-<span>    <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-05-08"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-05"</span><span class="op">)</span></span>
+<span>  pregnancy.medications <span class="op">=</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
+<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="st">"2025-08-21"</span>, <span class="st">"2025-08-31"</span>,</span>
+<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="st">"2025-09-01"</span>, <span class="st">"2025-09-11"</span>,</span>
+<span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="st">"2025-09-03"</span>, <span class="st">"2025-09-11"</span>,</span>
+<span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="st">"2025-09-08"</span>, <span class="st">"2025-11-05"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">start_date</span><span class="op">)</span>,</span>
+<span>    stop_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">stop_date</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>Note that it is best to avoid creating R objects in your “.Rprofile”, e.g. a <code>medications</code> data frame outside of the call to <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>, otherwise that object will be loaded into your global environment at the start of every R session.</p>
 </div>
 </div>
 <div class="section level2">
