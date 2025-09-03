@@ -93,7 +93,7 @@ date_when(33)
 # a simplified medication schedule
 meds <- dplyr::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-  "progynova", "tablet", 3, as.Date("2025-08-21"), as.Date("2025-08-30"),
+  "progynova", "tablet", 3, as.Date("2025-08-21"), as.Date("2025-08-31"),
   "progynova", "tablet", 6, as.Date("2025-09-01"), as.Date("2025-09-11"),
   "cyclogest", "pessary", 2, as.Date("2025-09-03"), as.Date("2025-09-11"),
   "clexane", "injection", 1, as.Date("2025-09-08"), as.Date("2025-11-05")
@@ -107,11 +107,11 @@ medications_remaining(meds)
 
 ```{r}
 # how much medication for a given week 
-# (useful if you need to request a prescription)
+# (useful if you need to request a prescription to cover a certain time period)
 medications_remaining(
   meds, 
   on_date = as.Date("2025-09-01"), 
-  until_date = as.Date("2025-09-06")
+  until_date = as.Date("2025-09-07")
 )
 ```
 
@@ -145,12 +145,12 @@ get_due_date()
 set_due_date(NULL)
 ```
 
-### Options in `.RProfile`
+### Options in `.Rprofile`
 
-We recommend adding your options to your `.RProfile` so they persist across R sessions.
+We recommend adding your options to your `.Rprofile` so they persist across R sessions.
 R will read in these options at the start of each session, 
 and you will not need to use the `set_*` family of functions, nor pass them as arguments to the package functions. 
-The `get_*` family of functions will still retrieve the options set in `.RProfile`. 
+The `get_*` family of functions will still retrieve the options set in `.Rprofile`. 
 
 Here's an example of what that might look like:
 
@@ -158,15 +158,21 @@ Here's an example of what that might look like:
 options(
   pregnancy.due_date = as.Date("2025-09-16"),
   pregnancy.person = "I", # addressed in first person
-  pregnancy.medications = dplyr::tribble(
-    ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-    "progynova", "tablet", 3, as.Date("2025-04-21"), as.Date("2025-04-30"),
-    "progynova", "tablet", 6, as.Date("2025-05-01"), as.Date("2025-07-11"),
-    "cyclogest", "pessary", 2, as.Date("2025-05-03"), as.Date("2025-07-11"),
-    "clexane", "injection", 1, as.Date("2025-05-08"), as.Date("2025-09-05")
+  pregnancy.medications = tibble::tribble(
+  ~medication, ~format, ~quantity, ~start_date, ~stop_date,
+  "progynova", "tablet", 3, "2025-08-21", "2025-08-31",
+  "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
+  "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
+  "clexane", "injection", 1, "2025-09-08", "2025-11-05"
+  ) |> 
+  dplyr::mutate(
+    start_date = as.Date(start_date),
+    stop_date = as.Date(stop_date)
   )
 )
 ```
+
+Note that it is best to avoid creating R objects in your ".Rprofile", e.g. a `medications` data frame outside of the call to `options()`, otherwise that object will be loaded into your global environment at the start of every R session.
 
 ## Documentation
 
