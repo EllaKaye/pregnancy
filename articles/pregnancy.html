@@ -100,13 +100,13 @@ for those using IVF.</p>
 along the pregnancy is on a given date. It defaults to providing this
 information for the current date, but an alternative
 <code>on_date</code> can be provided. This vignette was built on
-<strong>August 28, 2025</strong>, so for the purposes of reading this
+<strong>September 03, 2025</strong>, so for the purposes of reading this
 article, that counts as “today”.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 37 weeks and 2 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 2 weeks and 5 days until the due date (September 16, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 93% through the pregnancy.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 38 weeks and 1 day pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (September 16, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 95% through the pregnancy.</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-04-02"</span><span class="op">)</span>, due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-16"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On April 02, 2025, you were 16 weeks and 1 day pregnant.</span></span></code></pre></div>
 <p>The <code><a href="../reference/date_when.html">date_when()</a></code> function gives the date when a certain
@@ -115,7 +115,7 @@ date from today:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">28</span>, due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On June 24, 2025, you were 28 weeks pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That was 9 weeks and 2 days ago.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That was 10 weeks and 1 day ago.</span></span></code></pre></div>
 <p>By default, the output messages from <code><a href="../reference/how_far.html">how_far()</a></code> and
 <code><a href="../reference/date_when.html">date_when()</a></code> are in the second person, i.e. addressed to
 “you”, but there is also an option to specify another person. A value of
@@ -123,16 +123,16 @@ date from today:</p>
 first person:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 37 weeks and 2 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 2 weeks and 5 days until the due date (September 16, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 93% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 38 weeks and 1 day pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (September 16, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 95% through the pregnancy.</span></span></code></pre></div>
 <p>Any other character string will be interpreted as a third-person
 name, which is useful, for example, if you’re following the pregnancy
 progress of a partner:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">6</span>, due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="st">"Ruth"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On January 21, 2025, Ruth was 6 weeks pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That was 31 weeks and 2 days ago.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That was 32 weeks and 1 day ago.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tracking-medications">Tracking medications<a class="anchor" aria-label="anchor" href="#tracking-medications"></a>
@@ -183,9 +183,9 @@ any arguments, and <code><a href="../reference/date_when.html">date_when()</a></
 week:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 37 weeks and 2 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 2 weeks and 5 days until the due date (September 16, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 93% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 38 weeks and 1 day pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (September 16, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 95% through the pregnancy.</span></span></code></pre></div>
 <p>To check what the option is set to, use
 <code><a href="../reference/due_date-option.html">get_due_date()</a></code>.</p>
 </div>
@@ -213,16 +213,16 @@ used.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You can retrieve the `person` option with `get_person()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.person')`.</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 37 weeks and 2 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 2 weeks and 5 days until the due date (September 16, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 93% through the pregnancy.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 38 weeks and 1 day pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (September 16, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 95% through the pregnancy.</span></span>
 <span><span class="fu"><a href="../reference/person.html">set_person</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> pregnancy.person option set to NULL.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The `person` argument will now default to "You".</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 37 weeks and 2 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 2 weeks and 5 days until the due date (September 16, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 93% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 38 weeks and 1 day pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (September 16, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 95% through the pregnancy.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="pregnancy-medications">
