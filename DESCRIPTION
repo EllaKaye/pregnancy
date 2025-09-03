@@ -1,13 +1,25 @@
 Package: pregnancy
-Title: Keep track of dates and medications through pregnancy and fertility treatment
+Title: Calculate and Track Dates and Medications During Pregnancy
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Ella",
-           family = "Kaye",
-           role = c("aut", "cre", "cph"),
-           email = "ella.kaye@gmail.com",
-           comment = c(ORCID = "0000-0002-7300-3718"))
-Description: What the package does (one paragraph).
+    person(
+        given = "Ella",
+        family = "Kaye",
+        role = c("aut", "cre", "cph"),
+        email = "ella.kaye@gmail.com",
+        comment = c(ORCID = "0000-0002-7300-3718")
+    )
+Description: Provides functionality for calculating pregnancy-related dates and 
+    tracking medications during pregnancy and fertility treatment. Calculates 
+    due dates from various starting points including last menstrual period and 
+    IVF transfer dates, determines pregnancy progress on any given date, and 
+    identifies when specific pregnancy weeks are reached. Also calculates 
+    optimal pregnancy test dates based on cycle timing and test sensitivity. 
+    Includes medication tracking capabilities for individuals undergoing 
+    fertility treatment or during pregnancy, allowing users to monitor remaining 
+    doses and quantities needed over specified time periods. Designed for those 
+    tracking their own pregnancies or supporting partners through the process, 
+    making use of options to personalise output messages.
 License: MIT + file LICENSE
 URL: https://ellakaye.github.io/pregnancy/, https://github.com/EllaKaye/pregnancy
 BugPerports: https://github.com/EllaKaye/pregnancy/issues
