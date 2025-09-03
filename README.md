@@ -231,5 +231,5 @@ start of every R session.
 
 ## Documentation
 
-See package website at <https://ellakaye.github.io/pregnancy> and also
+See package website at <https://ellakaye.github.io/pregnancy/> and also
 in the installed package: `help(package = "pregnancy")`.

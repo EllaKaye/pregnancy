@@ -189,7 +189,7 @@ Note that it is best to avoid creating R objects in your `.Rprofile`, e.g. a `me
 
 ## Documentation
 
-See package website at <https://ellakaye.github.io/pregnancy> 
+See package website at <https://ellakaye.github.io/pregnancy/> 
 and also in the installed package: `help(package = "pregnancy")`.
 
 ```{r echo = FALSE}
