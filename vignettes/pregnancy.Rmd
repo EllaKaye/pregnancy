@@ -84,11 +84,11 @@ meds <- dplyr::tribble(
   "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
   "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
   "clexane", "injection", 1, "2025-09-08", "2025-11-05"
-) |> 
+) |>
   dplyr::mutate(
     start_date = as.Date(start_date),
     stop_date = as.Date(stop_date)
-)
+  )
 ```
 
 You can then calculate the quantity of medications left to take grouped by either by medication (default) or format. By default, the calculation is for today (i.e. `on_date` = `Sys.Date()`). The resulting table assumes that the function is being called first thing in the day, i.e. before any of `on_date`'s medications have been taken. 
@@ -107,8 +107,8 @@ and have to tell the pharmacy exactly what you need:
 
 ```{r}
 medications_remaining(
-  meds, 
-  on_date = as.Date("2025-09-01"), 
+  meds,
+  on_date = as.Date("2025-09-01"),
   until_date = as.Date("2025-09-14")
 )
 ```

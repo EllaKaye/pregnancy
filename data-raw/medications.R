@@ -18,5 +18,4 @@ medications <- tibble::tribble(
   "prednisolone", "tablet", 1, as.Date("2025-10-26"), as.Date("2025-10-26")
 )
 
-
 usethis::use_data(medications, overwrite = TRUE)
