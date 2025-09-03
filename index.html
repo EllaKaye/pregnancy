@@ -115,6 +115,7 @@
 <p>This README was built on <strong>September 03, 2025</strong>, so for the purposes of reading this page, that counts as “today”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># don't need to specify `due_date` since option is set</span></span>
+<span><span class="co"># invisibly returns number of days into the pregnancy</span></span>
 <span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ You are 27 weeks and 2 days pregnant.</span></span>
 <span><span class="co">#&gt; ℹ That's 12 weeks and 5 days until the due date (December 01, 2025).</span></span>
@@ -125,6 +126,7 @@
 <span><span class="co">#&gt; ℹ On September 17, 2025, I will be 29 weeks and 2 days pregnant.</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># when a given week of the pregnancy is reached</span></span>
+<span><span class="co"># invisibly returns the Date when that week is reached</span></span>
 <span><span class="fu"><a href="reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ On October 13, 2025, you will be 33 weeks pregnant.</span></span>
 <span><span class="co">#&gt; ℹ That's 5 weeks and 5 days away.</span></span></code></pre></div>
@@ -167,7 +169,9 @@
 <div class="section level2">
 <h2 id="global-options">Global options<a class="anchor" aria-label="anchor" href="#global-options"></a>
 </h2>
-<p><code><a href="reference/how_far.html">how_far()</a></code> and <code><a href="reference/date_when.html">date_when()</a></code> both need to know the pregnancy due date, and this can be passed directly to the <code>due_date</code> argument. It would be very tedious, however, to have to enter a due date every time you call these functions over the course of a pregnancy, especially since that date is constant throughout. Similarly for the medications table in <code><a href="reference/medications_remaining.html">medications_remaining()</a></code>. To avoid this, the pregnancy package makes use of <strong>global options</strong>, which can be set with the <code>set_*</code> family of functions (<code><a href="reference/due_date-option.html">set_due_date()</a></code>, <code><a href="reference/person.html">set_person()</a></code>, <code><a href="reference/medications-option.html">set_medications()</a></code>, and retrieved with the corresponding <code>get_*</code> family of functions. These options will persist for the duration of the current R session. Any global option can be unset by calling its <code>set_*</code> function with the argument <code>NULL</code>.</p>
+<p><code><a href="reference/how_far.html">how_far()</a></code> and <code><a href="reference/date_when.html">date_when()</a></code> both need to know the pregnancy due date, and this can be passed directly to the <code>due_date</code> argument. It would be very tedious, however, to have to enter a due date every time you call these functions over the course of a pregnancy, especially since that date is constant throughout. The same holds for the for medications table required for <code><a href="reference/medications_remaining.html">medications_remaining()</a></code>.</p>
+<p>To avoid this, the pregnancy package makes use of <strong>global options</strong>, which can be set with the <code>set_*</code> family of functions (<code><a href="reference/due_date-option.html">set_due_date()</a></code>, <code><a href="reference/person.html">set_person()</a></code>, <code><a href="reference/medications-option.html">set_medications()</a></code>), and retrieved with the corresponding <code>get_*</code> family of functions (<code><a href="reference/due_date-option.html">get_due_date()</a></code>, <code><a href="reference/person.html">get_person()</a></code>, <code><a href="reference/medications-option.html">get_medications()</a></code>). These options will persist for the duration of the current R session.</p>
+<p>Any global option can be unset by calling its <code>set_*</code> function with the argument <code>NULL</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a different due date from the earlier example</span></span>
 <span><span class="fu"><a href="reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2026-04-01"</span><span class="op">)</span><span class="op">)</span></span>
@@ -198,7 +202,7 @@
 <h3 id="options-in-rprofile">Options in <code>.RProfile</code>
 <a class="anchor" aria-label="anchor" href="#options-in-rprofile"></a>
 </h3>
-<p>We recommend adding your options to your <code>.RProfile</code> so they persist across R sessions. R will read in these options at the start of each session, and you will not need to use the <code>set_*</code> family of functions. The <code>get_*</code> family of functions will still retrieve the options set in <code>.RProfile</code>.</p>
+<p>We recommend adding your options to your <code>.RProfile</code> so they persist across R sessions. R will read in these options at the start of each session, and you will not need to use the <code>set_*</code> family of functions, nor pass them as arguments to the package functions. The <code>get_*</code> family of functions will still retrieve the options set in <code>.RProfile</code>.</p>
 <p>Here’s an example of what that might look like:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
