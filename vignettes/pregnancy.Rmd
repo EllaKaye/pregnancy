@@ -14,95 +14,131 @@ knitr::opts_chunk$set(
 )
 ```
 
-***This vignette is still a draft***.
-
 ```{r setup}
 library(pregnancy)
 ```
 
-This is an R package for calculating dates and tracking medications during pregnancy and fertility treatment. 
-It extends a private, personal package that I wrote for myself when I was pregnant.
-It contains functions and features that I found useful at the time, 
-and others that I added when adapting the package for general use.
+This is an R package for calculating dates and tracking medications during pregnancy and fertility treatment. It extends a private, personal package that I wrote for myself when I was pregnant. It contains functions and features that I found useful at the time, and others that I added when adapting the package for general use.
 
-The functionality goes beyond what's offered by online pregnancy calculators and apps, 
-plus there are no concerns (unlike with these sites and apps) about data privacy, tracking or advertising.
+The functionality goes beyond what's offered by online pregnancy calculators and apps, plus there are no concerns (unlike with these sites and apps) about data privacy, tracking or advertising.
 
 ## Date calculations
 
-The `calculate_due_date()` function estimates the pregnancy due date. 
-The `start_date` is interpreted differently, depending on the `start_type`. 
-By default, the `start_type` is the last menstrual period, and the `start_date` is the date this started.
-Other `start_date` options, like various transfer days, are useful for those using IVF.
+The `calculate_due_date()` function estimates the pregnancy due date. The `start_date` is interpreted differently, depending on the `start_type`. By default, the `start_type` is the last menstrual period, and the `start_date` is the date this started. Other `start_date` options, like various transfer days, are useful for those using IVF.
 
 ```{r}
 # invisibly returns a Date object with the estimated due date
-due_date <- calculate_due_date(as.Date("2024-12-10"))
+due_date <- calculate_due_date(as.Date("2025-02-24"))
 ```
 
-Once a due date is know, `how_far()` tells you how far along the pregnancy is on a given date.
-It defaults to providing this information for the current date, 
-but an alternative `on_date` can be provided. 
-This vignette was built on **`r format(Sys.Date(), '%B %d, %Y')`**, 
-so for the purposes of reading this article, that counts as "today".
+Once a due date is know, `how_far()` tells you how far along the pregnancy is on a given date. It defaults to providing this information for the current date, but an alternative `on_date` can be provided. This vignette was built on **`r format(Sys.Date(), '%B %d, %Y')`**, so for the purposes of reading this article, that counts as "today".
 
 ```{r}
 how_far(due_date = due_date)
-how_far(on_date = as.Date("2025-04-02"), due_date = as.Date("2025-09-16"))
+how_far(on_date = as.Date("2025-09-17"), due_date = due_date)
 ```
 
-The `date_when()` function gives the date when a certain week of pregnancy will be (or was) reached,
-and the duration of that date from today:
+The `date_when()` function gives the date when a certain week of pregnancy will be (or was) reached, and the duration of that date from today:
 
 ```{r}
-date_when(28, due_date = due_date)
+date_when(33, due_date = due_date)
 ```
 
-By default, the output messages from `how_far()` and `date_when()` are in the second person, i.e. addressed to "you",
-but there is also an option to specify another person.
-A value of `1` or `"I"` means you'll be addressed in the first person:
+By default, the output messages from `how_far()` and `date_when()` are in the second person, i.e. addressed to "you", but there is also an option to specify another person. A value of `1` or `"I"` means you'll be addressed in the first person:
 
 ```{r}
 how_far(due_date = due_date, person = 1)
 ```
 
-Any other character string will be interpreted as a third-person name,
-which is useful, for example, if you're following the pregnancy progress of a partner:
-
+Any other character string will be interpreted as a third-person name, which is useful, for example, if you're following the pregnancy progress of a partner:
 
 ```{r}
-date_when(6, due_date = due_date, person = "Ruth")
+date_when(33, due_date = due_date, person = "Ruth")
 ```
 
 ## Tracking medications
 
-*Write this section!*
+For those who get pregnant via fertility treatment, it is likely they need to take a number of different medications to support the pregnancy. Having functionality for tracking these is useful for both practical and emotional reasons. When I was pregnant, in my personal, private pregnancy package, whenever I called my version of `how_far`, it would print a message with how many injections I had already endured, and how many I had left to go, which helped me get through them.
+
+I haven't written that functionality into `how_far()` in this generalised version of the pregnancy package, but I have provided a separate `medications_remaining()` function to keep track of medications. It requires a data frame of medications, which must have the following columns with the specified data types:
+
+| Column name | Data type | Description |
+|----|----|----|
+| medication | character or factor | name of the medication |
+| format | character or factor | format of the medication (e.g. pill, injection) |
+| quantity | numeric | number of units to take per day |
+| start_date | Date | date to start taking the medication |
+| stop_date | Date | final date on which medication is taken |
+
+Note that if the quantity of a given medication changes during the pregnancy, 
+you need separate rows with the start and stop dates for each quantity.
+
+Here's an example of what a small `medications` table might look like 
+(a larger example table is provided in the package as `pregnancy::medications`):
+
+```{r}
+# a simplified medication schedule
+meds <- dplyr::tribble(
+  ~medication, ~format, ~quantity, ~start_date, ~stop_date,
+  "progynova", "tablet", 3, "2025-08-21", "2025-08-31",
+  "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
+  "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
+  "clexane", "injection", 1, "2025-09-08", "2025-11-05"
+) |> 
+  dplyr::mutate(
+    start_date = as.Date(start_date),
+    stop_date = as.Date(stop_date)
+)
+```
+
+You can then calculate the quantity of medications left to take grouped by either by medication (default) or format. By default, the calculation is for today (i.e. `on_date` = `Sys.Date()`). The resulting table assumes that the function is being called first thing in the day, i.e. before any of `on_date`'s medications have been taken. 
+
+```{r}
+medications_remaining(meds)
+```
+
+```{r}
+medications_remaining(meds, group = "format")
+```
+
+You can specify a value other than today for `on_date`, as well as an `until_date`.
+This is useful if you need (as I did) to order a couple of week's medication at the time,
+and have to tell the pharmacy exactly what you need:
+
+```{r}
+medications_remaining(
+  meds, 
+  on_date = as.Date("2025-09-01"), 
+  until_date = as.Date("2025-09-14")
+)
+```
 
 ## Global options
 
-It would be very tedious to have to enter a due date every time you call `how_far()` or `date_when()` over the course of a pregnancy, especially since that date is constant throughout. 
-Similarly for the medications table in `medications_remaining()`.
-To avoid this, the pregnancy package makes use of **global options**, 
-which can be set with the `set_*` family of functions ((`set_due_date()`, `set_person()`, `set_medications()`), 
-retrieved with the `get_*` family of functions.
+It would be very tedious to have to enter a due date every time you call `how_far()` or `date_when()` over the course of a pregnancy, especially since that date is constant throughout. The same goes for the medications table required for `medications_remaining()`.
+
+To avoid this, the pregnancy package makes use of **global options**, which can be set with the `set_*` family of functions (`set_due_date()`, `set_person()`, `set_medications()`). 
+These functions only set the options for the current R session. 
+
+To ensure the options persist across all R sessions, we suggest setting them in your `.Rprofile`, and give an example at the end of this vignette.
+
+Global options can be retrieved with the `get_*` family of functions (`get_due_date()`, `get_person()`, `get_medications()`).
+
 Any global option can be unset by calling its `set_*` function with the argument `NULL`.
 
 ### `pregnancy.due_date`
 
 You can set the `pregnancy.due_date` option using the `set_due_date()` function.
-When that option is set, if the `due_date` argument to `how_far()` or `date_when()` is `NULL` (the default),
-that option is retrieved. 
 
-`set_due_date()` only sets the due date for the current R session. 
-To make this option persist (recommended), it can be added to your `.RProfile`. 
-The console output of `set_due_date()` provides guidance on how to do this.
+When that option is set, if the `due_date` argument to `how_far()` or `date_when()` is `NULL` (the default), that option is retrieved.
+
+`set_due_date()` only sets the due date for the current R session. To make this option persist (recommended), it can be added to your `.Rprofile`. The console output of `set_due_date()` provides guidance on how to do this.
 
 ```{r}
 set_due_date(due_date)
 ```
 
-Then `how_far()` can be called without needing to specify any arguments, 
-and `date_when()` only needs the target week:
+Then `how_far()` can be called without needing to specify any arguments, and `date_when()` only needs the target week:
 
 ```{r}
 how_far()
@@ -112,10 +148,9 @@ To check what the option is set to, use `get_due_date()`.
 
 ### `pregnancy.person`
 
-`set_person()` sets the global option `pregnancy.person`. 
-If this option is set it will be retrieved to specify the value of `person` in `how_far()` and `date_when()`,
-unless it is overriden by passing another value directly to the `person` argument. 
-If the option is not set, the default second-person will be used.
+`set_person()` sets the global option `pregnancy.person` for the current R session. 
+If this option is set it will be retrieved to specify the value of `person` in `how_far()` and `date_when()`, 
+unless it is overriden by passing another value directly to the `person` argument. If the option is not set, the default second-person will be used.
 
 ```{r}
 set_person(1)
@@ -126,12 +161,18 @@ how_far()
 
 ### `pregnancy.medications`
 
-*Write this section!*
+`set_medications()` sets the global option `pregnancy.medications` for the current R session. 
 
-### An example `.RProfile`
+When that option is set, if the `meds` argument to `medications_remaining()` is `NULL` (the default), that option is retrieved.
 
-Taking the advice to specify the options in your `.RProfile`, 
-here's an example of what that might look like:
+```{r}
+set_medications(pregnancy::medications)
+medications_remaining()
+```
+
+### An example `.Rprofile`
+
+Taking the advice to specify the options in your `.Rprofile`, here's an example of what that might look like:
 
 ``` r
 options(
@@ -147,3 +188,4 @@ options(
 )
 ```
 
+Note that it is best to avoid creating R objects in your ".Rprofile", e.g. a `medications` data frame outside of the call to `options()`, otherwise that object will be loaded into your global environment at the start of every R session.
