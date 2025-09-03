@@ -1,8 +1,3 @@
-# functions related to due date
-# calculate_due_date(start_date, start_type, cycle)
-# get_due_date()
-# set_due_date(due_date)
-
 # testing calculate_due_date() --------------------------------------------
 
 test_that("start_date is correct format", {

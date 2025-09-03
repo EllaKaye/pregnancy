@@ -1,9 +1,3 @@
-# (non-exported) helper functions for getting and checking due dates
-# date_stop_null(date)
-# check_person(person)
-# check_date(date)
-# check_cycle(cycle)
-
 # this throws an error regardless on the value of date
 # the date argument is only to allow an informative error message when date_stop called within another function
 date_stop <- function(date) {
@@ -144,24 +138,6 @@ set_option_null_message <- function(option) {
     )
   }
 }
-
-# Probably don't need this - use tests instead of in-function checks
-# check_set <- function(option) {
-#   option_string <- deparse(substitute(option))
-#   pregnancy_option <- paste0("pregnancy.", option_string)
-#
-#   if (is.null(option) && !is.null(getOption(pregnancy_option))) {
-#     cli::cli_abort("pregnancy.{option} option was not set to {.var {option_string}}")
-#   pregnancy_option
-#   }
-#
-#   if (!is.null(option) && getOption(pregnancy_option) != option) {
-#     cli::cli_abort("pregnancy.{option} option was not set to {.var {option_string}}")
-#   }
-#
-#   invisible(option)
-#
-# }
 
 null_option <- function(option) {
   # message when getOption(pregnancy.{option}) is null

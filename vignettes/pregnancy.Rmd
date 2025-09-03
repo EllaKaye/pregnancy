@@ -203,5 +203,5 @@ options(
   pregnancy.due_date = due_date_opt,
   pregnancy.person = person_opt,
   pregnancy.medications = medications_opt
-  )
+)
 ```

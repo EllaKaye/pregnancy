@@ -1,8 +1,3 @@
-# helper functions relating to grammar in message, e.g. name/pronoun, tense of verb
-# get_subject(person)
-# get_tense(date1, date2)
-# to_be(person, tense)
-
 # used to pass into `to_be()`
 # returns "You", "I" or person
 # nolint start: return_linter

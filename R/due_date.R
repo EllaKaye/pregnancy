@@ -1,8 +1,3 @@
-# functions related to due date
-# calculate_due_date(start_date, start_type, cycle)
-# get_due_date()
-# set_due_date(due_date)
-
 #' Calculate estimated due date and birth period
 #'
 #' Calculates the estimated due date based on a start date and type. The function

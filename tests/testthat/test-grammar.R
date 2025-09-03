@@ -1,8 +1,3 @@
-# helper functions relating to grammar in message, e.g. name/pronoun, tense of verb
-# get_subject(person)
-# get_tense(date1, date2)
-# to_be(person, tense)
-
 # testing get_subject(person) ------------------------------------------
 
 test_that("get_subject handles numeric 1 and 2", {
@@ -84,12 +79,6 @@ test_that("date diff gives expected tense", {
 
 
 # testing to_be(person, tense) --------------------------------------------
-
-# TODO: snapshot test
-# test_that("un-matched tense throws error", {
-#  expect_error(to_be("futuree"), regexp = "tense")
-# })
-# may need snapshot test here
 
 # N.B. `person` should have been through `get_subject(person)` first (hence also `check_person()`)
 test_that("get correct verb given person and tense", {

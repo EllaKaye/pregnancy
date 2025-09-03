@@ -1,9 +1,3 @@
-# functions related to medications
-# medications_remaining()
-# check_medications()
-# get_medications()
-# set_medications()
-
 #' Calculate remaining medications to be taken
 #'
 #' @description
@@ -126,15 +120,7 @@ medications_remaining <-
       meds %>%
       dplyr::mutate(from = pmax(on_date, start_date)) %>%
       dplyr::mutate(to = pmin(until_date, stop_date)) %>%
-      # dplyr::mutate(total_days = (stop_date - start_date) + 1) %>%
-      # dplyr::mutate(total_quantity = as.integer(total_days * quantity)) %>%
-      # dplyr::mutate(days_remaining = dplyr::case_when(
-      #   on_date <= stop_date & on_date >= start_date ~ (as.integer(stop_date - on_date) + 1),
-      #   start_date > on_date ~ (as.integer(stop_date - start_date) + 1),
-      #   TRUE ~ 0
-      # )) %>%
       dplyr::mutate(days = pmax(0, (as.integer(to - from) + 1))) %>%
-      # dplyr::mutate(quantity_remaining = as.integer(days_remaining * quantity)) %>%
       dplyr::mutate(quant = as.integer(days * quantity))
 
     if (group == "medication") {
