@@ -20,14 +20,12 @@ The functionality goes beyond what’s offered by online pregnancy
 calculators and apps, plus there are no concerns (unlike with these
 sites and apps) about data privacy, tracking or advertising.
 
-> This R package is in the final stages of development, with a view to
-> release in early September 2025.
+> This R package is in the very final stages of development, with a view
+> to release in early September 2025.
 >
 > The main functionality is now in place.
 >
-> Still to do: some improvements to documentation, finish vignette,
-> better test coverage, improve some of messages in some utils
-> functions.
+> Still to do: some improvements to documentation, finish vignette.
 
 ## Installation
 
@@ -76,15 +74,15 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-This README was built on **August 28, 2025**, so for the purposes of
+This README was built on **September 03, 2025**, so for the purposes of
 reading this page, that counts as “today”.
 
 ``` r
 # don't need to specify `due_date` since option is set
 how_far()
-#> ℹ You are 26 weeks and 3 days pregnant.
-#> ℹ That's 13 weeks and 4 days until the due date (December 01, 2025).
-#> ℹ You are 66% through the pregnancy.
+#> ℹ You are 27 weeks and 2 days pregnant.
+#> ℹ That's 12 weeks and 5 days until the due date (December 01, 2025).
+#> ℹ You are 68% through the pregnancy.
 ```
 
 ``` r
@@ -97,7 +95,7 @@ how_far(on_date = as.Date("2025-09-17"), person = 1)
 # when a given week of the pregnancy is reached
 date_when(33)
 #> ℹ On October 13, 2025, you will be 33 weeks pregnant.
-#> ℹ That's 6 weeks and 4 days away.
+#> ℹ That's 5 weeks and 5 days away.
 ```
 
 ## Tracking medications
@@ -121,7 +119,7 @@ medications_remaining(meds)
 #>   <chr>         <int>
 #> 1 clexane          59
 #> 2 cyclogest        18
-#> 3 progynova        75
+#> 3 progynova        54
 ```
 
 ``` r
@@ -171,9 +169,9 @@ set_due_date(as.Date("2026-04-01"))
 
 ``` r
 how_far()
-#> ℹ You are 9 weeks and 1 day pregnant.
-#> ℹ That's 30 weeks and 6 days until the due date (April 01, 2026).
-#> ℹ You are 23% through the pregnancy.
+#> ℹ You are 10 weeks and 0 days pregnant.
+#> ℹ That's 30 weeks and 0 days until the due date (April 01, 2026).
+#> ℹ You are 25% through the pregnancy.
 ```
 
 ``` r
@@ -189,12 +187,10 @@ set_due_date(NULL)
 ### Options in `.RProfile`
 
 We recommend adding your options to your `.RProfile` so they persist
-across R sessions. R should read in these options when it loads, and you
-should then not need to use the `set_*` family of functions. The `get_*`
-family of functions should retrieve the options set in `.RProfile`.
-**Note: there appears to be an
-[issue](https://github.com/posit-dev/positron/issues/9211) in Positron
-where the R console *isn’t* properly loading `.RProfile` on start-up.**
+across R sessions. R will read in these options at the start of each
+session, and you will not need to use the `set_*` family of functions.
+The `get_*` family of functions will still retrieve the options set in
+`.RProfile`.
 
 Here’s an example of what that might look like:
 

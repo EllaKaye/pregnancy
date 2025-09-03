@@ -28,11 +28,11 @@ and others that I added when adapting the package for general use.
 The functionality goes beyond what's offered by online pregnancy calculators and apps, 
 plus there are no concerns (unlike with these sites and apps) about data privacy, tracking or advertising.
 
-> This R package is in the final stages of development, with a view to release in early September 2025.
+> This R package is in the very final stages of development, with a view to release in early September 2025.
 > 
 > The main functionality is now in place.
 > 
-> Still to do: some improvements to documentation, finish vignette, better test coverage, improve some of messages in some utils functions.
+> Still to do: some improvements to documentation, finish vignette.
 
 ## Installation 
 
@@ -144,9 +144,9 @@ set_due_date(NULL)
 ### Options in `.RProfile`
 
 We recommend adding your options to your `.RProfile` so they persist across R sessions.
-R should read in these options when it loads, and you should then not need to use the `set_*` family of functions. 
-The `get_*` family of functions should retrieve the options set in `.RProfile`. 
-**Note: there appears to be an [issue](https://github.com/posit-dev/positron/issues/9211) in Positron where the R console *isn't* properly loading `.RProfile` on start-up.**
+R will read in these options at the start of each session, 
+and you will not need to use the `set_*` family of functions. 
+The `get_*` family of functions will still retrieve the options set in `.RProfile`. 
 
 Here's an example of what that might look like:
 
