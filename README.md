@@ -79,6 +79,7 @@ reading this page, that counts as “today”.
 
 ``` r
 # don't need to specify `due_date` since option is set
+# invisibly returns number of days into the pregnancy
 how_far()
 #> ℹ You are 27 weeks and 2 days pregnant.
 #> ℹ That's 12 weeks and 5 days until the due date (December 01, 2025).
@@ -93,6 +94,7 @@ how_far(on_date = as.Date("2025-09-17"), person = 1)
 
 ``` r
 # when a given week of the pregnancy is reached
+# invisibly returns the Date when that week is reached
 date_when(33)
 #> ℹ On October 13, 2025, you will be 33 weeks pregnant.
 #> ℹ That's 5 weeks and 5 days away.
@@ -143,13 +145,17 @@ medications_remaining(
 and this can be passed directly to the `due_date` argument. It would be
 very tedious, however, to have to enter a due date every time you call
 these functions over the course of a pregnancy, especially since that
-date is constant throughout. Similarly for the medications table in
-`medications_remaining()`. To avoid this, the pregnancy package makes
-use of **global options**, which can be set with the `set_*` family of
-functions (`set_due_date()`, `set_person()`, `set_medications()`, and
-retrieved with the corresponding `get_*` family of functions. These
-options will persist for the duration of the current R session. Any
-global option can be unset by calling its `set_*` function with the
+date is constant throughout. The same holds for the for medications
+table required for `medications_remaining()`.
+
+To avoid this, the pregnancy package makes use of **global options**,
+which can be set with the `set_*` family of functions (`set_due_date()`,
+`set_person()`, `set_medications()`), and retrieved with the
+corresponding `get_*` family of functions (`get_due_date()`,
+`get_person()`, `get_medications()`). These options will persist for the
+duration of the current R session.
+
+Any global option can be unset by calling its `set_*` function with the
 argument `NULL`.
 
 ``` r
@@ -188,9 +194,9 @@ set_due_date(NULL)
 
 We recommend adding your options to your `.RProfile` so they persist
 across R sessions. R will read in these options at the start of each
-session, and you will not need to use the `set_*` family of functions.
-The `get_*` family of functions will still retrieve the options set in
-`.RProfile`.
+session, and you will not need to use the `set_*` family of functions,
+nor pass them as arguments to the package functions. The `get_*` family
+of functions will still retrieve the options set in `.RProfile`.
 
 Here’s an example of what that might look like:
 
