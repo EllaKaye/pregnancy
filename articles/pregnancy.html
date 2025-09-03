@@ -133,6 +133,15 @@ progress of a partner:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="st">"Ruth"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On October 13, 2025, Ruth will be 33 weeks pregnant.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 5 weeks and 5 days away.</span></span></code></pre></div>
+<p>There is one further date-related function in the package, which is
+useful if you are not yet pregnant but think there’s a chance you might
+be. This is <code><a href="../reference/calculate_test_date.html">calculate_test_date()</a></code>, which calculates the
+recommended date for taking a pregnancy test, based on start date
+(e.g. start of last menstural period) and test type:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculate_test_date.html">calculate_test_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-21"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Thursday, September 18, 2025</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Tuesday, September 16, 2025</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tracking-medications">Tracking medications<a class="anchor" aria-label="anchor" href="#tracking-medications"></a>
@@ -194,7 +203,7 @@ quantity.</p>
 <p>Here’s an example of what a small <code>medications</code> table
 might look like (a larger example table is provided in the package as
 <code><a href="../reference/medications.html">pregnancy::medications</a></code>):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a simplified medication schedule</span></span>
 <span><span class="va">meds</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
@@ -213,7 +222,7 @@ calculation is for today (i.e. <code>on_date</code> =
 <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date()</a></code>). The resulting table assumes that the function
 is being called first thing in the day, i.e. before any of
 <code>on_date</code>’s medications have been taken.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   medication quantity</span></span>
@@ -221,7 +230,7 @@ is being called first thing in the day, i.e. before any of
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane          59</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest        18</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> progynova        54</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span>, group <span class="op">=</span> <span class="st">"format"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   format    quantity</span></span>
@@ -233,7 +242,7 @@ is being called first thing in the day, i.e. before any of
 well as an <code>until_date</code>. This is useful if you need (as I
 did) to order a couple of week’s medication at the time, and have to
 tell the pharmacy exactly what you need:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span></span>
 <span>  <span class="va">meds</span>,</span>
 <span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-01"</span><span class="op">)</span>,</span>
@@ -280,7 +289,7 @@ function with the argument <code>NULL</code>.</p>
 session. To make this option persist (recommended), it can be added to
 your <code>.Rprofile</code>. The console output of
 <code><a href="../reference/due_date-option.html">set_due_date()</a></code> provides guidance on how to do this.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="va">due_date</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Due date set as December 01, 2025</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span></span>
@@ -295,7 +304,7 @@ your <code>.Rprofile</code>. The console output of
 <p>Then <code><a href="../reference/how_far.html">how_far()</a></code> can be called without needing to specify
 any arguments, and <code><a href="../reference/date_when.html">date_when()</a></code> only needs the target
 week:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 27 weeks and 2 days pregnant.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 12 weeks and 5 days until the due date (December 01, 2025).</span></span>
@@ -314,7 +323,7 @@ in <code><a href="../reference/how_far.html">how_far()</a></code> and <code><a h
 overriden by passing another value directly to the <code>person</code>
 argument. If the option is not set, the default second-person will be
 used.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/person.html">set_person</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> person set as 'I'</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `person` option.</span></span>
@@ -347,7 +356,7 @@ used.</p>
 <p>When that option is set, if the <code>meds</code> argument to
 <code><a href="../reference/medications_remaining.html">medications_remaining()</a></code> is <code>NULL</code> (the default),
 that option is retrieved.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications-option.html">set_medications</a></span><span class="op">(</span><span class="fu">pregnancy</span><span class="fu">::</span><span class="va"><a href="../reference/medications.html">medications</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> medications set.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `medications` option.</span></span>
@@ -375,7 +384,7 @@ that option is retrieved.</p>
 <p>Taking the advice to specify the options in your
 <code>.Rprofile</code>, here’s an example of what that might look
 like:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
 <span>  pregnancy.due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-16"</span><span class="op">)</span>,</span>
 <span>  pregnancy.person <span class="op">=</span> <span class="st">"I"</span>, <span class="co"># addressed in first person</span></span>
