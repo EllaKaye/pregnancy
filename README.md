@@ -20,13 +20,6 @@ The functionality goes beyond what’s offered by online pregnancy
 calculators and apps, plus there are no concerns (unlike with these
 sites and apps) about data privacy, tracking or advertising.
 
-> This R package is in the very final stages of development, with a view
-> to release in early September 2025.
->
-> The main functionality is now in place.
->
-> Still to do: some improvements to documentation, finish vignette.
-
 ## Installation
 
 You can install the development version of pregnancy from
