@@ -63,6 +63,13 @@ Any other character string will be interpreted as a third-person name, which is 
 date_when(33, due_date = due_date, person = "Ruth")
 ```
 
+There is one further date-related function in the package, which is useful if you are not yet pregnant but think there's a chance you might be.
+This is `calculate_test_date()`, which calculates the recommended date for taking a pregnancy test, based on start date (e.g. start of last menstural period) and test type:
+
+```{r}
+calculate_test_date(as.Date("2025-08-21"))
+```
+
 ## Tracking medications
 
 For those who get pregnant via fertility treatment, it is likely they need to take a number of different medications to support the pregnancy. Having functionality for tracking these is useful for both practical and emotional reasons. When I was pregnant, in my personal, private pregnancy package, whenever I called my version of `how_far`, it would print a message with how many injections I had already endured, and how many I had left to go, which helped me get through them.
