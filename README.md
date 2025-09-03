@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EllaKaye/pregnancy/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/EllaKaye/pregnancy/graph/badge.svg)](https://app.codecov.io/gh/EllaKaye/pregnancy)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/pregnancy)](https://CRAN.R-project.org/package=pregnancy)
 <!-- badges: end -->
 
 This is an R package for calculating dates and tracking medications
@@ -22,12 +24,23 @@ sites and apps) about data privacy, tracking or advertising.
 
 ## Installation
 
-You can install the development version of pregnancy from
-[GitHub](https://github.com/) with:
+**pregnancy** is available on CRAN:
 
 ``` r
-# install.packages("remotes") 
-remotes::install_github("EllaKaye/pregnancy") 
+install.packages("pregnancy")
+```
+
+You can install the development version from or R-universe:
+
+``` r
+install.packages("pregnancy", repos = "https://ellakaye.r-universe.dev")
+```
+
+Alternatively, install the development version from
+[GitHub](https://github.com/EllaKaye/pregnancy) with:
+
+``` r
+pak::pak("EllaKaye/pregnancy") 
 ```
 
 ## Usage
