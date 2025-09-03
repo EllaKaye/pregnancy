@@ -24,10 +24,12 @@ date_when(weeks, due_date = NULL, person = NULL, today = Sys.Date())
 This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.}
 }
 \value{
-Invisibly returns NULL. Prints messages to the console showing:
+Invisibly returns a Date object of when the specified week of pregnancy occurs/occurred/will occur.
+
+Prints messages to the console showing:
 \itemize{
 \item When the specified week of pregnancy occurs/occurred/will occur
-\item How far in the past/future that date is from today (unless today is the date)
+\item How far in the past/future that date is from today (unless that date is the current date)
 }
 }
 \description{

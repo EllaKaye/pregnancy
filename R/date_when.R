@@ -79,9 +79,11 @@ date_when_message <- function(
 #' @param today Date object representing the reference date for calculations. Default is Sys.Date().
 #'   This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.
 #' @inheritParams how_far
-#' @return Invisibly returns NULL. Prints messages to the console showing:
+#' @return Invisibly returns a Date object of when the specified week of pregnancy occurs/occurred/will occur.
+#'
+#' Prints messages to the console showing:
 #'   - When the specified week of pregnancy occurs/occurred/will occur
-#'   - How far in the past/future that date is from today (unless today is the date)
+#'   - How far in the past/future that date is from today (unless that date is the current date)
 #'
 #' @details
 #' The function calculates when someone will be/was a specific number of weeks pregnant based on their due date.
@@ -134,4 +136,6 @@ date_when <- function(
       "i" = dd_message$duration_str
     ))
   }
+
+  invisible(dd_calc$date_when)
 }
