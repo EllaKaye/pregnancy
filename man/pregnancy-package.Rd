@@ -4,17 +4,18 @@
 \name{pregnancy-package}
 \alias{pregnancy}
 \alias{pregnancy-package}
-\title{pregnancy: Keep track of dates and medications through pregnancy and fertility treatment}
+\title{pregnancy: Calculate and Track Dates and Medications During Pregnancy}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-What the package does (one paragraph).
+Provides functionality for calculating pregnancy-related dates and tracking medications during pregnancy and fertility treatment. Calculates due dates from various starting points including last menstrual period and IVF transfer dates, determines pregnancy progress on any given date, and identifies when specific pregnancy weeks are reached. Includes medication tracking capabilities for individuals undergoing fertility treatment or during pregnancy, allowing users to monitor remaining doses and quantities needed over specified time periods. Designed for those tracking their own pregnancies or supporting partners through the process, making use of options to personalise output messages.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://ellakaye.github.io/pregnancy/}
   \item \url{https://github.com/EllaKaye/pregnancy}
+  \item Report bugs at \url{https://github.com/EllaKaye/pregnancy/issues}
 }
 
 }
