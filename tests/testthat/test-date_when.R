@@ -135,16 +135,15 @@ test_that("date_when_calculation throws error when due_date is NULL and no optio
 })
 
 test_that("date_when_calculation accepts date strings", {
-  due_date <-
-    # Test invalid today parameter
-    expect_equal(
-      date_when_calculation(
-        weeks = 12,
-        due_date = "2025-12-01",
-        today = "2025-11-01"
-      )$total_days,
-      166
-    )
+  # Test invalid today parameter
+  expect_equal(
+    date_when_calculation(
+      weeks = 12,
+      due_date = "2025-12-01",
+      today = "2025-11-01"
+    )$total_days,
+    166
+  )
 })
 
 test_that("date_when_calculation uses Sys.Date() as default today", {

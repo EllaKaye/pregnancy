@@ -23,6 +23,35 @@ test_that("date can be a character string", {
   expect_no_error(check_date("2023-01-01"))
 })
 
+test_that("error if date is NA", {
+  expect_error(check_date(NA))
+})
+
+test_that("check_date handles NA values correctly", {
+  # Test that NA date throws the correct error
+  expect_error(
+    check_date(as.Date(NA)),
+    class = "pregnancy_error_value"
+  )
+
+  # Test that the error message contains the expected content
+  expect_error(
+    check_date(as.Date(NA)),
+    "was.*NA"
+  )
+
+  # Test that NULL date doesn't trigger the NA check
+  # (this should fail earlier in the function due to length check)
+  expect_error(
+    check_date(NULL),
+    class = "pregnancy_error_length"
+  )
+
+  # Test that valid date passes through without error
+  valid_date <- as.Date("2025-01-01")
+  expect_equal(check_date(valid_date), valid_date)
+})
+
 # testing check_person(person) -------------------------------------------------
 
 test_that("person is character of length 1", {
