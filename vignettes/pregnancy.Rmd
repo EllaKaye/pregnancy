@@ -105,7 +105,7 @@ meds <- dplyr::tribble(
   "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
   "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
   "clexane", "injection", 1, "2025-09-08", "2025-11-05"
-) 
+)
 ```
 
 You can then calculate the quantity of medications left to take grouped by either by medication (default) or format. By default, the calculation is for today (i.e. `on_date` = `Sys.Date()`). The resulting table assumes that the function is being called first thing in the day, i.e. before any of `on_date`'s medications have been taken. 
@@ -153,7 +153,7 @@ When that option is set, if the `due_date` argument to `how_far()` or `date_when
 
 ```{r}
 # can be intentional about creating a Date object
-due_date = as.Date("2026-01-22")
+due_date <- as.Date("2026-01-22")
 set_due_date(due_date)
 ```
 
