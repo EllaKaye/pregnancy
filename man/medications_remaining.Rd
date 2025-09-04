@@ -17,8 +17,8 @@ medications_remaining(
 \item medication (character/factor): Name of the medication
 \item format (character/factor): Format of the medication (e.g., pill, injection)
 \item quantity (numeric): Number of units to take per day
-\item start_date (Date): Date to start taking the medication
-\item stop_date (Date): Final date on which the medication is taken
+\item start_date (Date or character string representing a date, e.g. "YYYY-MM-DD"): Date to start taking the medication
+\item stop_date (Date or character string representing a date, e.g. "YYYY-MM-DD"): Final date on which the medication is taken
 }
 
 If NULL, will try to use the "pregnancy.medications" option. Required if option not set.}
@@ -29,10 +29,12 @@ If NULL, will try to use the "pregnancy.medications" option. Required if option 
 \item "format": Group by medication format
 }}
 
-\item{on_date}{Date object specifying the date from which to calculate remaining medications.
+\item{on_date}{Date or character string representing a date, e.g. "YYYY-MM-DD",
+specifying the date from which to calculate remaining medications.
 Defaults to current system date}
 
-\item{until_date}{Date object specifying cut-off date for remaining medications.
+\item{until_date}{Date or character string representing a date, e.g. "YYYY-MM-DD",
+specifying cut-off date for remaining medications.
 If NULL, defaults to the latest \code{stop_date} in \code{medications}.}
 }
 \value{
@@ -55,6 +57,13 @@ Calculates and displays how many medications remain to be taken as of a specific
 based on a schedule of medications with start and stop dates. Results can be grouped
 either by medication name or by format (e.g., tablet, injection).
 }
+\details{
+If \code{on_date}, \code{until_date} \code{start_date} or \code{stop_date} is a character vector, the conversion to a \code{Date}
+is handled by anytime::anydate().
+
+If any \code{start_date} is \code{NA} in any row, that row will \strong{not} be counted in the remaining quantities.
+If any \code{stop_date} is \code{NA}, it throws an error.
+}
 \section{Global Options}{
 
 \itemize{
@@ -69,30 +78,30 @@ meds <- data.frame(
   medication = c("progynova", "prednisolone", "clexane"),
   format = c("tablet", "tablet", "injection"),
   quantity = c(3, 2, 1),
-  start_date = as.Date(c("2025-04-21", "2025-04-26", "2025-05-08")),
-  stop_date = as.Date(c("2025-04-30", "2025-05-07", "2025-09-05"))
+  start_date = c("2025-04-21", "2025-04-26", "2025-05-08"),
+  stop_date = c("2025-04-30", "2025-05-07", "2025-09-05")
 )
 
 # Calculate remaining medications
-medications_remaining(meds, on_date = as.Date("2025-04-21"))
+medications_remaining(meds, on_date = "2025-04-21")
 
-medications_remaining(meds, group = "format", on_date = as.Date("2025-04-21"))
+medications_remaining(meds, group = "format", on_date = "2025-04-21")
 
 # Calculate medications for a specified period
 medications_remaining(
   meds = meds,
-  on_date = as.Date("2025-04-23"),
-  until_date = as.Date("2025-04-30")
+  on_date = "2025-04-23",
+  until_date = "2025-04-30"
 )
 
 # Set and use global medications option
-#' Store original medications setting
+#' Store original medications setting (without message)
 original_medications <- getOption("pregnancy.medications")
 set_medications(pregnancy::medications)
 medications_remaining(on_date = as.Date("2025-05-01"))
 
-# Restore original medications setting
-set_medications(original_medications)
+# Restore original medications setting (without message)
+options(pregnancy.medications = original_medications)
 
 }
 \seealso{

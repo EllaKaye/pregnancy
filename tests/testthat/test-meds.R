@@ -16,6 +16,22 @@ test_that("medications_remaining calculates correctly by medication", {
   expect_equal(result$quantity, c(4, 6)) # A: 4 days * 1, B: 3 days * 2
 })
 
+test_that("medications_remaining calculates correctly by medication with character dates", {
+  meds <- data.frame(
+    medication = c("A", "B"),
+    format = c("tablet", "tablet"),
+    quantity = c(1, 2),
+    start_date = c("2025-04-01", "2025-04-03"),
+    stop_date = c("2025-04-04", "2025-04-05")
+  )
+
+  result <- medications_remaining(meds, on_date = "2025-04-01")
+
+  expect_equal(nrow(result), 2)
+  expect_equal(result$medication, c("A", "B"))
+  expect_equal(result$quantity, c(4, 6)) # A: 4 days * 1, B: 3 days * 2
+})
+
 test_that("medications_remaining calculates correctly by format", {
   meds <- data.frame(
     medication = c("A", "B"),
@@ -153,19 +169,19 @@ test_that("check_medications validates required columns", {
   )
 })
 
-test_that("check_medications validates date columns", {
-  invalid_dates <- data.frame(
+test_that("check_medications converts character dates", {
+  character_dates <- data.frame(
     medication = "A",
     format = "tablet",
     quantity = 1,
-    start_date = "2025-04-01", # character, not Date
-    stop_date = as.Date("2025-04-04")
+    start_date = "2025-04-01",
+    stop_date = "2025-04-04"
   )
 
-  expect_error(
-    check_medications(invalid_dates),
-    class = "pregnancy_error_class"
-  )
+  checked_medications <- check_medications(character_dates)
+
+  expect_equal(checked_medications$start_date, anytime::anydate("2025-04-01"))
+  expect_equal(checked_medications$stop_date, anytime::anydate("2025-04-04"))
 })
 
 test_that("check_medications validates column types", {

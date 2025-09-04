@@ -16,8 +16,8 @@ get_medications()
 \item medication (character/factor): Name of the medication
 \item format (character/factor): Format of the medication (e.g., pill, injection)
 \item quantity (numeric): Number of units to take per day
-\item start_date (Date): Date to start taking the medication
-\item stop_date (Date): Final date on which the medication is taken
+\item start_date (Date or character string representing a date, e.g. "YYYY-MM-DD"): Date to start taking the medication
+\item stop_date (Date or character string representing a date, e.g. "YYYY-MM-DD"): Final date on which the medication is taken
 }
 
 If NULL, will try to use the "pregnancy.medications" option. Required if option not set.}
