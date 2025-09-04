@@ -231,7 +231,7 @@ check_medications <- function(meds) {
 #' * [medications_remaining()], [medications]
 #'
 #' @examples
-#' # Store original setting
+#' # Store original setting (without messages)
 #' original_medications <- getOption("pregnancy.medications")
 #'
 #' # Set the option
@@ -240,8 +240,8 @@ check_medications <- function(meds) {
 #' # Get the option
 #' get_medications()
 #'
-#' # Restore original setting
-#' set_medications(original_medications)
+#' # Restore original setting (without messages)
+#' options(pregnancy.medications = original_medications)
 #'
 #' @name medications-option
 NULL

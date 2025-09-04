@@ -32,7 +32,7 @@ This affects the grammar and pronouns used in various function outputs. Settings
 persist for the current R session only, unless added to .Rprofile. \code{set_person()} sets the "pregnancy.person" option and \code{get_person()} retrieves it.
 }
 \examples{
-# Store original setting
+# Store original setting (without messages)
 original_person <- getOption("pregnancy.person")
 
 # Check current setting
@@ -50,8 +50,8 @@ get_person()
 set_person("Sarah")
 get_person()
 
-# Restore original setting
-set_person(original_person)
+# Restore original setting (without messages)
+options(pregnancy.person = original_person)
 
 }
 \seealso{

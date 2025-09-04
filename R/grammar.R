@@ -78,7 +78,7 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
 #' @seealso [how_far()] and other functions that use the person setting for message formatting
 #'
 #' @examples
-#' # Store original setting
+#' # Store original setting (without messages)
 #' original_person <- getOption("pregnancy.person")
 #'
 #' # Check current setting
@@ -96,8 +96,8 @@ to_be <- function(subject, tense = c("present", "past", "future")) {
 #' set_person("Sarah")
 #' get_person()
 #'
-#' # Restore original setting
-#' set_person(original_person)
+#' # Restore original setting (without messages)
+#' options(pregnancy.person = original_person)
 #'
 #' @name person
 NULL

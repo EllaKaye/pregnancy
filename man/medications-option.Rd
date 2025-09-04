@@ -35,7 +35,7 @@ Settings persist for the current R session only, unless added to
 .Rprofile. \code{set_medications()} sets the "pregnancy.medications" option and \code{get_medications()} retrieves it.
 }
 \examples{
-# Store original setting
+# Store original setting (without messages)
 original_medications <- getOption("pregnancy.medications")
 
 # Set the option
@@ -44,8 +44,8 @@ set_medications(pregnancy::medications)
 # Get the option
 get_medications()
 
-# Restore original setting
-set_medications(original_medications)
+# Restore original setting (without messages)
+options(pregnancy.medications = original_medications)
 
 }
 \seealso{
