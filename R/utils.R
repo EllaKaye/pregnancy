@@ -3,7 +3,7 @@
 date_stop <- function(date) {
   cli::cli_abort(
     c(
-      "{.var {rlang::caller_arg(date)}} must have class {.cls Date}.",
+      "{.var {rlang::caller_arg(date)}} must have class {.cls Date} or {.cls character}.",
       "i" = "It was {.type {date}} instead.",
       "i" = "You can do one of the following:",
       "*" = "set the {.var {rlang::caller_arg(date)}} argument",
@@ -31,6 +31,18 @@ check_date <- function(date) {
     )
   }
 
+  if (!lubridate::is.Date(date)) {
+    if (is.character(date)) {
+      date <- anytime::anydate(date)
+    } else {
+      cli::cli_abort(
+        message,
+        call = rlang::caller_env(),
+        class = "pregnancy_error_class"
+      )
+    }
+  }
+
   # picks up cases where lubridate fails to parse date (returns NA with a warning)
   # (as.Date() will throw an error if it cannot parse date)
   if (!is.null(date)) {
@@ -40,34 +52,6 @@ check_date <- function(date) {
         c("{.var {rlang::caller_arg(date)}} was {.class {date}}"),
         call = rlang::caller_env(),
         class = "pregnancy_error_value"
-      )
-    }
-  }
-
-  # if (!lubridate::is.Date(date)) {
-  #   if (is.character(date)) {
-  #     message <-
-  #       c(
-  #         message,
-  #         "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}"
-  #       )
-  #   }
-
-  #   cli::cli_abort(
-  #     message,
-  #     call = rlang::caller_env(),
-  #     class = "pregnancy_error_class"
-  #   )
-  # }
-
-  if (!lubridate::is.Date(date)) {
-    if (is.character(date)) {
-      date <- as.Date(date)
-    } else {
-      cli::cli_abort(
-        message,
-        call = rlang::caller_env(),
-        class = "pregnancy_error_class"
       )
     }
   }
