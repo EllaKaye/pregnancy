@@ -10,12 +10,17 @@ test_that("date is length 1", {
 })
 
 test_that("NA date throws error", {
-  expect_error(check_date(NA), class = "pregnancy_error_value")
+  expect_error(check_date(NA))
 })
 
-test_that("date is a Date", {
+test_that("error if date not parseable", {
   expect_error(check_date(2023 - 01 - 01), class = "pregnancy_error_class")
-  expect_error(check_date("2023-01-01"), class = "pregnancy_error_class")
+})
+
+test_that("date can be a character string", {
+  expect_equal(check_date("2023-01-01"), anytime::anydate("2023-01-01"))
+  expect_true(lubridate::is.Date(check_date("2023-01-01")))
+  expect_no_error(check_date("2023-01-01"))
 })
 
 # testing check_person(person) -------------------------------------------------
