@@ -37,15 +37,8 @@ test_that("get_subject calls check_person for validation", {
 
 # testing get_tense(date1, date2) ---------------------------------------------
 
-test_that("dates are Dates", {
-  expect_error(
-    get_tense("2023-01-01", as.Date("2023-01-01")),
-    class = "pregnancy_error_class"
-  )
-  expect_error(
-    get_tense(as.Date("2023-01-01"), "2023-01-01"),
-    class = "pregnancy_error_class"
-  )
+test_that("character dates are allowed", {
+  expect_equal(get_tense("2023-01-01", "2023-01-01"), "present")
 })
 
 test_that("dates are length 1", {

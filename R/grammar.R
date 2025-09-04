@@ -27,8 +27,8 @@ get_tense <- function(date1, date2) {
   # date2 is typically `on_date`
   # A positive diff means date2 is in the future
 
-  check_date(date1)
-  check_date(date2)
+  date1 <- check_date(date1)
+  date2 <- check_date(date2)
 
   diff <- date2 - date1
 
