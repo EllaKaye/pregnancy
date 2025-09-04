@@ -44,7 +44,7 @@ The due date can be provided directly or set globally using options("pregnancy.d
 Similarly, the person being referenced can be provided directly or set globally using options("pregnancy.person").
 
 If \code{date_when} or \code{today} is a character string, the conversion to a \code{Date}
-is handled by anytime::anydate().
+is handled by \code{anytime::anydate()}.
 }
 \examples{
 # Set a due date

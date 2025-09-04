@@ -93,7 +93,7 @@ date_when_message <- function(
 #' Similarly, the person being referenced can be provided directly or set globally using options("pregnancy.person").
 #'
 #' If `date_when` or `today` is a character string, the conversion to a `Date`
-#' is handled by anytime::anydate().
+#' is handled by `anytime::anydate()`.
 #'
 #' @examples
 #' # Set a due date

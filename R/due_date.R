@@ -36,7 +36,7 @@
 #' and the birth period end date is 14 days after the due date (42 weeks pregnant).
 #'
 #' #' If `start_date` is a character string, the conversion to a `Date`
-#' is handled by anytime::anydate().
+#' is handled by `anytime::anydate()`.
 #'
 #' @examples
 #' # Calculate due date from last menstrual period

@@ -59,7 +59,7 @@ either by medication name or by format (e.g., tablet, injection).
 }
 \details{
 If \code{on_date}, \code{until_date} \code{start_date} or \code{stop_date} is a character vector, the conversion to a \code{Date}
-is handled by anytime::anydate().
+is handled by \code{anytime::anydate()}.
 
 If any \code{start_date} is \code{NA} in any row, that row will \strong{not} be counted in the remaining quantities.
 If any \code{stop_date} is \code{NA}, it throws an error.

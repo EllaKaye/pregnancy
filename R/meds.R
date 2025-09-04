@@ -25,7 +25,7 @@
 #'
 #' @details
 #' If `on_date`, `until_date` `start_date` or `stop_date` is a character vector, the conversion to a `Date`
-#' is handled by anytime::anydate().
+#' is handled by `anytime::anydate()`.
 #'
 #' If any `start_date` is `NA` in any row, that row will **not** be counted in the remaining quantities.
 #' If any `stop_date` is `NA`, it throws an error.

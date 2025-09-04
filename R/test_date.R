@@ -24,7 +24,7 @@
 #' greater sensitivity in detecting hCG hormone levels.
 #'
 #' If `start_date` is a character string, the conversion to a `Date`
-#' is handled by anytime::anydate().
+#' is handled by `anytime::anydate()`.
 #'
 #' @examples
 #' # Calculate test date from last menstrual period
