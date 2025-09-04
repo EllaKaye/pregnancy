@@ -58,6 +58,9 @@ The test date is calculated as follows:
 
 Blood tests can typically detect pregnancy earlier than urine tests due to their
 greater sensitivity in detecting hCG hormone levels.
+
+If \code{start_date} is a character string, the conversion to a \code{Date}
+is handled by anytime::anydate().
 }
 \examples{
 # Calculate test date from last menstrual period

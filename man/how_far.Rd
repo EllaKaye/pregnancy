@@ -39,6 +39,9 @@ a different message is displayed noting this unusual duration.
 
 The function uses the \href{https://cli.r-lib.org}{cli} package for formatted message output and supports
 proper pluralization of weeks/days in messages.
+
+If \code{on_date} or \code{due_date} are character strings, the conversion to a \code{Date}
+is handled by anytime::anydate().
 }
 \section{Global Options}{
 

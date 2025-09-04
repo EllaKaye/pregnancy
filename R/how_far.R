@@ -138,6 +138,9 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' The function uses the [cli](https://cli.r-lib.org) package for formatted message output and supports
 #' proper pluralization of weeks/days in messages.
 #'
+#' If `on_date` or `due_date` are character strings, the conversion to a `Date`
+#' is handled by anytime::anydate().
+#'
 #' @section Global Options:
 #' * pregnancy.due_date: Date object setting default due date
 #' * pregnancy.person: Character string setting default person

@@ -23,6 +23,9 @@
 #' Blood tests can typically detect pregnancy earlier than urine tests due to their
 #' greater sensitivity in detecting hCG hormone levels.
 #'
+#' If `start_date` is a character string, the conversion to a `Date`
+#' is handled by anytime::anydate().
+#'
 #' @examples
 #' # Calculate test date from last menstrual period
 #' calculate_test_date("2025-01-31")

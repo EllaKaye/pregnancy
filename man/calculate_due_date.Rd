@@ -56,6 +56,9 @@ to conception date (3, 5, or 6 days), then 266 days are added
 
 The birth period start date is 21 days before the due date (37 weeks pregnant),
 and the birth period end date is 14 days after the due date (42 weeks pregnant).
+
+#' If \code{start_date} is a character string, the conversion to a \code{Date}
+is handled by anytime::anydate().
 }
 \examples{
 # Calculate due date from last menstrual period
