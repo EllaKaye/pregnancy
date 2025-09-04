@@ -134,28 +134,17 @@ test_that("date_when_calculation throws error when due_date is NULL and no optio
   )
 })
 
-test_that("date_when_calculation validates input dates", {
-  due_date <- as.Date("2024-09-01")
-
-  # Test invalid today parameter
-  expect_error(
-    date_when_calculation(
-      weeks = 12,
-      due_date = due_date,
-      today = "2024-01-01"
-    ),
-    class = "pregnancy_error_class"
-  )
-
-  # Test invalid due_date parameter
-  expect_error(
-    date_when_calculation(
-      weeks = 12,
-      due_date = "2024-09-01",
-      today = as.Date("2024-01-01")
-    ),
-    class = "pregnancy_error_class"
-  )
+test_that("date_when_calculation accepts date strings", {
+  due_date <-
+    # Test invalid today parameter
+    expect_equal(
+      date_when_calculation(
+        weeks = 12,
+        due_date = "2025-12-01",
+        today = "2025-11-01"
+      )$total_days,
+      166
+    )
 })
 
 test_that("date_when_calculation uses Sys.Date() as default today", {

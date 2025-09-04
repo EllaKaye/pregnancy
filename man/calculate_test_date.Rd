@@ -75,7 +75,7 @@ calculate_test_date(
 
 # Calculate from day 5 embryo transfer
 calculate_test_date(
-  as.Date("2025-02-19")
+  as.Date("2025-02-19"),
   start_type = "transfer_day_5"
 )
 
