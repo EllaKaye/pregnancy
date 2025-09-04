@@ -19,7 +19,7 @@ date_stop <- function(date) {
 check_date <- function(date) {
   message <-
     c(
-      "{.var {rlang::caller_arg(date)}} must be a {.cls Date} vector of length 1.",
+      "{.var {rlang::caller_arg(date)}} must be a {.cls Date} or {.cls character} vector of length 1.",
       "i" = "It was {.type {date}} of length {length(date)} instead."
     )
 
@@ -44,23 +44,35 @@ check_date <- function(date) {
     }
   }
 
+  # if (!lubridate::is.Date(date)) {
+  #   if (is.character(date)) {
+  #     message <-
+  #       c(
+  #         message,
+  #         "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}"
+  #       )
+  #   }
+
+  #   cli::cli_abort(
+  #     message,
+  #     call = rlang::caller_env(),
+  #     class = "pregnancy_error_class"
+  #   )
+  # }
+
   if (!lubridate::is.Date(date)) {
     if (is.character(date)) {
-      message <-
-        c(
-          message,
-          "i" = "You can parse a string as a date with {.fn base::as.Date} or {.fn lubridate::ymd}"
-        )
+      date <- as.Date(date)
+    } else {
+      cli::cli_abort(
+        message,
+        call = rlang::caller_env(),
+        class = "pregnancy_error_class"
+      )
     }
-
-    cli::cli_abort(
-      message,
-      call = rlang::caller_env(),
-      class = "pregnancy_error_class"
-    )
   }
 
-  invisible(date)
+  date
 }
 
 check_person <- function(person) {
