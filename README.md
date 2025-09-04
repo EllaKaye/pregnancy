@@ -58,7 +58,7 @@ library(pregnancy)
 ``` r
 # invisibly returns a Date object with the estimated due date
 # by default, start date of last menstrual period, but other options available
-due_date <- calculate_due_date(as.Date("2025-02-24"))
+due_date <- calculate_due_date("2025-02-24")
 #> ℹ Estimated due date: Monday, December 01, 2025
 #> ℹ Estimated birth period begins: November 10, 2025 (37 weeks)
 #> ℹ Estimated birth period ends: December 15, 2025 (42 weeks)
@@ -80,21 +80,21 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-This README was built on **September 03, 2025**, so for the purposes of
+This README was built on **September 04, 2025**, so for the purposes of
 reading this page, that counts as “today”.
 
 ``` r
 # don't need to specify `due_date` since option is set
 # invisibly returns number of days into the pregnancy
 how_far()
-#> ℹ You are 27 weeks and 2 days pregnant.
-#> ℹ That's 12 weeks and 5 days until the due date (December 01, 2025).
-#> ℹ You are 68% through the pregnancy.
+#> ℹ You are 27 weeks and 3 days pregnant.
+#> ℹ That's 12 weeks and 4 days until the due date (December 01, 2025).
+#> ℹ You are 69% through the pregnancy.
 ```
 
 ``` r
 # alternative `on_date`, addressed as "I"
-how_far(on_date = as.Date("2025-09-17"), person = 1)
+how_far(on_date = "2025-09-17", person = 1)
 #> ℹ On September 17, 2025, I will be 29 weeks and 2 days pregnant.
 ```
 
@@ -103,7 +103,7 @@ how_far(on_date = as.Date("2025-09-17"), person = 1)
 # invisibly returns the Date when that week is reached
 date_when(33)
 #> ℹ On October 13, 2025, you will be 33 weeks pregnant.
-#> ℹ That's 5 weeks and 5 days away.
+#> ℹ That's 5 weeks and 4 days away.
 ```
 
 ## Tracking medications
@@ -112,10 +112,10 @@ date_when(33)
 # a simplified medication schedule
 meds <- dplyr::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-  "progynova", "tablet", 3, as.Date("2025-08-21"), as.Date("2025-08-31"),
-  "progynova", "tablet", 6, as.Date("2025-09-01"), as.Date("2025-09-11"),
-  "cyclogest", "pessary", 2, as.Date("2025-09-03"), as.Date("2025-09-11"),
-  "clexane", "injection", 1, as.Date("2025-09-08"), as.Date("2025-11-05")
+  "progynova", "tablet", 3, "2025-08-21", "2025-08-31",
+  "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
+  "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
+  "clexane", "injection", 1, "2025-09-08", "2025-11-05"
 )
 ```
 
@@ -126,18 +126,14 @@ medications_remaining(meds)
 #>   medication quantity
 #>   <chr>         <int>
 #> 1 clexane          59
-#> 2 cyclogest        18
-#> 3 progynova        54
+#> 2 cyclogest        16
+#> 3 progynova        48
 ```
 
 ``` r
 # how much medication for a given week 
 # (useful if you need to request a prescription to cover a certain time period)
-medications_remaining(
-  meds, 
-  on_date = as.Date("2025-09-01"), 
-  until_date = as.Date("2025-09-07")
-)
+medications_remaining(meds, on_date = "2025-09-01", until_date = "2025-09-07")
 #> # A tibble: 2 × 2
 #>   medication quantity
 #>   <chr>         <int>
@@ -166,7 +162,7 @@ argument `NULL`.
 
 ``` r
 # a different due date from the earlier example
-set_due_date(as.Date("2026-04-01"))
+set_due_date("2026-04-01")
 #> ✔ Due date set as April 01, 2026
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
@@ -181,8 +177,8 @@ set_due_date(as.Date("2026-04-01"))
 
 ``` r
 how_far()
-#> ℹ You are 10 weeks and 0 days pregnant.
-#> ℹ That's 30 weeks and 0 days until the due date (April 01, 2026).
+#> ℹ You are 10 weeks and 1 day pregnant.
+#> ℹ That's 29 weeks and 6 days until the due date (April 01, 2026).
 #> ℹ You are 25% through the pregnancy.
 ```
 
@@ -208,7 +204,7 @@ Here’s an example of what that might look like:
 
 ``` r
 options(
-  pregnancy.due_date = as.Date("2025-09-16"),
+  pregnancy.due_date = "2025-09-16",
   pregnancy.person = "I", # addressed in first person
   pregnancy.medications = tibble::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
@@ -216,11 +212,7 @@ options(
   "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
   "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
   "clexane", "injection", 1, "2025-09-08", "2025-11-05"
-  ) |> 
-  dplyr::mutate(
-    start_date = as.Date(start_date),
-    stop_date = as.Date(stop_date)
-  )
+  ) 
 )
 ```
 

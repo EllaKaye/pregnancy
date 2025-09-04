@@ -9,17 +9,26 @@
 #'   * medication (character/factor): Name of the medication
 #'   * format (character/factor): Format of the medication (e.g., pill, injection)
 #'   * quantity (numeric): Number of units to take per day
-#'   * start_date (Date): Date to start taking the medication
-#'   * stop_date (Date): Final date on which the medication is taken
+#'   * start_date (Date or character string representing a date, e.g. "YYYY-MM-DD"): Date to start taking the medication
+#'   * stop_date (Date or character string representing a date, e.g. "YYYY-MM-DD"): Final date on which the medication is taken
 #'
 #' If NULL, will try to use the "pregnancy.medications" option. Required if option not set.
 #' @param group Character string specifying how to group the results. One of:
 #'   * "medication": Group by medication name (default)
 #'   * "format": Group by medication format
-#' @param on_date Date object specifying the date from which to calculate remaining medications.
+#' @param on_date Date or character string representing a date, e.g. "YYYY-MM-DD",
+#'   specifying the date from which to calculate remaining medications.
 #'   Defaults to current system date
-#' @param until_date Date object specifying cut-off date for remaining medications.
+#' @param until_date Date or character string representing a date, e.g. "YYYY-MM-DD",
+#'   specifying cut-off date for remaining medications.
 #'   If NULL, defaults to the latest `stop_date` in `medications`.
+#'
+#' @details
+#' If `on_date`, `until_date` `start_date` or `stop_date` is a character vector, the conversion to a `Date`
+#' is handled by anytime::anydate().
+#'
+#' If any `start_date` is `NA` in any row, that row will **not** be counted in the remaining quantities.
+#' If any `stop_date` is `NA`, it throws an error.
 #'
 #' @return
 #' Returns a data frame containing remaining quantities, grouped as specified.
@@ -44,30 +53,30 @@
 #'   medication = c("progynova", "prednisolone", "clexane"),
 #'   format = c("tablet", "tablet", "injection"),
 #'   quantity = c(3, 2, 1),
-#'   start_date = as.Date(c("2025-04-21", "2025-04-26", "2025-05-08")),
-#'   stop_date = as.Date(c("2025-04-30", "2025-05-07", "2025-09-05"))
+#'   start_date = c("2025-04-21", "2025-04-26", "2025-05-08"),
+#'   stop_date = c("2025-04-30", "2025-05-07", "2025-09-05")
 #' )
 #'
 #' # Calculate remaining medications
-#' medications_remaining(meds, on_date = as.Date("2025-04-21"))
+#' medications_remaining(meds, on_date = "2025-04-21")
 #'
-#' medications_remaining(meds, group = "format", on_date = as.Date("2025-04-21"))
+#' medications_remaining(meds, group = "format", on_date = "2025-04-21")
 #'
 #' # Calculate medications for a specified period
 #' medications_remaining(
 #'   meds = meds,
-#'   on_date = as.Date("2025-04-23"),
-#'   until_date = as.Date("2025-04-30")
+#'   on_date = "2025-04-23",
+#'   until_date = "2025-04-30"
 #' )
 #'
 #' # Set and use global medications option
-#' #' Store original medications setting
+#' #' Store original medications setting (without message)
 #' original_medications <- getOption("pregnancy.medications")
 #' set_medications(pregnancy::medications)
 #' medications_remaining(on_date = as.Date("2025-05-01"))
 #'
-#' # Restore original medications setting
-#' set_medications(original_medications)
+#' # Restore original medications setting (without message)
+#' options(pregnancy.medications = original_medications)
 #'
 #' @seealso
 #' * [set_medications()] for setting default medication schedule
@@ -82,7 +91,7 @@ medications_remaining <-
     on_date = Sys.Date(),
     until_date = NULL
   ) {
-    check_date(on_date)
+    on_date <- check_date(on_date)
 
     meds <- meds %||%
       getOption("pregnancy.medications") %||%
@@ -98,7 +107,7 @@ medications_remaining <-
         call = rlang::caller_env(),
         class = "pregnancy_error_meds"
       )
-    check_medications(meds)
+    meds <- check_medications(meds)
 
     group <- rlang::arg_match(group)
 
@@ -106,7 +115,7 @@ medications_remaining <-
       dplyr::pull(stop_date) %>%
       max()
     until_date <- until_date %||% latest_stop
-    check_date(until_date)
+    until_date <- check_date(until_date)
 
     if (until_date < on_date) {
       cli::cli_abort(
@@ -164,6 +173,20 @@ check_medications <- function(meds) {
   if (length(diff) > 0) {
     message <- c("{.var meds} is missing column{?s} {.code {diff}}.")
     cli::cli_abort(message, class = "pregnancy_error_missing")
+  }
+
+  if (
+    !lubridate::is.Date(meds[["start_date"]]) &&
+      is.character(meds[["start_date"]])
+  ) {
+    meds$start_date <- anytime::anydate(meds$start_date)
+  }
+
+  if (
+    !lubridate::is.Date(meds[["stop_date"]]) &&
+      is.character(meds[["stop_date"]])
+  ) {
+    meds$stop_date <- anytime::anydate(meds$stop_date)
   }
 
   if (
@@ -231,7 +254,7 @@ check_medications <- function(meds) {
 #' * [medications_remaining()], [medications]
 #'
 #' @examples
-#' # Store original setting
+#' # Store original setting (without messages)
 #' original_medications <- getOption("pregnancy.medications")
 #'
 #' # Set the option
@@ -240,8 +263,8 @@ check_medications <- function(meds) {
 #' # Get the option
 #' get_medications()
 #'
-#' # Restore original setting
-#' set_medications(original_medications)
+#' # Restore original setting (without messages)
+#' options(pregnancy.medications = original_medications)
 #'
 #' @name medications-option
 NULL

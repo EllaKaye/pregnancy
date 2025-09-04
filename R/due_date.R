@@ -6,8 +6,9 @@
 #' period, which spans from 37 weeks (birth period start) to 42 weeks (birth period
 #' end).
 #'
-#' @param start_date Date. The starting reference date. The interpretation of this
-#'   date depends on the `start_type` parameter.
+#' @param start_date Date or character string representing a date, e.g. "YYYY-MM-DD".
+#'   The starting reference date. The interpretation of this date depends on the
+#'   `start_type` parameter.
 #' @param start_type character. One of:
 #'   * "LMP": Last Menstrual Period date (default)
 #'   * "conception": Date of conception
@@ -34,21 +35,21 @@
 #' The birth period start date is 21 days before the due date (37 weeks pregnant),
 #' and the birth period end date is 14 days after the due date (42 weeks pregnant).
 #'
+#' #' If `start_date` is a character string, the conversion to a `Date`
+#' is handled by anytime::anydate().
+#'
 #' @examples
 #' # Calculate due date from last menstrual period
-#' my_start_date <- as.Date("2023-01-31")
-#' calculate_due_date(my_start_date)
+#' calculate_due_date("2025-01-31")
 #'
 #' # Calculate from conception date
-#' conception_date <- as.Date("2023-02-14")
-#' calculate_due_date(conception_date, start_type = "conception")
+#' calculate_due_date("2025-02-14", start_type = "conception")
 #'
 #' # Calculate from day 5 embryo transfer
-#' transfer_date <- as.Date("2023-02-19")
-#' calculate_due_date(transfer_date, start_type = "transfer_day_5")
+#' calculate_due_date(as.Date("2025-02-19"), start_type = "transfer_day_5")
 #'
 #' # Calculate with non-standard cycle length
-#' calculate_due_date(my_start_date, cycle = 35)
+#' calculate_due_date("2025-01-31", cycle = 35)
 #'
 #' @seealso
 #' * [date_when()] for finding dates at specific weeks of pregnancy
@@ -103,7 +104,7 @@ ovulation_date_calculation <- function(
 ) {
   start_type <- rlang::arg_match(start_type)
 
-  check_date(start_date)
+  start_date <- check_date(start_date)
 
   if (start_type == "LMP") {
     check_cycle(cycle)
@@ -133,8 +134,8 @@ ovulation_date_calculation <- function(
 #' and timing. Settings persist for the current R session only, unless added to
 #' .Rprofile. `set_due_date()` sets the "pregnancy.due_date" option and `get_due_date()` retrieves it.
 #'
-#' @param due_date A Date object specifying the estimated due date, or NULL to
-#'   unset the current value
+#' @param due_date A Date or character string representing a date, e.g. "YYYY-MM-DD",
+#'   specifying the estimated due date, or NULL to unset the option.
 #'
 #' @return
 #' Both functions invisibly return the current due date setting:
@@ -146,23 +147,18 @@ ovulation_date_calculation <- function(
 #' * [how_far()] and other functions that use the due date for calculations
 #'
 #' @examples
-#' # Store original setting
+#' # Store original setting (without messages)
 #' original_due_date <- getOption("pregnancy.due_date")
 #'
 #' # Check current setting
 #' get_due_date()
 #'
-#' # Set due date using as.Date
-#' set_due_date(as.Date("2024-09-15"))
+#' # Set due date and check again
+#' set_due_date("2025-09-15")
 #' get_due_date()
 #'
-#' # Set due date using lubridate
-#' library(lubridate)
-#' set_due_date(ymd("2024-09-15"))
-#' get_due_date()
-#'
-#' # Restore original setting
-#' set_due_date(original_due_date)
+#' # Restore original setting (without messages)
+#' options(pregnancy.due_date = original_due_date)
 #'
 #' @name due_date-option
 NULL
@@ -172,7 +168,7 @@ NULL
 set_due_date <- function(due_date) {
   # check date
   if (!is.null(due_date)) {
-    check_date(due_date)
+    due_date <- check_date(due_date)
   }
 
   options("pregnancy.due_date" = due_date)

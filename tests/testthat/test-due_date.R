@@ -5,10 +5,10 @@ test_that("start_date is correct format", {
     calculate_due_date(2023 - 01 - 01),
     class = "pregnancy_error_class"
   )
-  expect_error(
-    calculate_due_date("2023-01-01"),
-    class = "pregnancy_error_class"
-  )
+})
+
+test_that("start_date accepts character dates", {
+  expect_equal(calculate_due_date("2023-01-31"), as.Date("2023-11-07"))
 })
 
 test_that("start_type matches arg", {
@@ -106,6 +106,14 @@ test_that("date option gets set", {
   options(pregnancy.due_date = NULL)
   set_due_date(as.Date("2023-04-30"))
   expect_equal(getOption("pregnancy.due_date"), as.Date("2023-04-30"))
+  options(pregnancy.due_date = starting_option)
+})
+
+test_that("character date option gets set", {
+  starting_option <- getOption("pregnancy.due_date")
+  options(pregnancy.due_date = NULL)
+  set_due_date("2023-04-30")
+  expect_equal(getOption("pregnancy.due_date"), anytime::anydate("2023-04-30"))
   options(pregnancy.due_date = starting_option)
 })
 

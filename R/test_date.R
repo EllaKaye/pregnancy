@@ -23,26 +23,28 @@
 #' Blood tests can typically detect pregnancy earlier than urine tests due to their
 #' greater sensitivity in detecting hCG hormone levels.
 #'
+#' If `start_date` is a character string, the conversion to a `Date`
+#' is handled by anytime::anydate().
+#'
 #' @examples
 #' # Calculate test date from last menstrual period
-#' my_start_date <- as.Date("2023-01-31")
-#' calculate_test_date(my_start_date)
+#' calculate_test_date("2025-01-31")
 #'
 #' # Calculate for blood test from conception date
-#' conception_date <- as.Date("2023-02-14")
-#' calculate_test_date(conception_date,
+#' calculate_test_date(
+#'   start_date = "5023-02-14",
 #'   start_type = "conception",
 #'   test_type = "blood"
 #' )
 #'
 #' # Calculate from day 5 embryo transfer
-#' transfer_date <- as.Date("2023-02-19")
-#' calculate_test_date(transfer_date,
+#' calculate_test_date(
+#'   as.Date("2025-02-19"),
 #'   start_type = "transfer_day_5"
 #' )
 #'
 #' # Calculate with non-standard cycle length
-#' calculate_test_date(my_start_date, cycle = 35)
+#' calculate_test_date("2025-01-31", cycle = 35)
 #'
 #' @seealso
 #' * [calculate_due_date()] for calculating the estimated due date

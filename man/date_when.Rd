@@ -9,8 +9,9 @@ date_when(weeks, due_date = NULL, person = NULL, today = Sys.Date())
 \arguments{
 \item{weeks}{Numeric value indicating the number of weeks of pregnancy to calculate the date for.}
 
-\item{due_date}{Date. The expected due date. If NULL, will try to use the
-"pregnancy.due_date" option. Required if option not set.}
+\item{due_date}{Date or character string representing a date, e.g. "YYYY-MM-DD".
+The expected due date. If NULL, will try to use the "pregnancy.due_date" option.
+Required if option not set.}
 
 \item{person}{The person who is pregnant, to determine the grammar for the output message. Can be:
 \itemize{
@@ -20,7 +21,8 @@ date_when(weeks, due_date = NULL, person = NULL, today = Sys.Date())
 \item \code{NULL}: will try to use the "pregnancy.person" option. Defaults to "You" if the option is set.
 }}
 
-\item{today}{Date object representing the reference date for calculations. Default is Sys.Date().
+\item{today}{Date or character string representing a date, e.g. "YYYY-MM-DD".
+Represents the reference date for calculations. Default is Sys.Date().
 This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.}
 }
 \value{
@@ -40,16 +42,14 @@ The function calculates when someone will be/was a specific number of weeks preg
 It handles past, present and future dates appropriately in its messaging.
 The due date can be provided directly or set globally using options("pregnancy.due_date").
 Similarly, the person being referenced can be provided directly or set globally using options("pregnancy.person").
+
+If \code{date_when} or \code{today} is a character string, the conversion to a \code{Date}
+is handled by anytime::anydate().
 }
 \examples{
 # Set a due date
-due <- as.Date("2025-12-01")
-
-# When will they be 12 weeks pregnant?
-date_when(20, due_date = due)
-
-# When will they be 20 weeks pregnant?
-date_when(33, due_date = due, person = "Sarah")
+date_when(20, due_date = "2025-12-01")
+date_when(33, due_date = as.Date("2025-12-01"), person = "Sarah")
 
 }
 \seealso{

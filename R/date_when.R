@@ -1,10 +1,10 @@
 date_when_calculation <- function(weeks, due_date = NULL, today = Sys.Date()) {
-  check_date(today)
+  today <- check_date(today)
 
   due_date <- due_date %||%
     getOption("pregnancy.due_date") %||%
     date_stop(due_date)
-  check_date(due_date)
+  due_date <- check_date(due_date)
 
   # date calculations
   start_date <- due_date - 280
@@ -76,7 +76,8 @@ date_when_message <- function(
 #' Calculate and display date of specific pregnancy week
 #'
 #' @param weeks Numeric value indicating the number of weeks of pregnancy to calculate the date for.
-#' @param today Date object representing the reference date for calculations. Default is Sys.Date().
+#' @param today Date or character string representing a date, e.g. "YYYY-MM-DD".
+#'   Represents the reference date for calculations. Default is Sys.Date().
 #'   This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.
 #' @inheritParams how_far
 #' @return Invisibly returns a Date object of when the specified week of pregnancy occurs/occurred/will occur.
@@ -91,15 +92,13 @@ date_when_message <- function(
 #' The due date can be provided directly or set globally using options("pregnancy.due_date").
 #' Similarly, the person being referenced can be provided directly or set globally using options("pregnancy.person").
 #'
+#' If `date_when` or `today` is a character string, the conversion to a `Date`
+#' is handled by anytime::anydate().
+#'
 #' @examples
 #' # Set a due date
-#' due <- as.Date("2025-12-01")
-#'
-#' # When will they be 12 weeks pregnant?
-#' date_when(20, due_date = due)
-#'
-#' # When will they be 20 weeks pregnant?
-#' date_when(33, due_date = due, person = "Sarah")
+#' date_when(20, due_date = "2025-12-01")
+#' date_when(33, due_date = as.Date("2025-12-01"), person = "Sarah")
 #'
 #' @seealso
 #' [calculate_due_date()] for calculating the due date

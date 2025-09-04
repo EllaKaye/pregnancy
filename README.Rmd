@@ -71,7 +71,7 @@ library(pregnancy)
 ```{r}
 # invisibly returns a Date object with the estimated due date
 # by default, start date of last menstrual period, but other options available
-due_date <- calculate_due_date(as.Date("2025-02-24"))
+due_date <- calculate_due_date("2025-02-24")
 ```
 
 ```{r}
@@ -91,7 +91,7 @@ how_far()
 
 ```{r}
 # alternative `on_date`, addressed as "I"
-how_far(on_date = as.Date("2025-09-17"), person = 1)
+how_far(on_date = "2025-09-17", person = 1)
 ```
 
 ```{r}
@@ -106,10 +106,10 @@ date_when(33)
 # a simplified medication schedule
 meds <- dplyr::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-  "progynova", "tablet", 3, as.Date("2025-08-21"), as.Date("2025-08-31"),
-  "progynova", "tablet", 6, as.Date("2025-09-01"), as.Date("2025-09-11"),
-  "cyclogest", "pessary", 2, as.Date("2025-09-03"), as.Date("2025-09-11"),
-  "clexane", "injection", 1, as.Date("2025-09-08"), as.Date("2025-11-05")
+  "progynova", "tablet", 3, "2025-08-21", "2025-08-31",
+  "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
+  "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
+  "clexane", "injection", 1, "2025-09-08", "2025-11-05"
 )
 ```
 
@@ -121,11 +121,7 @@ medications_remaining(meds)
 ```{r}
 # how much medication for a given week 
 # (useful if you need to request a prescription to cover a certain time period)
-medications_remaining(
-  meds, 
-  on_date = as.Date("2025-09-01"), 
-  until_date = as.Date("2025-09-07")
-)
+medications_remaining(meds, on_date = "2025-09-01", until_date = "2025-09-07")
 ```
 
 ## Global options
@@ -145,7 +141,7 @@ Any global option can be unset by calling its `set_*` function with the argument
 
 ```{r}
 # a different due date from the earlier example
-set_due_date(as.Date("2026-04-01"))
+set_due_date("2026-04-01")
 ```
 
 ```{r}
@@ -169,7 +165,7 @@ Here's an example of what that might look like:
 
 ``` r
 options(
-  pregnancy.due_date = as.Date("2025-09-16"),
+  pregnancy.due_date = "2025-09-16",
   pregnancy.person = "I", # addressed in first person
   pregnancy.medications = tibble::tribble(
   ~medication, ~format, ~quantity, ~start_date, ~stop_date,
@@ -177,11 +173,7 @@ options(
   "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
   "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
   "clexane", "injection", 1, "2025-09-08", "2025-11-05"
-  ) |> 
-  dplyr::mutate(
-    start_date = as.Date(start_date),
-    stop_date = as.Date(stop_date)
-  )
+  ) 
 )
 ```
 
