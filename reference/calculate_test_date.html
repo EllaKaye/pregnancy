@@ -65,8 +65,9 @@ tests typically being viable 2 days earlier than urine tests.</p>
 
 
 <dl><dt id="arg-start-date">start_date<a class="anchor" aria-label="anchor" href="#arg-start-date"></a></dt>
-<dd><p>Date. The starting reference date. The interpretation of this
-date depends on the <code>start_type</code> parameter.</p></dd>
+<dd><p>Date or character string representing a date, e.g. "YYYY-MM-DD".
+The starting reference date. The interpretation of this date depends on the
+<code>start_type</code> parameter.</p></dd>
 
 
 <dt id="arg-start-type">start_type<a class="anchor" aria-label="anchor" href="#arg-start-type"></a></dt>
@@ -102,6 +103,8 @@ Also prints informative messages showing:</p><ul><li><p>The recommended date for
 <li><p>For blood tests: 12 days are added to the ovulation date</p></li>
 </ol><p>Blood tests can typically detect pregnancy earlier than urine tests due to their
 greater sensitivity in detecting hCG hormone levels.</p>
+<p>If <code>start_date</code> is a character string, the conversion to a <code>Date</code>
+is handled by anytime::anydate().</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -113,32 +116,31 @@ greater sensitivity in detecting hCG hormone levels.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Calculate test date from last menstrual period</span></span></span>
-<span class="r-in"><span><span class="va">my_start_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-01-31"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">my_start_date</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Tuesday, February 28, 2023</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Sunday, February 26, 2023</span>
+<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="st">"2025-01-31"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Friday, February 28, 2025</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Wednesday, February 26, 2025</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate for blood test from conception date</span></span></span>
-<span class="r-in"><span><span class="va">conception_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-02-14"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">conception_date</span>,</span></span>
+<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="st">"5023-02-14"</span>,</span></span>
 <span class="r-in"><span>  start_type <span class="op">=</span> <span class="st">"conception"</span>,</span></span>
 <span class="r-in"><span>  test_type <span class="op">=</span> <span class="st">"blood"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Tuesday, February 28, 2023</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Sunday, February 26, 2023</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Friday, February 28, 5023</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Wednesday, February 26, 5023</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate from day 5 embryo transfer</span></span></span>
-<span class="r-in"><span><span class="va">transfer_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-02-19"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">transfer_date</span>,</span></span>
+<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-02-19"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  start_type <span class="op">=</span> <span class="st">"transfer_day_5"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Tuesday, February 28, 2023</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Sunday, February 26, 2023</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Friday, February 28, 2025</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Wednesday, February 26, 2025</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate with non-standard cycle length</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="va">my_start_date</span>, cycle <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Tuesday, March 07, 2023</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Sunday, March 05, 2023</span>
+<span class="r-in"><span><span class="fu">calculate_test_date</span><span class="op">(</span><span class="st">"2025-01-31"</span>, cycle <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Friday, March 07, 2025</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Wednesday, March 05, 2025</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -80,7 +80,7 @@ persist for the current R session only, unless added to .Rprofile. <code>set_per
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Store original setting</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Store original setting (without messages)</span></span></span>
 <span class="r-in"><span><span class="va">original_person</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"pregnancy.person"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check current setting</span></span></span>
@@ -133,10 +133,8 @@ persist for the current R session only, unless added to .Rprofile. <code>set_per
 <span class="r-in"><span><span class="fu">get_person</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The person option is set as 'Sarah'.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Restore original setting</span></span></span>
-<span class="r-in"><span><span class="fu">set_person</span><span class="op">(</span><span class="va">original_person</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> pregnancy.person option set to NULL.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The `person` argument will now default to "You".</span>
+<span class="r-in"><span><span class="co"># Restore original setting (without messages)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pregnancy.person <span class="op">=</span> <span class="va">original_person</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

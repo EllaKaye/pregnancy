@@ -70,8 +70,9 @@ end).</p>
 
 
 <dl><dt id="arg-start-date">start_date<a class="anchor" aria-label="anchor" href="#arg-start-date"></a></dt>
-<dd><p>Date. The starting reference date. The interpretation of this
-date depends on the <code>start_type</code> parameter.</p></dd>
+<dd><p>Date or character string representing a date, e.g. "YYYY-MM-DD".
+The starting reference date. The interpretation of this date depends on the
+<code>start_type</code> parameter.</p></dd>
 
 
 <dt id="arg-start-type">start_type<a class="anchor" aria-label="anchor" href="#arg-start-type"></a></dt>
@@ -104,6 +105,8 @@ Also prints informative messages showing:</p><ul><li><p>The estimated due date</
 to conception date (3, 5, or 6 days), then 266 days are added</p></li>
 </ul><p>The birth period start date is 21 days before the due date (37 weeks pregnant),
 and the birth period end date is 14 days after the due date (42 weeks pregnant).</p>
+<p>#' If <code>start_date</code> is a character string, the conversion to a <code>Date</code>
+is handled by anytime::anydate().</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -116,31 +119,28 @@ and the birth period end date is 14 days after the due date (42 weeks pregnant).
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Calculate due date from last menstrual period</span></span></span>
-<span class="r-in"><span><span class="va">my_start_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-01-31"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="va">my_start_date</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Tuesday, November 07, 2023</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 17, 2023 (37 weeks)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 21, 2023 (42 weeks)</span>
+<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="st">"2025-01-31"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Friday, November 07, 2025</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 17, 2025 (37 weeks)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 21, 2025 (42 weeks)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate from conception date</span></span></span>
-<span class="r-in"><span><span class="va">conception_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-02-14"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="va">conception_date</span>, start_type <span class="op">=</span> <span class="st">"conception"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Tuesday, November 07, 2023</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 17, 2023 (37 weeks)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 21, 2023 (42 weeks)</span>
+<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="st">"2025-02-14"</span>, start_type <span class="op">=</span> <span class="st">"conception"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Friday, November 07, 2025</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 17, 2025 (37 weeks)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 21, 2025 (42 weeks)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate from day 5 embryo transfer</span></span></span>
-<span class="r-in"><span><span class="va">transfer_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-02-19"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="va">transfer_date</span>, start_type <span class="op">=</span> <span class="st">"transfer_day_5"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Tuesday, November 07, 2023</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 17, 2023 (37 weeks)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 21, 2023 (42 weeks)</span>
+<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-02-19"</span><span class="op">)</span>, start_type <span class="op">=</span> <span class="st">"transfer_day_5"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Friday, November 07, 2025</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 17, 2025 (37 weeks)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 21, 2025 (42 weeks)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate with non-standard cycle length</span></span></span>
-<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="va">my_start_date</span>, cycle <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Tuesday, November 14, 2023</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 24, 2023 (37 weeks)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 28, 2023 (42 weeks)</span>
+<span class="r-in"><span><span class="fu">calculate_due_date</span><span class="op">(</span><span class="st">"2025-01-31"</span>, cycle <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Friday, November 14, 2025</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: October 24, 2025 (37 weeks)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: November 28, 2025 (42 weeks)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

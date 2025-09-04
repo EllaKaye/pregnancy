@@ -56,13 +56,15 @@ weeks pregnant, days remaining until due date, and overall progress percentage.<
 
 
 <dl><dt id="arg-on-date">on_date<a class="anchor" aria-label="anchor" href="#arg-on-date"></a></dt>
-<dd><p>Date. The date for which to calculate pregnancy progress.
+<dd><p>Date or character string representing a date, e.g. "YYYY-MM-DD".
+The date for which to calculate pregnancy progress.
 Defaults to current system date.</p></dd>
 
 
 <dt id="arg-due-date">due_date<a class="anchor" aria-label="anchor" href="#arg-due-date"></a></dt>
-<dd><p>Date. The expected due date. If NULL, will try to use the
-"pregnancy.due_date" option. Required if option not set.</p></dd>
+<dd><p>Date or character string representing a date, e.g. "YYYY-MM-DD".
+The expected due date. If NULL, will try to use the "pregnancy.due_date" option.
+Required if option not set.</p></dd>
 
 
 <dt id="arg-person">person<a class="anchor" aria-label="anchor" href="#arg-person"></a></dt>
@@ -86,6 +88,8 @@ adjusting message grammar. If the calculation shows more than 42 weeks of pregna
 a different message is displayed noting this unusual duration.</p>
 <p>The function uses the <a href="https://cli.r-lib.org" class="external-link">cli</a> package for formatted message output and supports
 proper pluralization of weeks/days in messages.</p>
+<p>If <code>on_date</code> or <code>due_date</code> are character strings, the conversion to a <code>Date</code>
+is handled by anytime::anydate().</p>
     </div>
     <div class="section level2">
     <h2 id="global-options">Global Options<a class="anchor" aria-label="anchor" href="#global-options"></a></h2>
@@ -103,30 +107,38 @@ proper pluralization of weeks/days in messages.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Current progress with explicit due date</span></span></span>
 <span class="r-in"><span><span class="co"># Note that output will depend on date the function is run</span></span></span>
-<span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-07-01"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Given a due date of July 01, 2025, you would now be more than 42 weeks</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   pregnant.</span>
+<span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>due_date <span class="op">=</span> <span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 27 weeks and 3 days pregnant.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 12 weeks and 4 days until the due date (December 01, 2025).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 69% through the pregnancy.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Progress on a specific date</span></span></span>
-<span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-06-01"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-07-01"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On June 01, 2025, you were 35 weeks and 5 days pregnant.</span>
+<span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-11-01"</span>, due_date <span class="op">=</span> <span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On November 01, 2025, you will be 35 weeks and 5 days pregnant.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With custom person</span></span></span>
-<span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-06-01"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-07-01"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  person <span class="op">=</span> <span class="st">"Sarah"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On June 01, 2025, Sarah was 35 weeks and 5 days pregnant.</span>
+<span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-11-01"</span>, due_date <span class="op">=</span> <span class="st">"2025-12-01"</span>, person <span class="op">=</span> <span class="st">"Sarah"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On November 01, 2025, Sarah will be 35 weeks and 5 days pregnant.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set global options</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-07-01"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">date_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"pregnancy.due_date"</span><span class="op">)</span> <span class="co"># save current option</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as December 01, 2025</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, in your</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">".Rprofile"</span>, set `options(pregnancy.due_date = ...)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   where ... is the value of `due_date`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can edit your <span style="color: #0000BB;">".Rprofile"</span> by calling `usethis::edit_r_profile()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
 <span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 27 weeks and 3 days pregnant.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 12 weeks and 4 days until the due date (December 01, 2025).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 69% through the pregnancy.</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pregnancy.due_date <span class="op">=</span> <span class="va">date_opt</span><span class="op">)</span> <span class="co"># return original option</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

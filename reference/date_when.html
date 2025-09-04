@@ -57,8 +57,9 @@
 
 
 <dt id="arg-due-date">due_date<a class="anchor" aria-label="anchor" href="#arg-due-date"></a></dt>
-<dd><p>Date. The expected due date. If NULL, will try to use the
-"pregnancy.due_date" option. Required if option not set.</p></dd>
+<dd><p>Date or character string representing a date, e.g. "YYYY-MM-DD".
+The expected due date. If NULL, will try to use the "pregnancy.due_date" option.
+Required if option not set.</p></dd>
 
 
 <dt id="arg-person">person<a class="anchor" aria-label="anchor" href="#arg-person"></a></dt>
@@ -70,7 +71,8 @@
 
 
 <dt id="arg-today">today<a class="anchor" aria-label="anchor" href="#arg-today"></a></dt>
-<dd><p>Date object representing the reference date for calculations. Default is Sys.Date().
+<dd><p>Date or character string representing a date, e.g. "YYYY-MM-DD".
+Represents the reference date for calculations. Default is Sys.Date().
 This parameter exists primarily for testing and documentation purposes and it is unlikely to make sense for the user to need or want to change it from the default.</p></dd>
 
 </dl></div>
@@ -86,6 +88,8 @@ This parameter exists primarily for testing and documentation purposes and it is
 It handles past, present and future dates appropriately in its messaging.
 The due date can be provided directly or set globally using options("pregnancy.due_date").
 Similarly, the person being referenced can be provided directly or set globally using options("pregnancy.person").</p>
+<p>If <code>date_when</code> or <code>today</code> is a character string, the conversion to a <code>Date</code>
+is handled by anytime::anydate().</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -97,17 +101,12 @@ Similarly, the person being referenced can be provided directly or set globally 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Set a due date</span></span></span>
-<span class="r-in"><span><span class="va">due</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># When will they be 12 weeks pregnant?</span></span></span>
-<span class="r-in"><span><span class="fu">date_when</span><span class="op">(</span><span class="fl">20</span>, due_date <span class="op">=</span> <span class="va">due</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">date_when</span><span class="op">(</span><span class="fl">20</span>, due_date <span class="op">=</span> <span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On July 14, 2025, you were 20 weeks pregnant.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That was 7 weeks and 2 days ago.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># When will they be 20 weeks pregnant?</span></span></span>
-<span class="r-in"><span><span class="fu">date_when</span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="va">due</span>, person <span class="op">=</span> <span class="st">"Sarah"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That was 7 weeks and 3 days ago.</span>
+<span class="r-in"><span><span class="fu">date_when</span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-12-01"</span><span class="op">)</span>, person <span class="op">=</span> <span class="st">"Sarah"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On October 13, 2025, Sarah will be 33 weeks pregnant.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 5 weeks and 5 days away.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 5 weeks and 4 days away.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

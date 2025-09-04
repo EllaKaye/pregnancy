@@ -64,8 +64,8 @@ and timing. Settings persist for the current R session only, unless added to
 
 
 <dl><dt id="arg-due-date">due_date<a class="anchor" aria-label="anchor" href="#arg-due-date"></a></dt>
-<dd><p>A Date object specifying the estimated due date, or NULL to
-unset the current value</p></dd>
+<dd><p>A Date or character string representing a date, e.g. "YYYY-MM-DD",
+specifying the estimated due date, or NULL to unset the option.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -83,7 +83,7 @@ unset the current value</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Store original setting</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Store original setting (without messages)</span></span></span>
 <span class="r-in"><span><span class="va">original_due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"pregnancy.due_date"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check current setting</span></span></span>
@@ -92,9 +92,9 @@ unset the current value</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can set it with `set_due_date()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can also pass a value directly to the `due_date` argument where required.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Set due date using as.Date</span></span></span>
-<span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2024-09-15"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as September 15, 2024</span>
+<span class="r-in"><span><span class="co"># Set due date and check again</span></span></span>
+<span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="st">"2025-09-15"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as September 15, 2025</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
@@ -105,34 +105,10 @@ unset the current value</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
 <span class="r-in"><span><span class="fu">get_due_date</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your due date is set as September 15, 2024.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your due date is set as September 15, 2025.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Set due date using lubridate</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘lubridate’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     date, intersect, setdiff, union</span>
-<span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2024-09-15"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Due date set as September 15, 2024</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument (unless you wish to override the option).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To make this `due_date` option available in all R sessions, in your</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">".Rprofile"</span>, set `options(pregnancy.due_date = ...)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   where ... is the value of `due_date`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can edit your <span style="color: #0000BB;">".Rprofile"</span> by calling `usethis::edit_r_profile()`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
-<span class="r-in"><span><span class="fu">get_due_date</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your due date is set as September 15, 2024.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Restore original setting</span></span></span>
-<span class="r-in"><span><span class="fu">set_due_date</span><span class="op">(</span><span class="va">original_due_date</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> pregnancy.due_date option set to NULL.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You will need to explicitly pass a value to the `due_date` argument</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   in functions that use it, or reset the option with `set_due_date()`.</span>
+<span class="r-in"><span><span class="co"># Restore original setting (without messages)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pregnancy.due_date <span class="op">=</span> <span class="va">original_due_date</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

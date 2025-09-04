@@ -95,7 +95,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># invisibly returns a Date object with the estimated due date</span></span>
 <span><span class="co"># by default, start date of last menstrual period, but other options available</span></span>
-<span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_due_date.html">calculate_due_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-02-24"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_due_date.html">calculate_due_date</a></span><span class="op">(</span><span class="st">"2025-02-24"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Estimated due date: Monday, December 01, 2025</span></span>
 <span><span class="co">#&gt; ℹ Estimated birth period begins: November 10, 2025 (37 weeks)</span></span>
 <span><span class="co">#&gt; ℹ Estimated birth period ends: December 15, 2025 (42 weeks)</span></span></code></pre></div>
@@ -113,24 +113,24 @@
 <span><span class="co">#&gt; ℹ You can edit your ".Rprofile" by calling `usethis::edit_r_profile()`</span></span>
 <span><span class="co">#&gt; ℹ You can retrieve the `due_date` option with `get_due_date()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.due_date')`.</span></span></code></pre></div>
-<p>This README was built on <strong>September 03, 2025</strong>, so for the purposes of reading this page, that counts as “today”.</p>
+<p>This README was built on <strong>September 04, 2025</strong>, so for the purposes of reading this page, that counts as “today”.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># don't need to specify `due_date` since option is set</span></span>
 <span><span class="co"># invisibly returns number of days into the pregnancy</span></span>
 <span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ You are 27 weeks and 2 days pregnant.</span></span>
-<span><span class="co">#&gt; ℹ That's 12 weeks and 5 days until the due date (December 01, 2025).</span></span>
-<span><span class="co">#&gt; ℹ You are 68% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ You are 27 weeks and 3 days pregnant.</span></span>
+<span><span class="co">#&gt; ℹ That's 12 weeks and 4 days until the due date (December 01, 2025).</span></span>
+<span><span class="co">#&gt; ℹ You are 69% through the pregnancy.</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># alternative `on_date`, addressed as "I"</span></span>
-<span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-17"</span><span class="op">)</span>, person <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-09-17"</span>, person <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ On September 17, 2025, I will be 29 weeks and 2 days pregnant.</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># when a given week of the pregnancy is reached</span></span>
 <span><span class="co"># invisibly returns the Date when that week is reached</span></span>
 <span><span class="fu"><a href="reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ On October 13, 2025, you will be 33 weeks pregnant.</span></span>
-<span><span class="co">#&gt; ℹ That's 5 weeks and 5 days away.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ That's 5 weeks and 4 days away.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tracking-medications">Tracking medications<a class="anchor" aria-label="anchor" href="#tracking-medications"></a>
@@ -139,10 +139,10 @@
 <code class="sourceCode R"><span><span class="co"># a simplified medication schedule</span></span>
 <span><span class="va">meds</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
-<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-21"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-08-31"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-01"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-11"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-03"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-11"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-08"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-11-05"</span><span class="op">)</span></span>
+<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="st">"2025-08-21"</span>, <span class="st">"2025-08-31"</span>,</span>
+<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="st">"2025-09-01"</span>, <span class="st">"2025-09-11"</span>,</span>
+<span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="st">"2025-09-03"</span>, <span class="st">"2025-09-11"</span>,</span>
+<span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="st">"2025-09-08"</span>, <span class="st">"2025-11-05"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># how much of each medication is left to take, as of "today"</span></span>
@@ -151,16 +151,12 @@
 <span><span class="co">#&gt;   medication quantity</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;         &lt;int&gt;</span></span>
 <span><span class="co">#&gt; 1 clexane          59</span></span>
-<span><span class="co">#&gt; 2 cyclogest        18</span></span>
-<span><span class="co">#&gt; 3 progynova        54</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 cyclogest        16</span></span>
+<span><span class="co">#&gt; 3 progynova        48</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># how much medication for a given week </span></span>
 <span><span class="co"># (useful if you need to request a prescription to cover a certain time period)</span></span>
-<span><span class="fu"><a href="reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span></span>
-<span>  <span class="va">meds</span>, </span>
-<span>  on_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-01"</span><span class="op">)</span>, </span>
-<span>  until_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-07"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span>, on_date <span class="op">=</span> <span class="st">"2025-09-01"</span>, until_date <span class="op">=</span> <span class="st">"2025-09-07"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
 <span><span class="co">#&gt;   medication quantity</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;         &lt;int&gt;</span></span>
@@ -175,7 +171,7 @@
 <p>Any global option can be unset by calling its <code>set_*</code> function with the argument <code>NULL</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a different due date from the earlier example</span></span>
-<span><span class="fu"><a href="reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2026-04-01"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="st">"2026-04-01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ✔ Due date set as April 01, 2026</span></span>
 <span><span class="co">#&gt; ℹ Functions in the pregnancy package will now use this `due_date` option.</span></span>
 <span><span class="co">#&gt; ℹ So, for this R session, you do not need to supply a value to the `due_date`</span></span>
@@ -188,8 +184,8 @@
 <span><span class="co">#&gt;   or with `getOption('pregnancy.due_date')`.</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ You are 10 weeks and 0 days pregnant.</span></span>
-<span><span class="co">#&gt; ℹ That's 30 weeks and 0 days until the due date (April 01, 2026).</span></span>
+<span><span class="co">#&gt; ℹ You are 10 weeks and 1 day pregnant.</span></span>
+<span><span class="co">#&gt; ℹ That's 29 weeks and 6 days until the due date (April 01, 2026).</span></span>
 <span><span class="co">#&gt; ℹ You are 25% through the pregnancy.</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># check and then unset option</span></span>
@@ -207,7 +203,7 @@
 <p>Here’s an example of what that might look like:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
-<span>  pregnancy.due_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-09-16"</span><span class="op">)</span>,</span>
+<span>  pregnancy.due_date <span class="op">=</span> <span class="st">"2025-09-16"</span>,</span>
 <span>  pregnancy.person <span class="op">=</span> <span class="st">"I"</span>, <span class="co"># addressed in first person</span></span>
 <span>  pregnancy.medications <span class="op">=</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
@@ -215,11 +211,7 @@
 <span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="st">"2025-09-01"</span>, <span class="st">"2025-09-11"</span>,</span>
 <span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="st">"2025-09-03"</span>, <span class="st">"2025-09-11"</span>,</span>
 <span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="st">"2025-09-08"</span>, <span class="st">"2025-11-05"</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">start_date</span><span class="op">)</span>,</span>
-<span>    stop_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">stop_date</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span>  <span class="op">)</span> </span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Note that it is best to avoid creating R objects in your <code>.Rprofile</code>, e.g. a <code>medications</code> data frame outside of the call to <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>, otherwise that object will be loaded into your global environment at the start of every R session.</p>
 </div>
