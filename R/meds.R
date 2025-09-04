@@ -195,7 +195,7 @@ check_medications <- function(meds) {
   ) {
     cli::cli_abort(
       c(
-        "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date}.",
+        "In {.var meds}, columns {.code start_date} and {.code stop_date} must have class {.cls Date} or be a string representing a date.",
         "i" = "{.var start_date} was class {.cls {class(meds[['start_date']])}}.",
         "i" = "{.var stop_date} was class {.cls {class(meds[['stop_date']])}}."
       ),

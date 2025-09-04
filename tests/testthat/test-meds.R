@@ -254,6 +254,34 @@ test_that("check_medications validates format column type", {
   )
 })
 
+
+test_that("check_medications throws error for non-Date date columns", {
+  # Test data with character date columns that can't be converted
+  meds_bad_dates <- data.frame(
+    medication = "test_med",
+    format = "tablet",
+    quantity = 1,
+    start_date = "invalid_date",
+    stop_date = "another_invalid_date",
+    stringsAsFactors = FALSE
+  )
+
+  # Convert to something that's not Date and not character
+  # (so conversion attempt will fail)
+  meds_bad_dates$start_date <- as.factor(meds_bad_dates$start_date)
+  meds_bad_dates$stop_date <- as.factor(meds_bad_dates$stop_date)
+
+  expect_error(
+    check_medications(meds_bad_dates),
+    class = "pregnancy_error_class"
+  )
+
+  expect_error(
+    check_medications(meds_bad_dates),
+    "columns.*start_date.*and.*stop_date.*must have class.*Date"
+  )
+})
+
 # testing set_medications() --------------------------------------------
 test_that("medication option gets set", {
   starting_option <- getOption("pregnancy.medications")
