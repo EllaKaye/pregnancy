@@ -34,6 +34,8 @@ how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
 # MAYBE: think about messages 2 and 3 if on_date is not Sys.Date()
 # lintr gives false positives for objects only used in `cli::format_inline`
 how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
+  on_date <- check_date(on_date)
+
   # grammar for output message
   person <- person %||% getOption("pregnancy.person") %||% "You"
   subject <- get_subject(person) # "I", "You" or person
@@ -111,10 +113,12 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' Calculates and displays how far along a pregnancy is on a specific date, including
 #' weeks pregnant, days remaining until due date, and overall progress percentage.
 #'
-#' @param on_date Date. The date for which to calculate pregnancy progress.
+#' @param on_date Date or character string representing a date, e.g. "YYYY-MM-DD".
+#'   The date for which to calculate pregnancy progress.
 #'   Defaults to current system date.
-#' @param due_date Date. The expected due date. If NULL, will try to use the
-#'   "pregnancy.due_date" option. Required if option not set.
+#' @param due_date Date or character string representing a date, e.g. "YYYY-MM-DD".
+#'   The expected due date. If NULL, will try to use the "pregnancy.due_date" option.
+#'   Required if option not set.
 #' @param person The person who is pregnant, to determine the grammar for the output message. Can be:
 #'   * "I", "1", "1st", "first", or numeric `1` for first person
 #'   * "you", "2", "2nd", "second", or numeric `2` for second person
@@ -141,26 +145,20 @@ how_far_message <- function(calc_results, on_date = Sys.Date(), person = NULL) {
 #' @examples
 #' # Current progress with explicit due date
 #' # Note that output will depend on date the function is run
-#' how_far(due_date = as.Date("2025-07-01"))
+#' how_far(due_date = "2025-12-01")
 #'
 #' # Progress on a specific date
-#' how_far(
-#'   on_date = as.Date("2025-06-01"),
-#'   due_date = as.Date("2025-07-01")
-#' )
+#' how_far(on_date = "2025-11-01", due_date = "2025-12-01")
 #'
 #' # With custom person
-#' how_far(
-#'   on_date = as.Date("2025-06-01"),
-#'   due_date = as.Date("2025-07-01"),
-#'   person = "Sarah"
-#' )
+#' how_far(on_date = "2025-11-01", due_date = "2025-12-01", person = "Sarah")
 #'
 #' # Set global options
-#' \dontrun{
-#' set_due_date(as.Date("2025-07-01"))
+#' date_opt <- getOption("pregnancy.due_date") # save current option
+#' set_due_date("2025-12-01")
 #' how_far()
-#' }
+#' options(pregnancy.due_date = date_opt) # return original option
+#'
 #' @seealso [set_due_date()], [set_person()]
 #' @export
 how_far <- function(on_date = Sys.Date(), due_date = NULL, person = NULL) {

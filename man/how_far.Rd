@@ -7,11 +7,13 @@
 how_far(on_date = Sys.Date(), due_date = NULL, person = NULL)
 }
 \arguments{
-\item{on_date}{Date. The date for which to calculate pregnancy progress.
+\item{on_date}{Date or character string representing a date, e.g. "YYYY-MM-DD".
+The date for which to calculate pregnancy progress.
 Defaults to current system date.}
 
-\item{due_date}{Date. The expected due date. If NULL, will try to use the
-"pregnancy.due_date" option. Required if option not set.}
+\item{due_date}{Date or character string representing a date, e.g. "YYYY-MM-DD".
+The expected due date. If NULL, will try to use the "pregnancy.due_date" option.
+Required if option not set.}
 
 \item{person}{The person who is pregnant, to determine the grammar for the output message. Can be:
 \itemize{
@@ -49,26 +51,20 @@ proper pluralization of weeks/days in messages.
 \examples{
 # Current progress with explicit due date
 # Note that output will depend on date the function is run
-how_far(due_date = as.Date("2025-07-01"))
+how_far(due_date = "2025-12-01")
 
 # Progress on a specific date
-how_far(
-  on_date = as.Date("2025-06-01"),
-  due_date = as.Date("2025-07-01")
-)
+how_far(on_date = "2025-11-01", due_date = "2025-12-01")
 
 # With custom person
-how_far(
-  on_date = as.Date("2025-06-01"),
-  due_date = as.Date("2025-07-01"),
-  person = "Sarah"
-)
+how_far(on_date = "2025-11-01", due_date = "2025-12-01", person = "Sarah")
 
 # Set global options
-\dontrun{
-set_due_date(as.Date("2025-07-01"))
+date_opt <- getOption("pregnancy.due_date") # save current option
+set_due_date("2025-12-01")
 how_far()
-}
+options(pregnancy.due_date = date_opt) # return original option
+
 }
 \seealso{
 \code{\link[=set_due_date]{set_due_date()}}, \code{\link[=set_person]{set_person()}}

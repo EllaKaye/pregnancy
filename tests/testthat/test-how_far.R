@@ -54,18 +54,20 @@ test_that("how_far_calculation handles due_date option", {
   expect_equal(result$weeks_to_go, 20)
 })
 
-test_that("how_far_calculation errors appropriately", {
-  expect_error(
-    how_far_calculation(on_date = "2025-02-11"),
-    class = "pregnancy_error_class"
+test_that("how_far_calculation accepts dates as strings", {
+  expect_no_error(
+    how_far_calculation(
+      on_date = "2025-02-11",
+      due_date = "2025-07-01"
+    )
   )
 
-  expect_error(
+  expect_equal(
     how_far_calculation(
-      on_date = as.Date("2025-02-11"),
+      on_date = "2025-02-11",
       due_date = "2025-07-01"
-    ),
-    class = "pregnancy_error_class"
+    )$days_along,
+    140
   )
 })
 

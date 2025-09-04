@@ -9,8 +9,9 @@ date_when(weeks, due_date = NULL, person = NULL, today = Sys.Date())
 \arguments{
 \item{weeks}{Numeric value indicating the number of weeks of pregnancy to calculate the date for.}
 
-\item{due_date}{Date. The expected due date. If NULL, will try to use the
-"pregnancy.due_date" option. Required if option not set.}
+\item{due_date}{Date or character string representing a date, e.g. "YYYY-MM-DD".
+The expected due date. If NULL, will try to use the "pregnancy.due_date" option.
+Required if option not set.}
 
 \item{person}{The person who is pregnant, to determine the grammar for the output message. Can be:
 \itemize{
