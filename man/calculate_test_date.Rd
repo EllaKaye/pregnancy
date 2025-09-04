@@ -13,8 +13,9 @@ calculate_test_date(
 )
 }
 \arguments{
-\item{start_date}{Date. The starting reference date. The interpretation of this
-date depends on the \code{start_type} parameter.}
+\item{start_date}{Date or character string representing a date, e.g. "YYYY-MM-DD".
+The starting reference date. The interpretation of this date depends on the
+\code{start_type} parameter.}
 
 \item{start_type}{character. One of:
 \itemize{

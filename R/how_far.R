@@ -1,11 +1,11 @@
 # functions relating to pregnancy progress
 how_far_calculation <- function(on_date = Sys.Date(), due_date = NULL) {
-  check_date(on_date)
+  on_date <- check_date(on_date)
 
   due_date <- due_date %||%
     getOption("pregnancy.due_date") %||%
     date_stop(due_date)
-  check_date(due_date)
+  due_date <- check_date(due_date)
 
   # date calculations
   start_date <- due_date - 280

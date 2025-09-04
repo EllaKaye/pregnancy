@@ -5,10 +5,10 @@ test_that("start_date is correct format", {
     calculate_due_date(2023 - 01 - 01),
     class = "pregnancy_error_class"
   )
-  expect_error(
-    calculate_due_date("2023-01-01"),
-    class = "pregnancy_error_class"
-  )
+})
+
+test_that("start_date accepts character dates", {
+  expect_equal(calculate_due_date("2023-01-31"), as.Date("2023-11-07"))
 })
 
 test_that("start_type matches arg", {

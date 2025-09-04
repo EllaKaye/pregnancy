@@ -6,8 +6,9 @@
 #' period, which spans from 37 weeks (birth period start) to 42 weeks (birth period
 #' end).
 #'
-#' @param start_date Date. The starting reference date. The interpretation of this
-#'   date depends on the `start_type` parameter.
+#' @param start_date Date or character string representing a date, e.g. "YYYY-MM-DD".
+#'   The starting reference date. The interpretation of this date depends on the
+#'   `start_type` parameter.
 #' @param start_type character. One of:
 #'   * "LMP": Last Menstrual Period date (default)
 #'   * "conception": Date of conception
@@ -36,19 +37,16 @@
 #'
 #' @examples
 #' # Calculate due date from last menstrual period
-#' my_start_date <- as.Date("2023-01-31")
-#' calculate_due_date(my_start_date)
+#' calculate_due_date("2025-01-31")
 #'
 #' # Calculate from conception date
-#' conception_date <- as.Date("2023-02-14")
-#' calculate_due_date(conception_date, start_type = "conception")
+#' calculate_due_date("2025-02-14", start_type = "conception")
 #'
 #' # Calculate from day 5 embryo transfer
-#' transfer_date <- as.Date("2023-02-19")
-#' calculate_due_date(transfer_date, start_type = "transfer_day_5")
+#' calculate_due_date(as.Date("2025-02-19"), start_type = "transfer_day_5")
 #'
 #' # Calculate with non-standard cycle length
-#' calculate_due_date(my_start_date, cycle = 35)
+#' calculate_due_date("2025-01-31", cycle = 35)
 #'
 #' @seealso
 #' * [date_when()] for finding dates at specific weeks of pregnancy
@@ -103,7 +101,7 @@ ovulation_date_calculation <- function(
 ) {
   start_type <- rlang::arg_match(start_type)
 
-  check_date(start_date)
+  start_date <- check_date(start_date)
 
   if (start_type == "LMP") {
     check_cycle(cycle)
