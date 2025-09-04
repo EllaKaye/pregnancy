@@ -109,6 +109,14 @@ test_that("date option gets set", {
   options(pregnancy.due_date = starting_option)
 })
 
+test_that("character date option gets set", {
+  starting_option <- getOption("pregnancy.due_date")
+  options(pregnancy.due_date = NULL)
+  set_due_date("2023-04-30")
+  expect_equal(getOption("pregnancy.due_date"), as.Date("2023-04-30"))
+  options(pregnancy.due_date = starting_option)
+})
+
 test_that("NULL option gets set", {
   starting_option <- getOption("pregnancy.due_date")
   options(pregnancy.due_date = as.Date("2023-04-30"))
