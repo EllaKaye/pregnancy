@@ -1,3 +1,12 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Removed unnecessary spaces in the 'Description' field
+
+* Explained the acronym IVF in the 'Description' field
+
+* Added a reference for calculating due dates to the 'Description' field
+
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
