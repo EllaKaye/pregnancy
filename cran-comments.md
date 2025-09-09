@@ -7,6 +7,8 @@ This is a resubmission. In this version I have:
 
 * Added a reference for calculating due dates to the 'Description' field
 
+* Updated the version number to 0.1.1
+
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
