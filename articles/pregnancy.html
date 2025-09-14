@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>pregnancy</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/EllaKaye/pregnancy/blob/main/vignettes/pregnancy.Rmd" class="external-link"><code>vignettes/pregnancy.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/EllaKaye/pregnancy/blob/v0.1.1/vignettes/pregnancy.Rmd" class="external-link"><code>vignettes/pregnancy.Rmd</code></a></small>
       <div class="d-none name"><code>pregnancy.Rmd</code></div>
     </div>
 
@@ -107,13 +107,13 @@ for those using IVF.</p>
 along the pregnancy is on a given date. It defaults to providing this
 information for the current date, but an alternative
 <code>on_date</code> can be provided. This vignette was built on
-<strong>September 09, 2025</strong>, so for the purposes of reading this
+<strong>September 14, 2025</strong>, so for the purposes of reading this
 article, that counts as “today”.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 28 weeks and 1 day pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 6 days until the due date (December 01, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 70% through the pregnancy.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 28 weeks and 6 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 1 day until the due date (December 01, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 72% through the pregnancy.</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-09-17"</span>, due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On September 17, 2025, you will be 29 weeks and 2 days</span></span>
 <span><span class="co">#&gt; pregnant.</span></span></code></pre></div>
@@ -123,7 +123,7 @@ date from today:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On October 13, 2025, you will be 33 weeks pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 4 weeks and 6 days away.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 4 weeks and 1 day away.</span></span></code></pre></div>
 <p>By default, the output messages from <code><a href="../reference/how_far.html">how_far()</a></code> and
 <code><a href="../reference/date_when.html">date_when()</a></code> are in the second person, i.e. addressed to
 “you”, but there is also an option to specify another person. A value of
@@ -131,16 +131,16 @@ date from today:</p>
 first person:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 28 weeks and 1 day pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 6 days until the due date (December 01, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 70% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 28 weeks and 6 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 1 day until the due date (December 01, 2025).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 72% through the pregnancy.</span></span></code></pre></div>
 <p>Any other character string will be interpreted as a third-person
 name, which is useful, for example, if you’re following the pregnancy
 progress of a partner:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="st">"Ruth"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On October 13, 2025, Ruth will be 33 weeks pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 4 weeks and 6 days away.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 4 weeks and 1 day away.</span></span></code></pre></div>
 <p>There is one further date-related function in the package, which is
 useful if you are not yet pregnant but think there’s a chance you might
 be, e.g. if you are undergoing fertility treatment. This is
@@ -229,20 +229,16 @@ is being called first thing in the day, i.e. before any of
 <code>on_date</code>’s medications have been taken.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
 <span><span class="co">#&gt;   medication quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane          58</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest         6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> progynova        18</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane          53</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span>, group <span class="op">=</span> <span class="st">"format"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
 <span><span class="co">#&gt;   format    quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> injection       58</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> pessary          6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> tablet          18</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> injection       53</span></span></code></pre></div>
 <p>You can specify a value other than today for <code>on_date</code>, as
 well as an <code>until_date</code>. This is useful if you need (as I
 did) to order a couple of week’s medication at the time, and have to
@@ -313,9 +309,9 @@ any arguments, and <code><a href="../reference/date_when.html">date_when()</a></
 week:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 20 weeks and 5 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 19 weeks and 2 days until the due date (January 22, 2026).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 52% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 21 weeks and 3 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 18 weeks and 4 days until the due date (January 22, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 54% through the pregnancy.</span></span></code></pre></div>
 <p>To check what the option is set to, use
 <code><a href="../reference/due_date-option.html">get_due_date()</a></code>.</p>
 </div>
@@ -343,16 +339,16 @@ used.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You can retrieve the `person` option with `get_person()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.person')`.</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># due_date option still set from previous section</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 20 weeks and 5 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 19 weeks and 2 days until the due date (January 22, 2026).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 52% through the pregnancy.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 21 weeks and 3 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 18 weeks and 4 days until the due date (January 22, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 54% through the pregnancy.</span></span>
 <span><span class="fu"><a href="../reference/person.html">set_person</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> pregnancy.person option set to NULL.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The `person` argument will now default to "You".</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 20 weeks and 5 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 19 weeks and 2 days until the due date (January 22, 2026).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 52% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 21 weeks and 3 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 18 weeks and 4 days until the due date (January 22, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 54% through the pregnancy.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="pregnancy-medications">
@@ -379,11 +375,11 @@ that option is retrieved.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
 <span><span class="co">#&gt;   medication   quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane            88</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest          66</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> lubion             33</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> prednisolone      153</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> progynova         198</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane            83</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest          56</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> lubion             28</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> prednisolone      133</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> progynova         168</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="an-example--rprofile">An example <code>.Rprofile</code><a class="anchor" aria-label="anchor" href="#an-example--rprofile"></a>
