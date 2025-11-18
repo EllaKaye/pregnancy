@@ -108,17 +108,17 @@ is handled by <code><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Current progress with explicit due date</span></span></span>
 <span class="r-in"><span><span class="co"># Note that output will depend on date the function is run</span></span></span>
 <span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>due_date <span class="op">=</span> <span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 28 weeks and 6 days pregnant.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 1 day until the due date (December 01, 2025).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 72% through the pregnancy.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 38 weeks and 1 day pregnant.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (December 01, 2025).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 95% through the pregnancy.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Progress on a specific date</span></span></span>
 <span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-11-01"</span>, due_date <span class="op">=</span> <span class="st">"2025-12-01"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On November 01, 2025, you will be 35 weeks and 5 days pregnant.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On November 01, 2025, you were 35 weeks and 5 days pregnant.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With custom person</span></span></span>
 <span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-11-01"</span>, due_date <span class="op">=</span> <span class="st">"2025-12-01"</span>, person <span class="op">=</span> <span class="st">"Sarah"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On November 01, 2025, Sarah will be 35 weeks and 5 days pregnant.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> On November 01, 2025, Sarah was 35 weeks and 5 days pregnant.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set global options</span></span></span>
 <span class="r-in"><span><span class="va">date_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"pregnancy.due_date"</span><span class="op">)</span> <span class="co"># save current option</span></span></span>
@@ -134,9 +134,9 @@ is handled by <code><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You can retrieve the `due_date` option with `get_due_date()`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   or with `getOption('pregnancy.due_date')`.</span>
 <span class="r-in"><span><span class="fu">how_far</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 28 weeks and 6 days pregnant.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 1 day until the due date (December 01, 2025).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 72% through the pregnancy.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 38 weeks and 1 day pregnant.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> That's 1 week and 6 days until the due date (December 01, 2025).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> You are 95% through the pregnancy.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pregnancy.due_date <span class="op">=</span> <span class="va">date_opt</span><span class="op">)</span> <span class="co"># return original option</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -150,7 +150,7 @@ is handled by <code><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

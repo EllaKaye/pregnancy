@@ -81,8 +81,14 @@ I added when adapting the package for general use.</p>
 calculators and apps, plus there are no concerns (unlike with these
 sites and apps) about data privacy, tracking or advertising.</p>
 <div class="section level2">
-<h2 id="date-calculations">Date calculations<a class="anchor" aria-label="anchor" href="#date-calculations"></a>
+<h2 id="a-note-on-dates">A note on dates<a class="anchor" aria-label="anchor" href="#a-note-on-dates"></a>
 </h2>
+<p>To easily keep this vignette fairly up-to-date, and prevent recurring
+package build and CRAN failures as time goes by, I have not hard-coded
+any dates here. Instead, I have calculated everything from the date on
+which this vignette built. That was on <strong>November 18,
+2025</strong>, so for the purposes of reading this page, that counts as
+“today”.</p>
 <p>The <strong>pregnancy</strong> package uses dates extensively. Any
 function argument that requires a date can either take a
 <code>Date</code> object<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;There are many ways to create &lt;code&gt;Date&lt;/code&gt; objects
@@ -90,6 +96,10 @@ in R, including &lt;code&gt;&lt;a href="https://rdrr.io/r/base/as.Date.html" cla
 and &lt;code&gt;&lt;a href="https://rdrr.io/pkg/anytime/man/anytime.html" class="external-link"&gt;anytime::anydate()&lt;/a&gt;&lt;/code&gt;.&lt;/p&gt;'><sup>1</sup></a>, or a character string that can be parsed
 to a <code>Date</code>, e.g. <code>"YYYY-MM-DD"</code>. The parsing is
 performed by <code><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class="external-link">anytime::anydate()</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="date-calculations">Date calculations<a class="anchor" aria-label="anchor" href="#date-calculations"></a>
+</h2>
 <p>The <code><a href="../reference/calculate_due_date.html">calculate_due_date()</a></code> function estimates the
 pregnancy due date. The <code>start_date</code> is interpreted
 differently, depending on the <code>start_type</code>. By default, the
@@ -98,32 +108,38 @@ differently, depending on the <code>start_type</code>. By default, the
 <code>start_date</code> options, like various transfer days, are useful
 for those using IVF.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># invisibly returns a Date object with the estimated due date</span></span>
-<span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_due_date.html">calculate_due_date</a></span><span class="op">(</span><span class="st">"2025-02-24"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Monday, December 01, 2025</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: November 10, 2025 (37 weeks)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: December 15, 2025 (42 weeks)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># for purpose of vignette, calculate `start_date` relative to "today"</span></span>
+<span><span class="va">today</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">start_date</span> <span class="op">&lt;-</span> <span class="va">today</span> <span class="op">-</span> <span class="fl">192</span></span>
+<span></span>
+<span><span class="co"># invisibly returns a Date object with the estimated due date</span></span>
+<span><span class="co"># by default, start date of last menstrual period, but other options available</span></span>
+<span><span class="co"># in practice, the start_date argument will be a known date, e.g. "2025-05-29"</span></span>
+<span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_due_date.html">calculate_due_date</a></span><span class="op">(</span><span class="va">start_date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated due date: <span style="font-weight: bold;">Saturday, February 14, 2026</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated birth period begins: January 24, 2026 (37 weeks)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated birth period ends: February 28, 2026 (42 weeks)</span></span></code></pre></div>
 <p>Once a due date is know, <code><a href="../reference/how_far.html">how_far()</a></code> tells you how far
 along the pregnancy is on a given date. It defaults to providing this
 information for the current date, but an alternative
-<code>on_date</code> can be provided. This vignette was built on
-<strong>September 14, 2025</strong>, so for the purposes of reading this
-article, that counts as “today”.</p>
+<code>on_date</code> can be provided. See the section below on global
+options for how to avoid needing to pass in the <code>due_date</code>
+value every time you call these function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 28 weeks and 6 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 1 day until the due date (December 01, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 72% through the pregnancy.</span></span>
-<span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="st">"2025-09-17"</span>, due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On September 17, 2025, you will be 29 weeks and 2 days</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 27 weeks and 3 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 12 weeks and 4 days until the due date (February 14, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 69% through the pregnancy.</span></span>
+<span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>on_date <span class="op">=</span> <span class="va">today</span> <span class="op">+</span> <span class="fl">1</span>, due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On November 19, 2025, you will be 27 weeks and 4 days</span></span>
 <span><span class="co">#&gt; pregnant.</span></span></code></pre></div>
 <p>The <code><a href="../reference/date_when.html">date_when()</a></code> function gives the date when a certain
 week of pregnancy will be (or was) reached, and the duration of that
 date from today:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="va">due_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On October 13, 2025, you will be 33 weeks pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 4 weeks and 1 day away.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On December 27, 2025, you will be 33 weeks pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 5 weeks and 4 days away.</span></span></code></pre></div>
 <p>By default, the output messages from <code><a href="../reference/how_far.html">how_far()</a></code> and
 <code><a href="../reference/date_when.html">date_when()</a></code> are in the second person, i.e. addressed to
 “you”, but there is also an option to specify another person. A value of
@@ -131,16 +147,16 @@ date from today:</p>
 first person:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span>due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 28 weeks and 6 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 11 weeks and 1 day until the due date (December 01, 2025).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 72% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 27 weeks and 3 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 12 weeks and 4 days until the due date (February 14, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 69% through the pregnancy.</span></span></code></pre></div>
 <p>Any other character string will be interpreted as a third-person
 name, which is useful, for example, if you’re following the pregnancy
 progress of a partner:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">33</span>, due_date <span class="op">=</span> <span class="va">due_date</span>, person <span class="op">=</span> <span class="st">"Ruth"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On October 13, 2025, Ruth will be 33 weeks pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 4 weeks and 1 day away.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On December 27, 2025, Ruth will be 33 weeks pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 5 weeks and 4 days away.</span></span></code></pre></div>
 <p>There is one further date-related function in the package, which is
 useful if you are not yet pregnant but think there’s a chance you might
 be, e.g. if you are undergoing fertility treatment. This is
@@ -148,9 +164,9 @@ be, e.g. if you are undergoing fertility treatment. This is
 date for taking a pregnancy test, based on start date (e.g. start of
 last menstural period) and test type:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculate_test_date.html">calculate_test_date</a></span><span class="op">(</span><span class="st">"2025-08-21"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Thursday, September 18, 2025</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Tuesday, September 16, 2025</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculate_test_date.html">calculate_test_date</a></span><span class="op">(</span><span class="va">today</span> <span class="op">-</span> <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated test date (urine): Wednesday, November 26, 2025</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Estimated test date (blood): Monday, November 24, 2025</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tracking-medications">Tracking medications<a class="anchor" aria-label="anchor" href="#tracking-medications"></a>
@@ -209,18 +225,19 @@ the following columns with the specified data types:</p>
 <p>Note that if the quantity of a given medication changes during the
 pregnancy, you need separate rows with the start and stop dates for each
 quantity.</p>
-<p>Here’s an example of what a small <code>medications</code> table
-might look like (a larger example table is provided in the package as
-<code><a href="../reference/medications.html">pregnancy::medications</a></code>):</p>
+<p>Here’s an example of what a simple <code>medications</code> table
+might look like:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a simplified medication schedule</span></span>
-<span><span class="va">meds</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="va">medication</span>, <span class="op">~</span><span class="va">format</span>, <span class="op">~</span><span class="va">quantity</span>, <span class="op">~</span><span class="va">start_date</span>, <span class="op">~</span><span class="va">stop_date</span>,</span>
-<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">3</span>, <span class="st">"2025-08-21"</span>, <span class="st">"2025-08-31"</span>,</span>
-<span>  <span class="st">"progynova"</span>, <span class="st">"tablet"</span>, <span class="fl">6</span>, <span class="st">"2025-09-01"</span>, <span class="st">"2025-09-11"</span>,</span>
-<span>  <span class="st">"cyclogest"</span>, <span class="st">"pessary"</span>, <span class="fl">2</span>, <span class="st">"2025-09-03"</span>, <span class="st">"2025-09-11"</span>,</span>
-<span>  <span class="st">"clexane"</span>, <span class="st">"injection"</span>, <span class="fl">1</span>, <span class="st">"2025-09-08"</span>, <span class="st">"2025-11-05"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">meds</span> <span class="op">&lt;-</span> <span class="fu">pregnancy</span><span class="fu">:::</span><span class="fu">update_meds_table</span><span class="op">(</span><span class="fu">pregnancy</span><span class="fu">::</span><span class="va"><a href="../reference/medications.html">medications_simple</a></span><span class="op">)</span></span>
+<span><span class="va">meds</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 5</span></span></span>
+<span><span class="co">#&gt;   medication format    quantity start_date stop_date </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> progynova  tablet           3 2025-11-04 2025-11-14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> progynova  tablet           6 2025-11-15 2025-11-25</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> cyclogest  pessary          2 2025-11-17 2025-11-25</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> clexane    injection        1 2025-11-22 2026-01-19</span></span></code></pre></div>
 <p>You can then calculate the quantity of medications left to take
 grouped by either by medication (default) or format. By default, the
 calculation is for today (i.e. <code>on_date</code> =
@@ -229,16 +246,20 @@ is being called first thing in the day, i.e. before any of
 <code>on_date</code>’s medications have been taken.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   medication quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane          53</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane          59</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest        16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> progynova        48</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="va">meds</span>, group <span class="op">=</span> <span class="st">"format"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   format    quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> injection       53</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> injection       59</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> pessary         16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> tablet          48</span></span></code></pre></div>
 <p>You can specify a value other than today for <code>on_date</code>, as
 well as an <code>until_date</code>. This is useful if you need (as I
 did) to order a couple of week’s medication at the time, and have to
@@ -246,15 +267,15 @@ tell the pharmacy exactly what you need:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span></span>
 <span>  <span class="va">meds</span>,</span>
-<span>  on_date <span class="op">=</span> <span class="st">"2025-09-01"</span>,</span>
-<span>  until_date <span class="op">=</span> <span class="st">"2025-09-14"</span></span>
+<span>  on_date <span class="op">=</span> <span class="va">today</span> <span class="op">+</span> <span class="fl">3</span>,</span>
+<span>  until_date <span class="op">=</span> <span class="va">today</span> <span class="op">+</span> <span class="fl">17</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   medication quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane           7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest        18</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> progynova        66</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane          14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest        10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> progynova        30</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="global-options">Global options<a class="anchor" aria-label="anchor" href="#global-options"></a>
@@ -291,10 +312,10 @@ session. To make this option persist (recommended), it can be added to
 your <code>.Rprofile</code>. The console output of
 <code><a href="../reference/due_date-option.html">set_due_date()</a></code> provides guidance on how to do this.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># can be intentional about creating a Date object</span></span>
-<span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2026-01-22"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># a different due date from the earlier example</span></span>
+<span><span class="va">due_date</span> <span class="op">&lt;-</span> <span class="va">today</span> <span class="op">+</span> <span class="fl">180</span></span>
 <span><span class="fu"><a href="../reference/due_date-option.html">set_due_date</a></span><span class="op">(</span><span class="va">due_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Due date set as January 22, 2026</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Due date set as May 17, 2026</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `due_date` option.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the `due_date`</span></span>
 <span><span class="co">#&gt;   argument (unless you wish to override the option).</span></span>
@@ -309,9 +330,13 @@ any arguments, and <code><a href="../reference/date_when.html">date_when()</a></
 week:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 21 weeks and 3 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 18 weeks and 4 days until the due date (January 22, 2026).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 54% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 14 weeks and 2 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 25 weeks and 5 days until the due date (May 17, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 36% through the pregnancy.</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/date_when.html">date_when</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> On December 28, 2025, you will be 20 weeks pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 5 weeks and 5 days away.</span></span></code></pre></div>
 <p>To check what the option is set to, use
 <code><a href="../reference/due_date-option.html">get_due_date()</a></code>.</p>
 </div>
@@ -326,7 +351,7 @@ in <code><a href="../reference/how_far.html">how_far()</a></code> and <code><a h
 overriden by passing another value directly to the <code>person</code>
 argument. If the option is not set, the default second-person will be
 used.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/person.html">set_person</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> person set as 'I'</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `person` option.</span></span>
@@ -339,16 +364,16 @@ used.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You can retrieve the `person` option with `get_person()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.person')`.</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># due_date option still set from previous section</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 21 weeks and 3 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 18 weeks and 4 days until the due date (January 22, 2026).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 54% through the pregnancy.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 14 weeks and 2 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 25 weeks and 5 days until the due date (May 17, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> I am 36% through the pregnancy.</span></span>
 <span><span class="fu"><a href="../reference/person.html">set_person</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> pregnancy.person option set to NULL.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The `person` argument will now default to "You".</span></span>
 <span><span class="fu"><a href="../reference/how_far.html">how_far</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 21 weeks and 3 days pregnant.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 18 weeks and 4 days until the due date (January 22, 2026).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 54% through the pregnancy.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 14 weeks and 2 days pregnant.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> That's 25 weeks and 5 days until the due date (May 17, 2026).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You are 36% through the pregnancy.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="pregnancy-medications">
@@ -359,8 +384,8 @@ used.</p>
 <p>When that option is set, if the <code>meds</code> argument to
 <code><a href="../reference/medications_remaining.html">medications_remaining()</a></code> is <code>NULL</code> (the default),
 that option is retrieved.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/medications-option.html">set_medications</a></span><span class="op">(</span><span class="fu">pregnancy</span><span class="fu">::</span><span class="va"><a href="../reference/medications.html">medications</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/medications-option.html">set_medications</a></span><span class="op">(</span><span class="fu">pregnancy</span><span class="fu">:::</span><span class="fu">update_meds_table</span><span class="op">(</span><span class="fu">pregnancy</span><span class="fu">::</span><span class="va"><a href="../reference/medications.html">medications</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> medications set.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Functions in the pregnancy package will now use this `medications` option.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> So, for this R session, you do not need to supply a value to the</span></span>
@@ -372,14 +397,15 @@ that option is retrieved.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You can retrieve the `medications` option with `get_medications()`,</span></span>
 <span><span class="co">#&gt;   or with `getOption('pregnancy.medications')`.</span></span>
 <span><span class="fu"><a href="../reference/medications_remaining.html">medications_remaining</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
 <span><span class="co">#&gt;   medication   quantity</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> clexane            83</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cyclogest          56</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> lubion             28</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> prednisolone      133</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> progynova         168</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> LDA                 4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> clexane           120</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> cyclogest         138</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> lubion             69</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> prednisolone      289</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> progynova         414</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="an-example--rprofile">An example <code>.Rprofile</code><a class="anchor" aria-label="anchor" href="#an-example--rprofile"></a>
@@ -387,7 +413,7 @@ that option is retrieved.</p>
 <p>Taking the advice to specify the options in your
 <code>.Rprofile</code>, here’s an example of what that might look
 like:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
 <span>  pregnancy.due_date <span class="op">=</span> <span class="st">"2025-09-16"</span>,</span>
 <span>  pregnancy.person <span class="op">=</span> <span class="st">"I"</span>, <span class="co"># addressed in first person</span></span>
@@ -418,7 +444,7 @@ session.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
