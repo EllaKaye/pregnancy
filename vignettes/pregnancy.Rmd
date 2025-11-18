@@ -29,7 +29,14 @@ This is an R package for calculating dates and tracking medications during pregn
 
 The functionality goes beyond what's offered by online pregnancy calculators and apps, plus there are no concerns (unlike with these sites and apps) about data privacy, tracking or advertising.
 
-## Date calculations
+## A note on dates
+
+To easily keep this vignette fairly up-to-date, 
+and prevent recurring package build and CRAN failures as time goes by, 
+I have not hard-coded any dates here. 
+Instead, I have calculated everything from the date on which this vignette built. 
+That was on **`r format(Sys.Date(), '%B %d, %Y')`**, 
+so for the purposes of reading this page, that counts as "today".
 
 The **pregnancy** package uses dates extensively. 
 Any function argument that requires a date can either take a `Date` object[^1], 
@@ -38,18 +45,28 @@ The parsing is performed by `anytime::anydate()`.
 
 [^1]: There are many ways to create `Date` objects in R, including `as.Date()`, `lubridate::ymd()`, and `anytime::anydate()`.
 
+## Date calculations
+
 The `calculate_due_date()` function estimates the pregnancy due date. The `start_date` is interpreted differently, depending on the `start_type`. By default, the `start_type` is the last menstrual period, and the `start_date` is the date this started. Other `start_date` options, like various transfer days, are useful for those using IVF.
 
 ```{r}
+# for purpose of vignette, calculate `start_date` relative to "today"
+today <- Sys.Date()
+start_date <- today - 192
+
 # invisibly returns a Date object with the estimated due date
-due_date <- calculate_due_date("2025-02-24")
+# by default, start date of last menstrual period, but other options available
+# in practice, the start_date argument will be a known date, e.g. "2025-05-29"
+due_date <- calculate_due_date(start_date)
 ```
 
-Once a due date is know, `how_far()` tells you how far along the pregnancy is on a given date. It defaults to providing this information for the current date, but an alternative `on_date` can be provided. This vignette was built on **`r format(Sys.Date(), '%B %d, %Y')`**, so for the purposes of reading this article, that counts as "today".
+Once a due date is know, `how_far()` tells you how far along the pregnancy is on a given date. 
+It defaults to providing this information for the current date, but an alternative `on_date` can be provided. 
+See the section below on global options for how to avoid needing to pass in the `due_date` value every time you call these function.
 
 ```{r}
 how_far(due_date = due_date)
-how_far(on_date = "2025-09-17", due_date = due_date)
+how_far(on_date = today + 1, due_date = due_date)
 ```
 
 The `date_when()` function gives the date when a certain week of pregnancy will be (or was) reached, and the duration of that date from today:
@@ -74,7 +91,7 @@ There is one further date-related function in the package, which is useful if yo
 This is `calculate_test_date()`, which calculates the recommended date for taking a pregnancy test, based on start date (e.g. start of last menstural period) and test type:
 
 ```{r}
-calculate_test_date("2025-08-21")
+calculate_test_date(today - 20)
 ```
 
 ## Tracking medications
@@ -94,18 +111,12 @@ I haven't written that functionality into `how_far()` in this generalised versio
 Note that if the quantity of a given medication changes during the pregnancy, 
 you need separate rows with the start and stop dates for each quantity.
 
-Here's an example of what a small `medications` table might look like 
-(a larger example table is provided in the package as `pregnancy::medications`):
+Here's an example of what a simple `medications` table might look like:
 
 ```{r}
 # a simplified medication schedule
-meds <- dplyr::tribble(
-  ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-  "progynova", "tablet", 3, "2025-08-21", "2025-08-31",
-  "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
-  "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
-  "clexane", "injection", 1, "2025-09-08", "2025-11-05"
-)
+meds <- pregnancy:::update_meds_table(pregnancy::medications_simple)
+meds
 ```
 
 You can then calculate the quantity of medications left to take grouped by either by medication (default) or format. By default, the calculation is for today (i.e. `on_date` = `Sys.Date()`). The resulting table assumes that the function is being called first thing in the day, i.e. before any of `on_date`'s medications have been taken. 
@@ -125,8 +136,8 @@ and have to tell the pharmacy exactly what you need:
 ```{r}
 medications_remaining(
   meds,
-  on_date = "2025-09-01",
-  until_date = "2025-09-14"
+  on_date = today + 3,
+  until_date = today + 17
 )
 ```
 
@@ -152,8 +163,8 @@ When that option is set, if the `due_date` argument to `how_far()` or `date_when
 `set_due_date()` only sets the due date for the current R session. To make this option persist (recommended), it can be added to your `.Rprofile`. The console output of `set_due_date()` provides guidance on how to do this.
 
 ```{r}
-# can be intentional about creating a Date object
-due_date <- as.Date("2026-01-22")
+# a different due date from the earlier example
+due_date <- today + 180
 set_due_date(due_date)
 ```
 
@@ -161,6 +172,10 @@ Then `how_far()` can be called without needing to specify any arguments, and `da
 
 ```{r}
 how_far()
+```
+
+```{r}
+date_when(20)
 ```
 
 To check what the option is set to, use `get_due_date()`.
@@ -185,7 +200,7 @@ how_far()
 When that option is set, if the `meds` argument to `medications_remaining()` is `NULL` (the default), that option is retrieved.
 
 ```{r}
-set_medications(pregnancy::medications)
+set_medications(pregnancy:::update_meds_table(pregnancy::medications))
 medications_remaining()
 ```
 
