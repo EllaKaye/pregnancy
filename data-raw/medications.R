@@ -19,3 +19,15 @@ medications <- tibble::tribble(
 )
 
 usethis::use_data(medications, overwrite = TRUE)
+
+# fmt: skip
+# a simplified medication schedule
+medications_simple <- dplyr::tribble(
+  ~medication, ~format, ~quantity, ~start_date, ~stop_date,
+  "progynova", "tablet", 3, as.Date("2025-08-21"), as.Date("2025-08-31"),
+  "progynova", "tablet", 6, as.Date("2025-09-01"), as.Date("2025-09-11"),
+  "cyclogest", "pessary", 2, as.Date("2025-09-03"), as.Date("2025-09-11"),
+  "clexane", "injection", 1, as.Date("2025-09-08"), as.Date("2025-11-05")
+)
+
+usethis::use_data(medications_simple, overwrite = TRUE)

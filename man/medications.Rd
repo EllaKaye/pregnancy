@@ -3,9 +3,11 @@
 \docType{data}
 \name{medications}
 \alias{medications}
+\alias{medications_simple}
 \title{An example medications table}
 \format{
-A data frame with 14 rows and 5 columns:
+\code{medications} is a data frame with 14 rows and 5 columns.
+\code{medications_simple} is a data frame with 4 rows and 5 columns.
 \describe{
 \item{medication}{Name of the medication}
 \item{format}{Format of medication}
@@ -13,9 +15,13 @@ A data frame with 14 rows and 5 columns:
 \item{start_date}{Date to start taking the medication}
 \item{stop_date}{Final date on which the medication is taken. See details.}
 }
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 4 rows and 5 columns.
 }
 \usage{
 medications
+
+medications_simple
 }
 \description{
 A data frame with example medications that might be used during fertility treatment/first trimester.
@@ -26,6 +32,7 @@ Note that the same medication (prednisolone in this example) has several rows, f
 }
 \examples{
 medications
+medications_simple
 }
 \seealso{
 \code{\link[=medications_remaining]{medications_remaining()}}

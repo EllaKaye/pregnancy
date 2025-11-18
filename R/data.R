@@ -6,7 +6,8 @@
 #' Note that the same medication (prednisolone in this example) has several rows, first because the quantity taken per day changes, then because it needs to be taken on non-consecutive days.
 #'
 #' @format
-#' A data frame with 14 rows and 5 columns:
+#' `medications` is a data frame with 14 rows and 5 columns.
+#' `medications_simple` is a data frame with 4 rows and 5 columns.
 #' \describe{
 #'   \item{medication}{Name of the medication}
 #'   \item{format}{Format of medication}
@@ -14,6 +15,11 @@
 #'   \item{start_date}{Date to start taking the medication}
 #'   \item{stop_date}{Final date on which the medication is taken. See details.}
 #' }
-#' @examples medications
+#' @examples
+#' medications
+#' medications_simple
 #' @seealso [medications_remaining()]
 "medications"
+
+#' @rdname medications
+"medications_simple"
