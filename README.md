@@ -30,7 +30,7 @@ sites and apps) about data privacy, tracking or advertising.
 install.packages("pregnancy")
 ```
 
-You can install the development version from or R-universe:
+You can install the development version from R-universe:
 
 ``` r
 install.packages("pregnancy", repos = "https://ellakaye.r-universe.dev")
@@ -47,28 +47,41 @@ pak::pak("EllaKaye/pregnancy")
 
 This is a quick tour. For a more extensive guide, see the [Get
 Started](https://ellakaye.github.io/pregnancy/articles/pregnancy.html)
-vignette, `vignette("pregnancy")`.
+vignette.
 
 ``` r
 library(pregnancy)
 ```
 
+## A note on dates
+
+To easily keep this document fairly up-to-date, and prevent recurring
+package build and CRAN failures as time goes by, I have not hard-coded
+any dates. Instead, I have calculated everything from the date on which
+this README was last built. That was on **November 18, 2025**, so for
+the purposes of reading this page, that counts as “today”.
+
 ## Date calculations
 
 ``` r
+# for purpose of README, calculate `start_date` relative to "today"
+today <- Sys.Date()
+start_date <- today - 192
+
 # invisibly returns a Date object with the estimated due date
 # by default, start date of last menstrual period, but other options available
-due_date <- calculate_due_date("2025-02-24")
-#> ℹ Estimated due date: Monday, December 01, 2025
-#> ℹ Estimated birth period begins: November 10, 2025 (37 weeks)
-#> ℹ Estimated birth period ends: December 15, 2025 (42 weeks)
+# in practice, the start_date argument will be a known date, e.g. "2025-05-29"
+due_date <- calculate_due_date(start_date)
+#> ℹ Estimated due date: Saturday, February 14, 2026
+#> ℹ Estimated birth period begins: January 24, 2026 (37 weeks)
+#> ℹ Estimated birth period ends: February 28, 2026 (42 weeks)
 ```
 
 ``` r
 # set the pregnancy.due_date option
 # avoids having to pass the due date as argument to other functions
 set_due_date(due_date)
-#> ✔ Due date set as December 01, 2025
+#> ✔ Due date set as February 14, 2026
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
 #>   argument (unless you wish to override the option).
@@ -80,29 +93,27 @@ set_due_date(due_date)
 #>   or with `getOption('pregnancy.due_date')`.
 ```
 
-This README was built on **September 04, 2025**, so for the purposes of
-reading this page, that counts as “today”.
-
 ``` r
 # don't need to specify `due_date` since option is set
 # invisibly returns number of days into the pregnancy
 how_far()
 #> ℹ You are 27 weeks and 3 days pregnant.
-#> ℹ That's 12 weeks and 4 days until the due date (December 01, 2025).
+#> ℹ That's 12 weeks and 4 days until the due date (February 14, 2026).
 #> ℹ You are 69% through the pregnancy.
 ```
 
 ``` r
 # alternative `on_date`, addressed as "I"
-how_far(on_date = "2025-09-17", person = 1)
-#> ℹ On September 17, 2025, I will be 29 weeks and 2 days pregnant.
+# usually `on_date` will be a fixed date, but given here relative to "today"
+how_far(on_date = today + 1, person = 1)
+#> ℹ On November 19, 2025, I will be 27 weeks and 4 days pregnant.
 ```
 
 ``` r
 # when a given week of the pregnancy is reached
 # invisibly returns the Date when that week is reached
 date_when(33)
-#> ℹ On October 13, 2025, you will be 33 weeks pregnant.
+#> ℹ On December 27, 2025, you will be 33 weeks pregnant.
 #> ℹ That's 5 weeks and 4 days away.
 ```
 
@@ -110,13 +121,15 @@ date_when(33)
 
 ``` r
 # a simplified medication schedule
-meds <- dplyr::tribble(
-  ~medication, ~format, ~quantity, ~start_date, ~stop_date,
-  "progynova", "tablet", 3, "2025-08-21", "2025-08-31",
-  "progynova", "tablet", 6, "2025-09-01", "2025-09-11",
-  "cyclogest", "pessary", 2, "2025-09-03", "2025-09-11",
-  "clexane", "injection", 1, "2025-09-08", "2025-11-05"
-)
+meds <- pregnancy:::update_meds_table(pregnancy::medications_simple)
+meds
+#> # A tibble: 4 × 5
+#>   medication format    quantity start_date stop_date 
+#>   <chr>      <chr>        <dbl> <date>     <date>    
+#> 1 progynova  tablet           3 2025-11-04 2025-11-14
+#> 2 progynova  tablet           6 2025-11-15 2025-11-25
+#> 3 cyclogest  pessary          2 2025-11-17 2025-11-25
+#> 4 clexane    injection        1 2025-11-22 2026-01-19
 ```
 
 ``` r
@@ -133,12 +146,14 @@ medications_remaining(meds)
 ``` r
 # how much medication for a given week 
 # (useful if you need to request a prescription to cover a certain time period)
-medications_remaining(meds, on_date = "2025-09-01", until_date = "2025-09-07")
-#> # A tibble: 2 × 2
+# usually, `on_date` and `until_date` would be hard-coded dates
+medications_remaining(meds, on_date = today + 3, until_date = today + 10)
+#> # A tibble: 3 × 2
 #>   medication quantity
 #>   <chr>         <int>
-#> 1 cyclogest        10
-#> 2 progynova        42
+#> 1 clexane           7
+#> 2 cyclogest        10
+#> 3 progynova        30
 ```
 
 ## Global options
@@ -162,8 +177,9 @@ argument `NULL`.
 
 ``` r
 # a different due date from the earlier example
-set_due_date("2026-04-01")
-#> ✔ Due date set as April 01, 2026
+new_due_date <- today + 180
+set_due_date(new_due_date)
+#> ✔ Due date set as May 17, 2026
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
 #>   argument (unless you wish to override the option).
@@ -177,15 +193,15 @@ set_due_date("2026-04-01")
 
 ``` r
 how_far()
-#> ℹ You are 10 weeks and 1 day pregnant.
-#> ℹ That's 29 weeks and 6 days until the due date (April 01, 2026).
-#> ℹ You are 25% through the pregnancy.
+#> ℹ You are 14 weeks and 2 days pregnant.
+#> ℹ That's 25 weeks and 5 days until the due date (May 17, 2026).
+#> ℹ You are 36% through the pregnancy.
 ```
 
 ``` r
 # check and then unset option
 get_due_date()
-#> ℹ Your due date is set as April 01, 2026.
+#> ℹ Your due date is set as May 17, 2026.
 set_due_date(NULL)
 #> ✔ pregnancy.due_date option set to NULL.
 #> ℹ You will need to explicitly pass a value to the `due_date` argument
