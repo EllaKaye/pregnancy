@@ -304,3 +304,21 @@ get_medications <- function() {
 
   invisible(meds)
 }
+
+# Given a starting meds table, adjust the dates based on the current date
+# Want the start date to be `days` days after "today"
+# Get reference date as the `start_date` in row 1, and adjust others accordingly
+# start_date and stop_date need to be `Date`s (not character)
+update_meds_table <- function(meds, days = 14) {
+  today <- Sys.Date()
+  reference <- as.Date(meds$start_date[1])
+  adjust <- as.integer(today - reference - days)
+
+  meds <- meds |>
+    dplyr::mutate(
+      start_date = start_date + adjust,
+      stop_date = stop_date + adjust
+    )
+
+  meds
+}
