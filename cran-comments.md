@@ -16,5 +16,5 @@
   - ubuntu-latest (oldrel-1)
   - windows-latest (release)
 * win-builder: 
-  - using R Under development (unstable) (2025-09-02 r88773 ucrt) 
+  - using R Under development (unstable) (2025-11-18 r89035 ucrt) 
   - using platform: x86_64-w64-mingw32
