@@ -314,7 +314,7 @@ update_meds_table <- function(meds, days = 14) {
   reference <- as.Date(meds$start_date[1])
   adjust <- as.integer(today - reference - days)
 
-  meds <- meds |>
+  meds <- meds %>%
     dplyr::mutate(
       start_date = start_date + adjust,
       stop_date = stop_date + adjust
