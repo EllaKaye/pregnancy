@@ -254,7 +254,6 @@ test_that("check_medications validates format column type", {
   )
 })
 
-
 test_that("check_medications throws error for non-Date date columns", {
   # Test data with character date columns that can't be converted
   meds_bad_dates <- data.frame(
@@ -299,7 +298,6 @@ test_that("medication option gets set", {
   options(pregnancy.person = starting_option)
 })
 
-
 test_that("NULL option gets set", {
   starting_option <- getOption("pregnancy.medications")
   meds <- data.frame(
@@ -339,4 +337,17 @@ test_that("retreives medication option", {
 test_that("NULL if medication not set", {
   withr::local_options(pregnancy.medication = NULL)
   expect_null(suppressMessages(get_medications()))
+})
+
+# testing update_meds_table() --------------------------------------------
+
+test_that("meds table updates", {
+  # Mock Sys.Date() to a known date for testing
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-11-18"))
+
+  updated_table <- update_meds_table(medications_simple)
+  expect_equal(updated_table$start_date[1], as.Date("2025-11-04"))
+
+  updated_table_days <- update_meds_table(medications_simple, 1)
+  expect_equal(updated_table_days$start_date[1], as.Date("2025-11-17"))
 })

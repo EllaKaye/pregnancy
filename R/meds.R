@@ -306,7 +306,7 @@ get_medications <- function() {
 }
 
 # Given a starting meds table, adjust the dates based on the current date
-# Want the start date to be `days` days after "today"
+# Want the start date to be `days` days before "today"
 # Get reference date as the `start_date` in row 1, and adjust others accordingly
 # start_date and stop_date need to be `Date`s (not character)
 update_meds_table <- function(meds, days = 14) {
