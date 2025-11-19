@@ -83,8 +83,8 @@ for calculating current pregnancy progress
 # Set a due date
 date_when(20, due_date = "2025-12-01")
 #> ℹ On July 14, 2025, you were 20 weeks pregnant.
-#> ℹ That was 18 weeks and 1 day ago.
+#> ℹ That was 18 weeks and 2 days ago.
 date_when(33, due_date = as.Date("2025-12-01"), person = "Sarah")
 #> ℹ On October 13, 2025, Sarah was 33 weeks pregnant.
-#> ℹ That was 5 weeks and 1 day ago.
+#> ℹ That was 5 weeks and 2 days ago.
 ```

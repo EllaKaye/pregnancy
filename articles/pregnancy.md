@@ -19,7 +19,7 @@ sites and apps) about data privacy, tracking or advertising.
 To easily keep this vignette fairly up-to-date, and prevent recurring
 package build and CRAN failures as time goes by, I have not hard-coded
 any dates here. Instead, I have calculated everything from the date on
-which this vignette built. That was on **November 18, 2025**, so for the
+which this vignette built. That was on **November 19, 2025**, so for the
 purposes of reading this page, that counts as “today”.
 
 The **pregnancy** package uses dates extensively. Any function argument
@@ -47,9 +47,9 @@ start_date <- today - 192
 # by default, start date of last menstrual period, but other options available
 # in practice, the start_date argument will be a known date, e.g. "2025-05-29"
 due_date <- calculate_due_date(start_date)
-#> ℹ Estimated due date: Saturday, February 14, 2026
-#> ℹ Estimated birth period begins: January 24, 2026 (37 weeks)
-#> ℹ Estimated birth period ends: February 28, 2026 (42 weeks)
+#> ℹ Estimated due date: Sunday, February 15, 2026
+#> ℹ Estimated birth period begins: January 25, 2026 (37 weeks)
+#> ℹ Estimated birth period ends: March 01, 2026 (42 weeks)
 ```
 
 Once a due date is know,
@@ -63,10 +63,10 @@ these function.
 ``` r
 how_far(due_date = due_date)
 #> ℹ You are 27 weeks and 3 days pregnant.
-#> ℹ That's 12 weeks and 4 days until the due date (February 14, 2026).
+#> ℹ That's 12 weeks and 4 days until the due date (February 15, 2026).
 #> ℹ You are 69% through the pregnancy.
 how_far(on_date = today + 1, due_date = due_date)
-#> ℹ On November 19, 2025, you will be 27 weeks and 4 days
+#> ℹ On November 20, 2025, you will be 27 weeks and 4 days
 #> pregnant.
 ```
 
@@ -77,7 +77,7 @@ was) reached, and the duration of that date from today:
 
 ``` r
 date_when(33, due_date = due_date)
-#> ℹ On December 27, 2025, you will be 33 weeks pregnant.
+#> ℹ On December 28, 2025, you will be 33 weeks pregnant.
 #> ℹ That's 5 weeks and 4 days away.
 ```
 
@@ -92,7 +92,7 @@ be addressed in the first person:
 ``` r
 how_far(due_date = due_date, person = 1)
 #> ℹ I am 27 weeks and 3 days pregnant.
-#> ℹ That's 12 weeks and 4 days until the due date (February 14, 2026).
+#> ℹ That's 12 weeks and 4 days until the due date (February 15, 2026).
 #> ℹ I am 69% through the pregnancy.
 ```
 
@@ -102,7 +102,7 @@ of a partner:
 
 ``` r
 date_when(33, due_date = due_date, person = "Ruth")
-#> ℹ On December 27, 2025, Ruth will be 33 weeks pregnant.
+#> ℹ On December 28, 2025, Ruth will be 33 weeks pregnant.
 #> ℹ That's 5 weeks and 4 days away.
 ```
 
@@ -115,8 +115,8 @@ on start date (e.g. start of last menstural period) and test type:
 
 ``` r
 calculate_test_date(today - 20)
-#> ℹ Estimated test date (urine): Wednesday, November 26, 2025
-#> ℹ Estimated test date (blood): Monday, November 24, 2025
+#> ℹ Estimated test date (urine): Thursday, November 27, 2025
+#> ℹ Estimated test date (blood): Tuesday, November 25, 2025
 ```
 
 ## Tracking medications
@@ -159,10 +159,10 @@ meds
 #> # A tibble: 4 × 5
 #>   medication format    quantity start_date stop_date 
 #>   <chr>      <chr>        <dbl> <date>     <date>    
-#> 1 progynova  tablet           3 2025-11-04 2025-11-14
-#> 2 progynova  tablet           6 2025-11-15 2025-11-25
-#> 3 cyclogest  pessary          2 2025-11-17 2025-11-25
-#> 4 clexane    injection        1 2025-11-22 2026-01-19
+#> 1 progynova  tablet           3 2025-11-05 2025-11-15
+#> 2 progynova  tablet           6 2025-11-16 2025-11-26
+#> 3 cyclogest  pessary          2 2025-11-18 2025-11-26
+#> 4 clexane    injection        1 2025-11-23 2026-01-20
 ```
 
 You can then calculate the quantity of medications left to take grouped
@@ -263,7 +263,7 @@ provides guidance on how to do this.
 # a different due date from the earlier example
 due_date <- today + 180
 set_due_date(due_date)
-#> ✔ Due date set as May 17, 2026
+#> ✔ Due date set as May 18, 2026
 #> ℹ Functions in the pregnancy package will now use this `due_date` option.
 #> ℹ So, for this R session, you do not need to supply a value to the `due_date`
 #>   argument (unless you wish to override the option).
@@ -284,13 +284,13 @@ only needs the target week:
 ``` r
 how_far()
 #> ℹ You are 14 weeks and 2 days pregnant.
-#> ℹ That's 25 weeks and 5 days until the due date (May 17, 2026).
+#> ℹ That's 25 weeks and 5 days until the due date (May 18, 2026).
 #> ℹ You are 36% through the pregnancy.
 ```
 
 ``` r
 date_when(20)
-#> ℹ On December 28, 2025, you will be 20 weeks pregnant.
+#> ℹ On December 29, 2025, you will be 20 weeks pregnant.
 #> ℹ That's 5 weeks and 5 days away.
 ```
 
@@ -324,14 +324,14 @@ set_person(1)
 #>   or with `getOption('pregnancy.person')`.
 how_far() # due_date option still set from previous section
 #> ℹ I am 14 weeks and 2 days pregnant.
-#> ℹ That's 25 weeks and 5 days until the due date (May 17, 2026).
+#> ℹ That's 25 weeks and 5 days until the due date (May 18, 2026).
 #> ℹ I am 36% through the pregnancy.
 set_person(NULL)
 #> ✔ pregnancy.person option set to NULL.
 #> ℹ The `person` argument will now default to "You".
 how_far()
 #> ℹ You are 14 weeks and 2 days pregnant.
-#> ℹ That's 25 weeks and 5 days until the due date (May 17, 2026).
+#> ℹ That's 25 weeks and 5 days until the due date (May 18, 2026).
 #> ℹ You are 36% through the pregnancy.
 ```
 

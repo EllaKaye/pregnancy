@@ -76,9 +76,9 @@ If `on_date` or `due_date` are character strings, the conversion to a
 # Current progress with explicit due date
 # Note that output will depend on date the function is run
 how_far(due_date = "2025-12-01")
-#> ℹ You are 38 weeks and 1 day pregnant.
-#> ℹ That's 1 week and 6 days until the due date (December 01, 2025).
-#> ℹ You are 95% through the pregnancy.
+#> ℹ You are 38 weeks and 2 days pregnant.
+#> ℹ That's 1 week and 5 days until the due date (December 01, 2025).
+#> ℹ You are 96% through the pregnancy.
 
 # Progress on a specific date
 how_far(on_date = "2025-11-01", due_date = "2025-12-01")
@@ -102,8 +102,8 @@ set_due_date("2025-12-01")
 #> ℹ You can retrieve the `due_date` option with `get_due_date()`,
 #>   or with `getOption('pregnancy.due_date')`.
 how_far()
-#> ℹ You are 38 weeks and 1 day pregnant.
-#> ℹ That's 1 week and 6 days until the due date (December 01, 2025).
-#> ℹ You are 95% through the pregnancy.
+#> ℹ You are 38 weeks and 2 days pregnant.
+#> ℹ That's 1 week and 5 days until the due date (December 01, 2025).
+#> ℹ You are 96% through the pregnancy.
 options(pregnancy.due_date = date_opt) # return original option
 ```

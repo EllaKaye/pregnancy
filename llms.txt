@@ -134,7 +134,6 @@ medications_remaining(meds)
 ``` r
 # how much medication for a given week 
 # (useful if you need to request a prescription to cover a certain time period)
-# usually, `on_date` and `until_date` would be hard-coded dates
 medications_remaining(meds, on_date = today + 3, until_date = today + 10)
 #> # A tibble: 3 × 2
 #>   medication quantity
