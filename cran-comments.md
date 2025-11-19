@@ -1,19 +1,10 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## v0.2.0
 
-* Removed unnecessary spaces in the 'Description' field
-
-* Explained the acronym IVF in the 'Description' field
-
-* Added a reference for calculating due dates to the 'Description' field
-
-* Updated the version number to 0.1.1
+* Vignette and README now set all dates relative to `Sys.Date()`. This fixes problem that caused CRAN failure. 
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* New submission
+0 errors | 0 warnings | 0 notes
 
 ## Test environments
 
