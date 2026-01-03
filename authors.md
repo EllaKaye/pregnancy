@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/EllaKaye/pregnancy/blob/main/DESCRIPTION)
 
 Kaye E (2026). *pregnancy: Calculate and Track Dates and Medications
-During Pregnancy*. R package version 0.2.0.9000,
+During Pregnancy*. R package version 0.2.1,
 <https://ellakaye.github.io/pregnancy/>.
 
     @Manual{,
       title = {pregnancy: Calculate and Track Dates and Medications During Pregnancy},
       author = {Ella Kaye},
       year = {2026},
-      note = {R package version 0.2.0.9000},
+      note = {R package version 0.2.1},
       url = {https://ellakaye.github.io/pregnancy/},
     }
