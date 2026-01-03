@@ -8,16 +8,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/EllaKaye/pregnancy/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/EllaKaye/pregnancy/blob/v0.2.0/DESCRIPTION)
 
-Kaye E (2025). *pregnancy: Calculate and Track Dates and Medications
+Kaye E (2026). *pregnancy: Calculate and Track Dates and Medications
 During Pregnancy*. R package version 0.2.0,
 <https://ellakaye.github.io/pregnancy/>.
 
     @Manual{,
       title = {pregnancy: Calculate and Track Dates and Medications During Pregnancy},
       author = {Ella Kaye},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.2.0},
       url = {https://ellakaye.github.io/pregnancy/},
     }

@@ -2,6 +2,8 @@
 
 ## pregnancy 0.2.0
 
+CRAN release: 2025-11-19
+
 - Add a `medications_simple` data frame
 - Add an (unexported) `update_meds_table()` function, to help keep
   README and vignette current
