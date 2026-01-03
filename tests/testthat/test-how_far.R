@@ -283,6 +283,8 @@ test_that("how_far_message handles under 0 days appropriately in past", {
 test_that("how_far_message handles under 0 days appropriately, in the future", {
   # due_date 2027-01-01, on_date 2026-01-01
 
+  local_mocked_bindings(Sys.Date = function() as.Date("2025-10-10"))
+
   calc_results <- how_far_calculation(
     on_date = as.Date("2026-01-01"),
     due_date = as.Date("2027-01-01")
