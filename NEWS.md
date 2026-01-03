@@ -1,4 +1,4 @@
-# pregnancy (development version)
+# pregnancy 0.2.1
 
 * Fix broken test
 

@@ -1,3 +1,7 @@
+## v0.2.1
+
+* Fixed a test that relied on `Sys.Date()`
+
 ## v0.2.0
 
 * Vignette and README now set all dates relative to `Sys.Date()`. This fixes problem that caused CRAN failure. 
