@@ -1,5 +1,9 @@
 # Changelog
 
+## pregnancy (development version)
+
+- Fix broken test
+
 ## pregnancy 0.2.0
 
 CRAN release: 2025-11-19
