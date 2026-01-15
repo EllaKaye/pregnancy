@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/EllaKaye/pregnancy/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/EllaKaye/pregnancy/blob/v0.2.1/DESCRIPTION)
 
 Kaye E (2026). *pregnancy: Calculate and Track Dates and Medications
 During Pregnancy*. R package version 0.2.1,
